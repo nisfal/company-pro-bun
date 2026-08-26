@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "bun --hot run server.ts",
-    "start": "bun run server.ts"
+    "start": "bun run server.ts",
+    "build": "esbuild api/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.mjs --external:@hono/node-server --external:hono"
   },
   "devDependencies": {
     "@types/bun": "latest",

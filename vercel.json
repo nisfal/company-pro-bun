@@ -1,18 +1,16 @@
 {
   "version": 2,
+  "buildCommand": "bun run build",
   "builds": [
     {
-      "src": "api/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "bundle": true
-      }
+      "src": "dist/index.mjs",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/index.ts"
+      "dest": "/dist/index.mjs"
     }
   ]
 }
