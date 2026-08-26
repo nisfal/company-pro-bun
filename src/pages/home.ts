@@ -1,202 +1,211 @@
 import { layout } from "../templates/layout";
-import { services, testimonials, company } from "../data/company";
+import { services, testimonials } from "../data/company";
 
-const serviceCards = services
-  .slice(0, 3)
-  .map(
-    (s) => `
-  <div class="card-hover bg-white rounded-2xl p-7 border border-gray-100 shadow-sm">
-    <div class="text-4xl mb-4">${s.icon}</div>
-    <h3 class="text-lg font-semibold text-gray-900 mb-2">${s.title}</h3>
-    <p class="text-sm text-gray-500 leading-relaxed">${s.description}</p>
-  </div>
-`
-  )
-  .join("");
-
-const testimonialCards = testimonials
-  .map(
-    (t) => `
-  <div class="card-hover bg-white rounded-2xl p-7 border border-gray-100 shadow-sm">
-    <div class="flex gap-1 mb-4">
-      ${"⭐".repeat(t.rating)}
+// Only first 3 services for preview
+const svcRows = services.slice(0, 4).map((s, i) => `
+  <div style="display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--surface-3)" class="reveal reveal-d${(i % 3) + 1}">
+    <span class="mono" style="font-size:11px;color:var(--ink-3);padding-top:4px;min-width:24px">${String(i + 1).padStart(2, '0')}</span>
+    <div style="flex:1">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:0.35rem">${s.title}</h3>
+      <p style="font-size:13.5px;color:var(--ink-3);line-height:1.6;max-width:520px">${s.description}</p>
     </div>
-    <p class="text-gray-600 text-sm leading-relaxed mb-6 italic">"${t.text}"</p>
-    <div class="flex items-center gap-3">
-      <div class="w-11 h-11 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-sm">${t.avatar}</div>
-      <div>
-        <p class="font-semibold text-gray-900 text-sm">${t.name}</p>
-        <p class="text-xs text-gray-500">${t.role} · ${t.company}</p>
+    <span style="font-size:11px;color:var(--ink-3);font-family:'Geist Mono',monospace;white-space:nowrap;padding-top:4px">${s.detail}</span>
+  </div>
+`).join('');
+
+const tCards = testimonials.map((t, i) => `
+  <div class="reveal reveal-d${i + 1}" style="padding:1.75rem;background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg)">
+    <p style="font-size:14px;line-height:1.7;color:var(--ink-2);margin-bottom:1.25rem">"${t.text}"</p>
+    <hr class="divider" style="margin-bottom:1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace;color:var(--ink-2);flex-shrink:0">${t.avatar}</div>
+        <div>
+          <p style="font-size:13px;font-weight:600;color:var(--ink)">${t.name}</p>
+          <p style="font-size:12px;color:var(--ink-3)">${t.role}, ${t.company}</p>
+        </div>
       </div>
+      <span style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3);background:var(--surface-2);padding:0.2rem 0.6rem;border-radius:4px">${t.project}</span>
     </div>
   </div>
-`
-  )
-  .join("");
+`).join('');
+
+const techItems = [
+  "Bun", "TypeScript", "React", "Next.js", "Go", "Python",
+  "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes",
+  "React Native", "Flutter", "TensorFlow", "Kafka",
+  "Bun", "TypeScript", "React", "Next.js", "Go", "Python",
+  "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes",
+  "React Native", "Flutter", "TensorFlow", "Kafka",
+].map(t => `<span class="mono" style="font-size:12px;color:var(--ink-3);white-space:nowrap">${t}</span>`).join('');
 
 const content = `
-  <!-- Hero Section -->
-  <section class="hero-bg min-h-screen flex items-center pt-24 pb-16">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-      <div class="fade-in">
-        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-4 py-2 rounded-full mb-6 border border-blue-100">
-          <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-          Tersedia untuk proyek baru 🚀
-        </div>
-        <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
-          Wujudkan <span class="gradient-text">Visi Digital</span> Bisnis Anda
-        </h1>
-        <p class="text-lg text-gray-500 leading-relaxed mb-8 max-w-lg">
-          Kami membantu perusahaan Indonesia bertransformasi secara digital dengan solusi teknologi yang inovatif, andal, dan terukur.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="/contact" class="btn-primary text-white px-8 py-3.5 rounded-xl font-semibold text-sm">
-            Konsultasi Gratis →
-          </a>
-          <a href="/portfolio" class="px-8 py-3.5 rounded-xl font-semibold text-sm border-2 border-gray-200 text-gray-700 hover:border-blue-300 hover:text-blue-600 transition-all">
-            Lihat Portfolio
-          </a>
-        </div>
-        <!-- Stats -->
-        <div class="flex flex-wrap gap-8 mt-12 pt-12 border-t border-gray-100">
-          <div>
-            <p class="text-3xl font-extrabold gradient-text">${company.projects}</p>
-            <p class="text-sm text-gray-500 mt-1">Proyek Selesai</p>
-          </div>
-          <div>
-            <p class="text-3xl font-extrabold gradient-text">${company.clients}</p>
-            <p class="text-sm text-gray-500 mt-1">Klien Puas</p>
-          </div>
-          <div>
-            <p class="text-3xl font-extrabold gradient-text">${company.employees}</p>
-            <p class="text-sm text-gray-500 mt-1">Tim Profesional</p>
-          </div>
-        </div>
-      </div>
+  <!-- ── HERO ──────────────────────────────────────────── -->
+  <section style="min-height:100dvh;display:flex;align-items:center;padding-top:var(--nav-h);background:var(--surface)">
+    <div class="container" style="padding-top:5rem;padding-bottom:5rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
 
-      <!-- Hero Visual -->
-      <div class="flex justify-center lg:justify-end">
-        <div class="relative float">
-          <div class="w-80 h-80 lg:w-96 lg:h-96 rounded-3xl bg-gradient-to-br from-blue-500 via-violet-500 to-purple-600 flex items-center justify-center shadow-2xl">
-            <div class="text-center text-white">
-              <div class="text-8xl mb-4">🚀</div>
-              <p class="text-xl font-bold">Digital First</p>
-              <p class="text-sm opacity-80 mt-1">Innovation & Technology</p>
-            </div>
-          </div>
-          <!-- Floating badges -->
-          <div class="absolute -top-4 -left-6 bg-white rounded-2xl shadow-lg px-4 py-2.5 flex items-center gap-2 text-sm font-medium text-gray-700">
-            <span>✅</span> 500+ Proyek
-          </div>
-          <div class="absolute -bottom-4 -right-6 bg-white rounded-2xl shadow-lg px-4 py-2.5 flex items-center gap-2 text-sm font-medium text-gray-700">
-            <span>⭐</span> 4.9 Rating
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Preview -->
-  <section class="section-alt py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Layanan Kami</span>
-        <h2 class="text-4xl font-extrabold text-gray-900 mt-3 mb-4">Solusi Teknologi <span class="gradient-text">Lengkap</span></h2>
-        <p class="text-gray-500 max-w-xl mx-auto">Dari web development hingga AI, kami hadir dengan solusi digital menyeluruh untuk kebutuhan bisnis Anda.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        ${serviceCards}
-      </div>
-      <div class="text-center mt-10">
-        <a href="/services" class="inline-flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all text-sm">
-          Lihat Semua Layanan <span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Us -->
-  <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Left -->
         <div>
-          <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Keunggulan Kami</span>
-          <h2 class="text-4xl font-extrabold text-gray-900 mt-3 mb-6">Mengapa Memilih <span class="gradient-text">NusaTech</span>?</h2>
-          <div class="space-y-5">
-            ${[
-              ["🎯", "Berpengalaman", "9+ tahun pengalaman mengerjakan ratusan proyek di berbagai industri."],
-              ["⚡", "Cepat & Tepat Waktu", "Metodologi agile memastikan proyek selesai sesuai jadwal tanpa kompromi kualitas."],
-              ["🤝", "Dukungan Penuh", "Tim support kami siap 24/7 untuk memastikan sistem Anda berjalan lancar."],
-              ["🔧", "Teknologi Terkini", "Selalu menggunakan stack teknologi terbaru dan terpercaya di industri."],
-            ]
-              .map(
-                ([icon, title, desc]) => `
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">${icon}</div>
-                <div>
-                  <h3 class="font-semibold text-gray-900 mb-1">${title}</h3>
-                  <p class="text-sm text-gray-500 leading-relaxed">${desc}</p>
-                </div>
-              </div>
-            `
-              )
-              .join("")}
+          <h1 style="font-size:clamp(2.4rem,4.5vw,3.5rem);font-weight:900;line-height:1.08;letter-spacing:-0.035em;margin-bottom:1.5rem">
+            Software yang<br>benar-benar<br><em style="font-style:italic;color:var(--accent)">berfungsi.</em>
+          </h1>
+          <p style="font-size:16px;color:var(--ink-2);max-width:420px;line-height:1.7;margin-bottom:2rem">
+            Bukan portfolio kosong. Kami sudah 9 tahun bantu startup dan korporat Indonesia tumbuh lewat teknologi. 500+ proyek, 0 klien yang pergi marah.
+          </p>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+            <a href="/contact" class="btn btn-dark">Ceritakan proyek Anda &rarr;</a>
+            <a href="/portfolio" class="btn btn-outline">Lihat hasil kerja</a>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-5">
-          ${[
-            ["🌟", "Award Winning", "Penghargaan terbaik tech company 2023"],
-            ["🔐", "ISO Certified", "Standar keamanan internasional"],
-            ["🌏", "Global Reach", "Klien dari 5 negara di Asia"],
-            ["📈", "Growth Focus", "ROI rata-rata 3x untuk klien kami"],
-          ]
-            .map(
-              ([icon, title, desc]) => `
-            <div class="card-hover bg-gray-50 rounded-2xl p-6 text-center">
-              <div class="text-4xl mb-3">${icon}</div>
-              <h3 class="font-bold text-gray-900 mb-1">${title}</h3>
-              <p class="text-xs text-gray-500">${desc}</p>
+
+        <!-- Right: asymmetric stats panel -->
+        <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:2.5rem;position:relative">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+            <div style="padding:1.5rem;border-right:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
+              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="500" data-suffix="+">0+</p>
+              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Proyek selesai</p>
             </div>
-          `
-            )
-            .join("")}
+            <div style="padding:1.5rem;border-bottom:1px solid var(--surface-3)">
+              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="200" data-suffix="+">0+</p>
+              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Klien aktif</p>
+            </div>
+            <div style="padding:1.5rem;border-right:1px solid var(--surface-3)">
+              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="9" data-suffix=" thn">0 thn</p>
+              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Di industri</p>
+            </div>
+            <div style="padding:1.5rem">
+              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--accent)" data-counter data-target="99" data-suffix=".9%" data-float="0">0%</p>
+              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Uptime rata-rata</p>
+            </div>
+          </div>
+          <!-- status badge -->
+          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--surface-3);display:flex;align-items:center;gap:0.6rem">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:ping 2s cubic-bezier(0,0,0.2,1) infinite;flex-shrink:0"></span>
+            <span style="font-size:12.5px;color:var(--ink-2)">Terbuka untuk proyek baru per Q3 2024</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes ping {
+      75%, 100% { transform: scale(1.8); opacity: 0; }
+    }
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+    }
+  </style>
+
+  <!-- ── TECH MARQUEE ──────────────────────────────────── -->
+  <section style="padding:1.25rem 0;background:#fff;border-top:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
+    <div class="marquee-outer">
+      <div class="marquee-track">${techItems}</div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ──────────────────────────────────────── -->
+  <section style="padding:6rem 0;background:var(--surface)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:280px 1fr;gap:5rem;align-items:start">
+
+        <!-- Sticky label column -->
+        <div style="position:sticky;top:calc(var(--nav-h) + 2rem)">
+          <h2 style="font-size:clamp(1.6rem,2.5vw,2rem);margin-bottom:0.75rem">Yang kami kerjakan sehari-hari</h2>
+          <p style="font-size:14px;color:var(--ink-3);line-height:1.65;margin-bottom:1.5rem">Bukan semua hal. Hanya yang benar-benar kami kuasai.</p>
+          <a href="/services" class="btn btn-outline" style="font-size:13px">Semua layanan &rarr;</a>
+        </div>
+
+        <!-- Service rows -->
+        <div>
+          ${svcRows}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="section-alt py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Testimoni</span>
-        <h2 class="text-4xl font-extrabold text-gray-900 mt-3 mb-4">Kata Klien <span class="gradient-text">Kami</span></h2>
-        <p class="text-gray-500 max-w-xl mx-auto">Kepuasan klien adalah prioritas utama kami. Inilah yang mereka katakan.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        ${testimonialCards}
+  <!-- ── WHY US ─────────────────────────────────────────── -->
+  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
+
+        <div class="reveal">
+          <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Kami bukan yang paling murah. Tapi kami <span class="accent-text">worth it.</span></h2>
+          <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:2rem">
+            Ada vendor lebih murah, kami tidak akan bohong soal itu. Tapi kami yang datang ke meeting sudah baca brief, paham konteks bisnis, dan angkat telepon jam 11 malam kalau ada masalah sebelum launch.
+          </p>
+          <a href="/contact" class="btn btn-dark">Ngobrol gratis &rarr;</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0">
+          ${[
+            ["Tidak ada hidden cost", "Scope, timeline, biaya dijelaskan di awal. Perubahan selalu dikomunikasikan sebelum dikerjakan."],
+            ["Kode yang bisa Anda baca", "Kami tulis dokumentasi, ikuti standar, dan pastikan tim Anda bisa maintain setelah kami selesai."],
+            ["Reply dalam jam kerja", "WA dibalas dalam jam kerja. Darurat? Ada hotline yang beneran diangkat, bukan bot."],
+            ["Garansi 3 bulan", "Bug-fix pasca-launch gratis 3 bulan. Tidak ada biaya tersembunyi untuk masalah yang kami buat."],
+          ].map(([title, desc], i) => `
+            <div class="reveal reveal-d${i + 1}" style="display:flex;gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--surface-3)">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px">
+                <circle cx="8" cy="8" r="7.5" stroke="var(--accent)" stroke-width="1"/>
+                <path d="M5 8l2 2 4-4" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:0.25rem">${title}</p>
+                <p style="font-size:13px;color:var(--ink-3);line-height:1.6">${desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-24 bg-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <div class="bg-gradient-to-br from-blue-600 via-violet-600 to-purple-700 rounded-3xl p-14 text-white shadow-2xl">
-        <div class="text-5xl mb-5">🤝</div>
-        <h2 class="text-4xl font-extrabold mb-4">Siap Memulai Proyek Anda?</h2>
-        <p class="text-blue-100 mb-8 text-lg max-w-2xl mx-auto">Konsultasikan kebutuhan digital bisnis Anda dengan tim ahli kami. Gratis, tanpa komitmen!</p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="/contact" class="bg-white text-blue-700 px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-blue-50 transition-colors">
-            Mulai Konsultasi Gratis
-          </a>
-          <a href="/portfolio" class="border-2 border-white/40 text-white px-8 py-3.5 rounded-xl font-semibold text-sm hover:bg-white/10 transition-colors">
-            Lihat Portfolio
-          </a>
+  <!-- ── TESTIMONIALS ──────────────────────────────────── -->
+  <section style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap">
+        <h2 class="reveal" style="font-size:clamp(1.6rem,2.5vw,2rem)">Kata klien, bukan marketing kami</h2>
+        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Kami minta mereka jujur.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem">
+        ${tCards}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────── -->
+  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+    <div class="container-sm reveal">
+      <div style="background:var(--ink);border-radius:var(--radius-lg);padding:4rem;text-align:center">
+        <p style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem">Mulai dari obrolan</p>
+        <h2 style="color:#fafafa;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Punya masalah teknis?<br>Kami dengerin.</h2>
+        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:2rem;line-height:1.65">Tidak perlu brief sempurna. Cukup ceritakan konteksnya, kita figureout bareng.</p>
+        <div style="display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap">
+          <a href="/contact" class="btn" style="background:#fafafa;color:var(--ink)">Hubungi kami</a>
+          <a href="/portfolio" class="btn" style="background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.2)">Lihat portfolio dulu</a>
         </div>
       </div>
     </div>
   </section>
+
+  <style>
+    @media (max-width: 768px) {
+      section > .container > div[style*="grid-template-columns:1fr 1fr"],
+      section > .container > div[style*="grid-template-columns:280px"] {
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem !important;
+      }
+      div[style*="grid-template-columns:repeat(3"] {
+        grid-template-columns: 1fr !important;
+      }
+      div[style*="grid-template-columns:1fr 1fr"][style*="gap:0"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+  </style>
 `;
 
 export const homePage = () => layout("Beranda", content, "home");

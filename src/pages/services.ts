@@ -1,105 +1,143 @@
 import { layout } from "../templates/layout";
 import { services } from "../data/company";
 
-const serviceCards = services
-  .map(
-    (s) => `
-  <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100 shadow-sm group">
-    <div class="text-5xl mb-5 group-hover:scale-110 transition-transform inline-block">${s.icon}</div>
-    <h3 class="text-xl font-bold text-gray-900 mb-3">${s.title}</h3>
-    <p class="text-gray-500 text-sm leading-relaxed mb-5">${s.description}</p>
-    <a href="/contact" class="inline-flex items-center gap-1 text-blue-600 text-sm font-semibold hover:gap-2 transition-all">
-      Konsultasi Sekarang →
-    </a>
+const svcItems = services.map((s, i) => `
+  <div class="reveal" style="padding:2rem 0;border-bottom:1px solid var(--surface-3);display:grid;grid-template-columns:48px 1fr auto;gap:1.5rem;align-items:flex-start">
+    <span class="mono" style="font-size:11px;color:var(--ink-3);padding-top:5px">${String(i + 1).padStart(2, '0')}</span>
+    <div>
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:0.5rem">${s.title}</h3>
+      <p style="font-size:14px;color:var(--ink-2);line-height:1.65;max-width:560px">${s.description}</p>
+      <a href="/contact" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;margin-top:0.75rem">Diskusikan kebutuhan &rarr;</a>
+    </div>
+    <span class="mono" style="font-size:11px;color:var(--ink-3);white-space:nowrap;padding-top:5px;text-align:right">${s.detail}</span>
   </div>
-`
-  )
-  .join("");
+`).join('');
+
+const techList = [
+  { name: "Bun", note: "Runtime utama" },
+  { name: "TypeScript", note: "Selalu" },
+  { name: "React / Next.js", note: "" },
+  { name: "Go", note: "Backend high-load" },
+  { name: "Python", note: "AI & data" },
+  { name: "PostgreSQL", note: "DB favorit" },
+  { name: "Redis", note: "" },
+  { name: "AWS", note: "Cloud utama" },
+  { name: "Docker + K8s", note: "" },
+  { name: "React Native", note: "" },
+  { name: "Flutter", note: "" },
+  { name: "TensorFlow", note: "" },
+  { name: "Kafka", note: "Event streaming" },
+  { name: "Vue.js", note: "" },
+  { name: "Laravel", note: "PHP legacy" },
+];
+
+const processSteps = [
+  ["Obrolan awal", "30-60 menit. Kami dengarkan masalah Anda, bukan langsung kasih penawaran. Kalau kami bukan yang tepat, kami bilang jujur."],
+  ["Scope & estimasi", "Proposal detail dalam 48 jam: lingkup, timeline, milestone, biaya. Tidak ada angka yang tiba-tiba berubah di tengah jalan."],
+  ["Bangun bareng", "Sprint 2 minggu, update rutin. Akses ke repo kapan saja. Tidak perlu nunggu 3 bulan buat lihat progress."],
+  ["Launch & lanjut", "Deploy, monitoring 30 hari, handover lengkap ke tim Anda. Garansi bug-fix 3 bulan setelah launch."],
+];
 
 const content = `
-  <!-- Page Header -->
-  <section class="hero-bg pt-32 pb-16">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Layanan Kami</span>
-      <h1 class="text-5xl font-extrabold text-gray-900 mt-3 mb-5">
-        Solusi Digital <span class="gradient-text">Terlengkap</span>
-      </h1>
-      <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">
-        Kami menyediakan berbagai layanan teknologi untuk membantu bisnis Anda tumbuh dan berkembang di era digital.
-      </p>
-    </div>
-  </section>
-
-  <!-- Services Grid -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-        ${serviceCards}
+  <!-- Header -->
+  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+    <div class="container">
+      <div style="max-width:600px">
+        <h1 style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1;margin-bottom:1rem">
+          Yang kami kerjakan sehari-hari
+        </h1>
+        <p style="font-size:16px;color:var(--ink-2);line-height:1.7">
+          Kami tidak menawarkan semua hal. Fokus di bidang yang benar-benar kami kuasai, dan hasilnya bisa Anda lihat di portfolio.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Process Section -->
-  <section class="section-alt py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Proses Kerja</span>
-        <h2 class="text-4xl font-extrabold text-gray-900 mt-3 mb-4">Bagaimana Kami <span class="gradient-text">Bekerja</span></h2>
-        <p class="text-gray-500 max-w-xl mx-auto">Proses terstruktur kami memastikan setiap proyek berjalan lancar dari awal hingga akhir.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        ${[
-          ["01", "Konsultasi", "Diskusi mendalam tentang kebutuhan dan tujuan bisnis Anda.", "💬"],
-          ["02", "Perencanaan", "Menyusun strategi, timeline, dan spesifikasi teknis yang detail.", "📋"],
-          ["03", "Pengembangan", "Membangun solusi dengan standar kode tertinggi dan best practices.", "⚙️"],
-          ["04", "Peluncuran", "Testing menyeluruh, deployment, dan dukungan pasca-launch.", "🚀"],
-        ]
-          .map(
-            ([num, title, desc, icon]) => `
-          <div class="text-center relative">
-            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-violet-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg mb-4 shadow-lg">
-              ${num}
+  <!-- Service list -->
+  <section style="background:#fff;border-top:1px solid var(--surface-3);padding:0 0 4rem">
+    <div class="container">
+      ${svcItems}
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
+        <div class="reveal" style="position:sticky;top:calc(var(--nav-h) + 2rem)">
+          <h2 style="font-size:clamp(1.6rem,2.5vw,2rem);margin-bottom:0.75rem">Proses yang tidak ada yang disembunyikan</h2>
+          <p style="font-size:14px;color:var(--ink-3);line-height:1.65">Dari hari pertama sampai launch, ini yang terjadi.</p>
+        </div>
+        <div>
+          ${processSteps.map(([title, desc], i) => `
+            <div class="reveal reveal-d${i + 1}" style="display:flex;gap:1.5rem;padding:1.75rem 0;border-bottom:1px solid var(--surface-3)">
+              <div style="width:32px;height:32px;border-radius:6px;background:var(--ink);color:#fafafa;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0">${String(i + 1).padStart(2, '0')}</div>
+              <div>
+                <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:0.35rem">${title}</p>
+                <p style="font-size:13.5px;color:var(--ink-3);line-height:1.65">${desc}</p>
+              </div>
             </div>
-            <div class="text-2xl mb-2">${icon}</div>
-            <h3 class="font-bold text-gray-900 mb-2">${title}</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">${desc}</p>
-          </div>
-        `
-          )
-          .join("")}
+          `).join('')}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Tech Stack -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Teknologi yang <span class="gradient-text">Kami Gunakan</span></h2>
-        <p class="text-gray-500">Stack terkini untuk solusi yang handal dan scalable.</p>
+  <!-- Tech -->
+  <section style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap">
+        <h2 class="reveal" style="font-size:1.5rem">Tools yang kami pakai, bukan yang kami pelajari bulan lalu</h2>
+        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Dipilih berdasarkan stabilitas produksi, bukan hype.</p>
       </div>
-      <div class="flex flex-wrap justify-center gap-3">
-        ${["React", "Next.js", "Bun", "TypeScript", "Node.js", "Go", "Python", "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes", "TensorFlow", "React Native", "Vue.js"]
-          .map(
-            (tech) => `
-          <span class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-blue-50 hover:text-blue-700 transition-colors cursor-default">${tech}</span>
-        `
-          )
-          .join("")}
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        ${techList.map(({ name, note }) => `
+          <span title="${note}" style="background:var(--surface-2);color:var(--ink-2);padding:0.4rem 0.9rem;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:default;border:1px solid var(--surface-3);transition:background 0.15s,color 0.15s" onmouseover="this.style.background='var(--accent-bg)';this.style.color='var(--accent)'" onmouseout="this.style.background='var(--surface-2)';this.style.color='var(--ink-2)'">${name}</span>
+        `).join('')}
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="py-20 section-alt">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Butuh Layanan Khusus?</h2>
-      <p class="text-gray-500 mb-8">Ceritakan kebutuhan Anda dan kami akan merancang solusi yang tepat.</p>
-      <a href="/contact" class="btn-primary text-white px-8 py-4 rounded-xl font-bold inline-block">
-        Diskusi Sekarang →
-      </a>
+  <!-- Pricing philosophy -->
+  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
+    <div class="container-sm reveal">
+      <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:3rem">
+        <h2 style="font-size:1.5rem;margin-bottom:0.75rem">Soal harga, kami jujur</h2>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:2rem">
+          Tidak ada daftar harga tetap, setiap proyek berbeda. Tapi kami bisa kasih estimasi jujur dalam 48 jam setelah brief diterima.
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--surface-3);border:1px solid var(--surface-3);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem">
+          ${[
+            ["Website", "Mulai Rp 25 juta"],
+            ["Mobile App", "Mulai Rp 80 juta"],
+            ["Enterprise", "Sesuai scope"],
+          ].map(([type, price]) => `
+            <div style="background:#fff;padding:1.25rem 1.5rem">
+              <p style="font-size:11px;color:var(--ink-3);margin-bottom:0.35rem;font-family:'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.08em">${type}</p>
+              <p style="font-size:14px;font-weight:700;color:var(--ink)">${price}</p>
+            </div>
+          `).join('')}
+        </div>
+        <a href="/contact" class="btn btn-dark">Minta estimasi gratis &rarr;</a>
+      </div>
     </div>
   </section>
+
+  <style>
+    @media (max-width: 768px) {
+      div[style*="grid-template-columns:48px 1fr auto"] {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
+      }
+      div[style*="grid-template-columns:1fr 1fr"][style*="gap:5rem"] {
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem !important;
+      }
+      div[style*="grid-template-columns:repeat(3,1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
 `;
 
 export const servicesPage = () => layout("Layanan", content, "services");
