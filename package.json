@@ -1,5 +1,6 @@
 {
   "name": "company-pro-bun",
+  "main": "index.ts",
   "module": "index.ts",
   "type": "module",
   "private": true,
@@ -8,7 +9,8 @@
     "start": "bun run server.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^22.0.0"
   },
   "peerDependencies": {
     "typescript": "^5"
