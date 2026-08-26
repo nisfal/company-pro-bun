@@ -2,7 +2,7 @@ import { layout } from "../templates/layout";
 import { portfolios } from "../data/company";
 
 // Two asymmetric rows: first row is full-width feature + side, second row is 2-col
-const featured = portfolios[0];
+const featured = portfolios[0]!;
 const rest = portfolios.slice(1);
 
 const content = `
