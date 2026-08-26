@@ -63,6 +63,16 @@ bun run start
 
 Server berjalan di `http://localhost:3000` secara default. Port bisa diubah lewat environment variable `PORT`.
 
+## Deploy ke Vercel
+
+Proyek ini sudah dikonfigurasi untuk Vercel via `vercel.json` dan `api/index.ts`.
+
+```bash
+vercel
+```
+
+Semua request diarahkan ke `api/index.ts` yang menggunakan Hono's Node adapter (`@hono/node-server/vercel`). Tanpa konfigurasi ini, Vercel akan memperlakukan file sebagai static asset dan browser akan mendownload `index.ts` alih-alih menjalankannya.
+
 ## Kustomisasi
 
 Semua data konten (nama perusahaan, layanan, tim, portofolio, testimoni) ada di satu file:
