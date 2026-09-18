@@ -1,236 +1,321 @@
-import { layout } from "../templates/layout";
+import { baseLayout } from "../layouts/base";
 import { company } from "../data/company";
 
-const faqItems = [
-  ["Apakah konsultasi pertama benar-benar gratis?", "Ya, benar-benar gratis. Kami dengarkan kebutuhan Anda, kasih opini teknis, dan kalau kami bukan yang tepat, kami bilang jujur."],
-  ["Berapa lama dari brief sampai proposal?", "Maksimal 48 jam kerja setelah brief lengkap kami terima. Proyek sederhana biasanya lebih cepat."],
-  ["Bisakah kami lihat source code di tengah pengerjaan?", "Tentu. Kami pakai private Git repo yang bisa Anda akses kapan saja. Tidak ada kode yang disembunyikan."],
-  ["Bagaimana kalau proyek meleset dari timeline?", "Kami komunikasikan di awal, bukan di hari deadline. Dan kami jelaskan penyebabnya."],
-  ["Apakah ada kontrak kerjanya?", "Ya, selalu. NDA dan perjanjian kerja yang mengatur scope, timeline, pembayaran, dan kepemilikan kode."],
-  ["Kami startup kecil, apakah bisa bekerja sama?", "Bisa. Beberapa klien terbaik kami dimulai dari startup dengan budget terbatas. Kami bantu prioritisasi agar budget dipakai seefektif mungkin."],
-];
-
-const content = `
-  <!-- Header -->
-  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+function contactHero(): string {
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;text-align:center;
+  ">
     <div class="container">
-      <div style="max-width:560px">
-        <h1 class="reveal" style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1;margin-bottom:1rem">
-          Ngobrol dulu,<br>gratis dan tanpa<br><em style="color:var(--accent);font-style:italic">komitmen</em>
-        </h1>
-        <p class="reveal" style="font-size:15px;color:var(--ink-2);line-height:1.7">
-          Isi form atau langsung WhatsApp kami. Biasanya kami balas dalam 2-3 jam di hari kerja.
-        </p>
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;
+          border-radius:999px;font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">📬 Kontak</span>
       </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">Ayo Ngobrol<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Tentang Proyek Anda</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:480px;margin:0 auto;line-height:1.7;
+      ">Respon dalam 1 hari kerja. Tidak ada pertanyaan yang terlalu kecil atau terlalu besar.</p>
     </div>
-  </section>
+  </section>`;
+}
 
-  <!-- Contact content -->
-  <section style="padding:2rem 0 5rem;background:#fff;border-top:1px solid var(--surface-3)">
+function contactForm(): string {
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:start">
+      <div style="
+        display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start;
+      " class="contact-grid">
 
         <!-- Form -->
-        <div class="reveal">
-          <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:0.4rem">Ceritakan proyek Anda</h2>
-          <p style="font-size:13px;color:var(--ink-3);margin-bottom:2rem">Tidak perlu brief sempurna. Kita figureout bareng.</p>
+        <div class="reveal" style="
+          background:#FFFEF7;
+          border:3px solid #1A1A2E;
+          border-radius:20px;
+          box-shadow:8px 8px 0 #FED41D;
+          padding:2.5rem;
+        ">
+          <h2 style="
+            font-family:'Bangers',cursive;font-size:1.8rem;
+            letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;
+          ">Kirim Pesan</h2>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44AA;margin-bottom:2rem;">
+            Semua field wajib diisi. Kami balas dalam 1×24 jam kerja.
+          </p>
 
-          <form id="contactForm" novalidate style="display:flex;flex-direction:column;gap:1.25rem">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Nama *</label>
-                <input type="text" name="name" required placeholder="Nama Anda"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Email *</label>
-                <input type="email" name="email" required placeholder="nama@perusahaan.com"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
+          <form id="contact-form" method="POST" action="/api/contact"
+            style="display:flex;flex-direction:column;gap:1.25rem;"
+            onsubmit="handleSubmit(event)">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="form-row">
+              ${inputField("name",  "Nama Lengkap", "text",  "Budi Santoso")}
+              ${inputField("email", "Email",         "email", "budi@perusahaan.com")}
             </div>
+            ${inputField("company", "Nama Perusahaan", "text", "PT Maju Bersama")}
+            ${selectField("service", "Kebutuhan Utama", [
+              "Product Engineering",
+              "Cloud & DevOps",
+              "Mobile Development",
+              "AI & Data Engineering",
+              "Security & Compliance",
+              "Analytics & BI",
+              "Lainnya",
+            ])}
+            ${textareaField("message", "Ceritakan Proyeknya", "Kami sedang membangun platform X dan butuh bantuan di bagian Y...")}
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Perusahaan</label>
-                <input type="text" name="company" placeholder="Opsional"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">No. WA</label>
-                <input type="tel" name="phone" placeholder="08xx"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Jenis proyek</label>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem">
-                ${["Web Development", "Mobile App", "Cloud & DevOps", "AI & Otomasi", "Security Audit", "Konsultasi"].map(s => `
-                  <label style="display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.75rem;border:1.5px solid var(--surface-3);border-radius:var(--radius);cursor:pointer;font-size:12.5px;font-weight:500;color:var(--ink-2);transition:border-color 0.15s,background 0.15s">
-                    <input type="checkbox" name="services" value="${s}" style="accent-color:var(--ink);width:13px;height:13px">
-                    ${s}
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Budget estimasi</label>
-              <select name="budget" style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;background:#fff;color:var(--ink-2);transition:border-color 0.15s"
-                onfocus="this.style.borderColor='var(--ink)'" onblur="this.style.borderColor='var(--surface-3)'">
-                <option value="">Pilih range (opsional)</option>
-                <option>Di bawah Rp 30 juta</option>
-                <option>Rp 30 - 100 juta</option>
-                <option>Rp 100 - 300 juta</option>
-                <option>Rp 300 juta - 1 miliar</option>
-                <option>Di atas Rp 1 miliar</option>
-                <option>Belum tahu, perlu diskusi</option>
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Ceritakan masalah Anda *</label>
-              <textarea name="message" required rows="5"
-                placeholder="Misalnya: kami punya toko offline 10 cabang dan ingin sistem kasir terintegrasi..."
-                style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink);resize:vertical;line-height:1.65"
-                onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"></textarea>
-            </div>
-
-            <div>
-              <button type="submit" id="submitBtn" class="btn btn-dark" style="width:100%;justify-content:center;padding:0.8rem">
-                <span id="btnText">Kirim pesan</span>
-                <span id="btnArrow">&rarr;</span>
-              </button>
-            </div>
-
-            <div id="formMsg" style="display:none;font-size:13.5px;padding:0.9rem 1rem;border-radius:var(--radius)"></div>
+            <button type="submit" id="submit-btn" style="
+              padding:0.9rem 2rem;
+              background:#FED41D;
+              color:#1A1A2E;
+              border:3px solid #1A1A2E;
+              border-radius:12px;
+              font-family:'Fredoka',sans-serif;
+              font-size:1rem;font-weight:700;
+              cursor:pointer;
+              box-shadow:5px 5px 0 #1A1A2E;
+              transition:transform 0.1s,box-shadow 0.1s;
+              align-self:flex-start;
+            "
+            onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0 #1A1A2E'"
+            onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0 #1A1A2E'"
+            >Kirim Pesan ✦</button>
           </form>
+
+          <!-- Success / Error feedback -->
+          <div id="form-success" style="display:none;
+            margin-top:1.5rem;padding:1rem 1.25rem;
+            background:#4CAF5018;border:2px solid #4CAF50;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D6A2D;
+          ">✅ Pesan berhasil dikirim! Kami akan membalas dalam 1×24 jam kerja.</div>
+          <div id="form-error" style="display:none;
+            margin-top:1.5rem;padding:1rem 1.25rem;
+            background:#FF6B6B18;border:2px solid #FF6B6B;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#8B0000;
+          ">❌ Terjadi kesalahan. Silakan coba lagi atau hubungi kami langsung via email.</div>
         </div>
 
-        <!-- Sidebar -->
-        <div style="display:flex;flex-direction:column;gap:1rem" class="reveal">
-          <div style="background:var(--ink);border-radius:var(--radius-lg);padding:1.75rem">
-            <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Kontak langsung</p>
-            <a href="https://wa.me/622127884491" style="display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.08);border-radius:var(--radius);padding:0.9rem 1rem;text-decoration:none;margin-bottom:0.5rem;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a6 6 0 0 0-5.19 9.02L1.5 13.5l3.07-.8A6 6 0 1 0 7.5 1.5zm0 10.8a4.8 4.8 0 0 1-2.45-.67l-.18-.1-1.82.48.49-1.78-.12-.19A4.8 4.8 0 1 1 7.5 12.3z" fill="rgba(255,255,255,0.6)"/></svg>
-              <div>
-                <p style="font-size:13px;font-weight:600;color:#fafafa">WhatsApp</p>
-                <p style="font-size:12px;color:rgba(255,255,255,0.4)">${company.phone}</p>
-              </div>
-            </a>
-            <a href="mailto:${company.email}" style="display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.08);border-radius:var(--radius);padding:0.9rem 1rem;text-decoration:none;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1.5 3.5h12v8a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-8zm0 0 6 5 6-5" stroke="rgba(255,255,255,0.6)" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div>
-                <p style="font-size:13px;font-weight:600;color:#fafafa">Email</p>
-                <p style="font-size:12px;color:rgba(255,255,255,0.4)">${company.email}</p>
-              </div>
-            </a>
-          </div>
+        <!-- Sidebar info -->
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+          ${infoCard("📍", "Alamat", company.address)}
+          ${infoCard("✉️", "Email", `<a href="mailto:${company.email}" style="color:#5BA8D4;text-decoration:none;">${company.email}</a>`)}
+          ${infoCard("📞", "Telepon", `<a href="tel:${company.phone.replace(/\s/g,'')}" style="color:#5BA8D4;text-decoration:none;">${company.phone}</a>`)}
 
-          <div style="background:var(--surface-2);border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:1.5rem">
-            <p style="font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Waktu respons</p>
-            <div style="display:flex;flex-direction:column;gap:0.6rem">
-              ${[
-                ["Form ini", "2-4 jam"],
-                ["WhatsApp", "< 1 jam"],
-                ["Email", "Hari yang sama"],
-                ["Darurat produksi", "< 30 menit"],
-              ].map(([ch, t]) => `
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="font-size:12.5px;color:var(--ink-2)">${ch}</span>
-                  <span style="font-size:12px;font-weight:600;color:var(--ink);font-family:'Geist Mono',monospace">${t}</span>
-                </div>
-              `).join('')}
+          <!-- Social links -->
+          <div class="reveal" style="
+            background:#1A1A2E;
+            border:3px solid #FED41D;
+            border-radius:16px;
+            box-shadow:5px 5px 0 #FED41D44;
+            padding:1.5rem;
+          ">
+            <h3 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin-bottom:1rem;">Temukan Kami</h3>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              ${socialLink("in", "LinkedIn", company.social.linkedin)}
+              ${socialLink("tw", "Twitter / X", company.social.twitter)}
+              ${socialLink("gh", "GitHub", company.social.github)}
+              ${socialLink("ig", "Instagram", company.social.instagram)}
             </div>
-          </div>
-
-          <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:1.5rem">
-            <p style="font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Kantor</p>
-            <p style="font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:0.5rem">${company.address}</p>
-            <p style="font-size:12px;color:var(--ink-3)">Sen-Jum, 09.00-18.00 WIB</p>
           </div>
         </div>
-
       </div>
     </div>
-  </section>
+    <style>
+      @media(max-width:768px){
+        .contact-grid{grid-template-columns:1fr !important;}
+        .form-row{grid-template-columns:1fr !important;}
+      }
+    </style>
+  </section>`;
+}
 
-  <!-- FAQ -->
-  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container-sm">
-      <h2 class="reveal" style="font-size:1.5rem;margin-bottom:2rem">Pertanyaan yang sering masuk</h2>
-      <div style="display:flex;flex-direction:column;gap:0" class="reveal">
-        ${faqItems.map(([q, a], i) => `
-          <div style="border-bottom:1px solid var(--surface-3)">
-            <button onclick="toggleFaq(this)" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;background:none;border:none;cursor:pointer;text-align:left;gap:1rem">
-              <span style="font-size:14px;font-weight:600;color:var(--ink)">${q}</span>
-              <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;transition:transform 0.2s"><path d="M4 6l4 4 4-4" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="faq-body" style="display:none;padding-bottom:1.1rem">
-              <p style="font-size:13.5px;color:var(--ink-3);line-height:1.7">${a}</p>
-            </div>
-          </div>
-        `).join('')}
-      </div>
+function inputField(name: string, label: string, type: string, placeholder: string): string {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;
+      font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <input type="${type}" id="${name}" name="${name}" placeholder="${placeholder}" required
+      style="
+        padding:0.7rem 1rem;
+        border:2.5px solid #1A1A2E;
+        border-radius:10px;
+        font-family:'Fredoka',sans-serif;
+        font-size:0.95rem;color:#1A1A2E;
+        background:#FFFEF7;
+        outline:none;
+        transition:border-color 0.15s,box-shadow 0.15s;
+      "
+      onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+      onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    />
+  </div>`;
+}
+
+function selectField(name: string, label: string, options: string[]): string {
+  const opts = options.map(o =>
+    `<option value="${o.toLowerCase().replace(/\s+/g, "-")}">${o}</option>`
+  ).join("");
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <select id="${name}" name="${name}" required style="
+      padding:0.7rem 1rem;
+      border:2.5px solid #1A1A2E;
+      border-radius:10px;
+      font-family:'Fredoka',sans-serif;
+      font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;
+      outline:none;
+      cursor:pointer;
+      transition:border-color 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D'"
+    onblur="this.style.borderColor='#1A1A2E'"
+    >
+      <option value="" disabled selected>Pilih layanan...</option>
+      ${opts}
+    </select>
+  </div>`;
+}
+
+function textareaField(name: string, label: string, placeholder: string): string {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <textarea id="${name}" name="${name}" placeholder="${placeholder}" required rows="5" style="
+      padding:0.7rem 1rem;
+      border:2.5px solid #1A1A2E;
+      border-radius:10px;
+      font-family:'Fredoka',sans-serif;
+      font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;
+      outline:none;resize:vertical;
+      transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+    onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    ></textarea>
+  </div>`;
+}
+
+function infoCard(icon: string, title: string, body: string): string {
+  return `
+  <div class="reveal" style="
+    background:#FFFEF7;
+    border:3px solid #1A1A2E;
+    border-radius:14px;
+    box-shadow:4px 4px 0 #1A1A2E;
+    padding:1.25rem;
+    display:flex;gap:1rem;align-items:flex-start;
+  ">
+    <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">${icon}</div>
+    <div>
+      <div style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.25rem;">${title}</div>
+      <div style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.5;">${body}</div>
     </div>
-  </section>
+  </div>`;
+}
 
+function socialLink(code: string, label: string, href: string): string {
+  return `
+  <a href="${href}" target="_blank" rel="noopener noreferrer" style="
+    display:flex;align-items:center;gap:0.75rem;
+    padding:0.6rem 0.75rem;
+    border:2px solid #FED41D22;
+    border-radius:8px;
+    text-decoration:none;
+    transition:border-color 0.15s,background 0.15s;
+  "
+  onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
+  onmouseout="this.style.borderColor='#FED41D22';this.style.background='transparent'"
+  >
+    <span style="
+      width:28px;height:28px;
+      background:#FED41D22;
+      border:1.5px solid #FED41D44;
+      border-radius:6px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Bangers',cursive;font-size:0.7rem;color:#FED41D;
+      flex-shrink:0;
+    ">${code.toUpperCase()}</span>
+    <span style="font-family:'Fredoka',sans-serif;font-size:0.88rem;font-weight:500;color:#FFFEF7CC;">${label}</span>
+  </a>`;
+}
+
+function contactScript(): string {
+  return `
   <script>
-    function toggleFaq(btn) {
-      const body = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-      const open = body.style.display === 'block';
-      document.querySelectorAll('.faq-body').forEach(b => b.style.display = 'none');
-      document.querySelectorAll('.faq-icon').forEach(ic => ic.style.transform = '');
-      if (!open) {
-        body.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
+    async function handleSubmit(e) {
+      e.preventDefault();
+      var btn     = document.getElementById('submit-btn');
+      var success = document.getElementById('form-success');
+      var error   = document.getElementById('form-error');
+      var form    = document.getElementById('contact-form');
+
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+      success.style.display = 'none';
+      error.style.display   = 'none';
+
+      var data = {
+        name:    form.name.value,
+        email:   form.email.value,
+        company: form.company.value,
+        service: form.service.value,
+        message: form.message.value,
+      };
+
+      try {
+        var res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          success.style.display = 'block';
+          form.reset();
+        } else {
+          error.style.display = 'block';
+        }
+      } catch (_) {
+        error.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Kirim Pesan ✦';
       }
     }
+  </script>`;
+}
 
-    const form = document.getElementById('contactForm');
-    const btnText = document.getElementById('btnText');
-    const btnArrow = document.getElementById('btnArrow');
-    const submitBtn = document.getElementById('submitBtn');
-    const formMsg = document.getElementById('formMsg');
+export function contactPage(): string {
+  const content = `
+    ${contactHero()}
+    <div class="comic-divider"></div>
+    ${contactForm()}
+    ${contactScript()}
+  `;
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      btnText.textContent = 'Mengirim...';
-      btnArrow.textContent = '';
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.6';
-      setTimeout(() => {
-        formMsg.style.display = 'block';
-        formMsg.style.background = 'var(--accent-bg)';
-        formMsg.style.border = '1px solid rgba(22,163,74,0.2)';
-        formMsg.style.color = 'var(--accent)';
-        formMsg.innerHTML = '<strong>Pesan terkirim.</strong> Kami akan balas dalam 2-4 jam di hari kerja.';
-        form.reset();
-        btnText.textContent = 'Kirim pesan';
-        btnArrow.innerHTML = '&rarr;';
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-      }, 1400);
-    });
-  </script>
-
-  <style>
-    @media (max-width: 768px) {
-      div[style*="grid-template-columns:1fr 380px"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:1rem"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:repeat(3,1fr)"][style*="gap:0.4rem"] { grid-template-columns: 1fr 1fr !important; }
-    }
-  </style>
-`;
-
-export const contactPage = () => layout("Kontak", content, "contact");
+  return baseLayout({
+    title: "Kontak",
+    description: `Hubungi ${company.name} — kami siap mendiskusikan proyek digital Anda.`,
+    activePage: "/contact",
+    content,
+  });
+}

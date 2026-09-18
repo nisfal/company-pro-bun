@@ -1,19 +1,24 @@
+/**
+ * Local dev entry point (Bun native HTTP server).
+ * Run with: bun run dev  OR  bun run start
+ */
 import app from "./src/router";
-
-const PORT = Number(process.env.PORT) || 3000;
+import { PORT } from "./src/lib/constants";
 
 console.log(`
-╔══════════════════════════════════════════╗
-║        NusaTech Solutions — Server       ║
-╠══════════════════════════════════════════╣
-║  🚀 Running at: http://localhost:${PORT}   ║
-║  📄 Pages:                              ║
-║     /              → Beranda            ║
-║     /services      → Layanan            ║
-║     /portfolio     → Portfolio          ║
-║     /about         → Tentang Kami       ║
-║     /contact       → Kontak             ║
-╚══════════════════════════════════════════╝
+╔═══════════════════════════════════════════╗
+║       NusaTech Solutions — Server         ║
+╠═══════════════════════════════════════════╣
+║  ☀️  http://localhost:${PORT}              ║
+║                                           ║
+║  GET /              → Beranda             ║
+║  GET /services      → Layanan             ║
+║  GET /portfolio     → Portfolio           ║
+║  GET /about         → Tentang Kami        ║
+║  GET /contact       → Kontak              ║
+║  POST /api/contact  → Form API            ║
+║  GET /health        → Health check        ║
+╚═══════════════════════════════════════════╝
 `);
 
 export default {

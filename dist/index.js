@@ -1553,9 +1553,9 @@ var getPathNoStrict = (request) => {
   const result = getPath(request);
   return result.length > 1 && result.at(-1) === "/" ? result.slice(0, -1) : result;
 };
-var mergePath = (base, sub, ...rest2) => {
-  if (rest2.length) {
-    sub = mergePath(sub, ...rest2);
+var mergePath = (base, sub, ...rest) => {
+  if (rest.length) {
+    sub = mergePath(sub, ...rest);
   }
   return `${base?.[0] === "/" ? "" : "/"}${base}${sub === "/" ? "" : `${base?.at(-1) === "/" ? "" : "/"}${sub?.[0] === "/" ? sub.slice(1) : sub}`}`;
 };
@@ -2143,7 +2143,7 @@ var Context = class {
    * ```
    */
   render = (...args) => {
-    this.#renderer ??= (content6) => this.html(content6);
+    this.#renderer ??= (content) => this.html(content);
     return this.#renderer(...args);
   };
   /**
@@ -2152,7 +2152,7 @@ var Context = class {
    * @param layout - The layout to set.
    * @returns The layout function.
    */
-  setLayout = (layout2) => this.#layout = layout2;
+  setLayout = (layout) => this.#layout = layout;
   /**
    * Gets the current layout for the response.
    *
@@ -2754,8 +2754,8 @@ var Hono = class _Hono {
    * @returns {Response | Promise<Response>} response of request
    *
    */
-  fetch = (request, ...rest2) => {
-    return this.#dispatch(request, rest2[1], rest2[0], request.method);
+  fetch = (request, ...rest) => {
+    return this.#dispatch(request, rest[1], rest[0], request.method);
   };
   /**
    * `.request()` is a useful method for testing.
@@ -3367,1480 +3367,2322 @@ var Hono2 = class extends Hono {
   }
 };
 
-// src/templates/layout.ts
-var layout = (title, content6, activePage = "home") => `
-<!DOCTYPE html>
-<html lang="id" class="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} \u2014 NusaTech</title>
-  <meta name="description" content="NusaTech \u2014 tim teknologi Jakarta yang obsesif soal kualitas. Web, mobile, cloud, AI. 9 tahun, 500+ proyek." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    /* \u2500\u2500 Reset & Base \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
-      background: #fafafa;
-      color: #111;
-      -webkit-font-smoothing: antialiased;
+// node_modules/hono/dist/utils/color.js
+function getColorEnabled() {
+  const { process: process2, Deno } = globalThis;
+  const isNoColor = typeof Deno?.noColor === "boolean" ? Deno.noColor : process2 !== void 0 ? (
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    "NO_COLOR" in process2?.env
+  ) : false;
+  return !isNoColor;
+}
+async function getColorEnabledAsync() {
+  const { navigator } = globalThis;
+  const cfWorkers = "cloudflare:workers";
+  const isNoColor = navigator !== void 0 && navigator.userAgent === "Cloudflare-Workers" ? await (async () => {
+    try {
+      return "NO_COLOR" in ((await import(cfWorkers)).env ?? {});
+    } catch {
+      return false;
     }
-    code, .mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+  })() : !getColorEnabled();
+  return !isNoColor;
+}
 
-    /* \u2500\u2500 Design tokens \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    :root {
-      --ink:       #0f0f0f;
-      --ink-2:     #3a3a3a;
-      --ink-3:     #717171;
-      --surface:   #fafafa;
-      --surface-2: #f3f3f0;
-      --surface-3: #e8e8e4;
-      --accent:    #16a34a;        /* single accent: forest green */
-      --accent-dk: #15803d;
-      --accent-bg: #f0fdf4;
-      --radius:    6px;            /* one radius system */
-      --radius-lg: 12px;
-      --nav-h:     64px;
+// node_modules/hono/dist/middleware/logger/index.js
+var humanize = (times) => {
+  const [delimiter, separator] = [",", "."];
+  const orderTimes = times.map((v) => v.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + delimiter));
+  return orderTimes.join(separator);
+};
+var time = (start) => {
+  const delta = Date.now() - start;
+  return humanize([delta < 1e3 ? delta + "ms" : Math.round(delta / 1e3) + "s"]);
+};
+var colorStatus = async (status) => {
+  const colorEnabled = await getColorEnabledAsync();
+  if (colorEnabled) {
+    switch (status / 100 | 0) {
+      case 5:
+        return `\x1B[31m${status}\x1B[0m`;
+      case 4:
+        return `\x1B[33m${status}\x1B[0m`;
+      case 3:
+        return `\x1B[36m${status}\x1B[0m`;
+      case 2:
+        return `\x1B[32m${status}\x1B[0m`;
     }
+  }
+  return `${status}`;
+};
+async function log(fn, prefix, method, path, status = 0, elapsed) {
+  const out = prefix === "<--" ? `${prefix} ${method} ${path}` : `${prefix} ${method} ${path} ${await colorStatus(status)} ${elapsed}`;
+  fn(out);
+}
+var logger = (fn = console.log) => {
+  return async function logger2(c, next) {
+    const { method, url } = c.req;
+    const path = url.slice(url.indexOf("/", 8));
+    await log(fn, "<--", method, path);
+    const start = Date.now();
+    await next();
+    await log(fn, "-->", method, path, c.res.status, time(start));
+  };
+};
 
-    /* \u2500\u2500 Typography \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    h1, h2, h3, h4 { color: var(--ink); letter-spacing: -0.025em; line-height: 1.1; font-weight: 800; }
-    p { color: var(--ink-2); line-height: 1.65; }
-
-    /* \u2500\u2500 Utility classes \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-    .container-sm { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
-
-    .accent-text { color: var(--accent); }
-
-    /* single inline label \u2014 small mono caps, rationed: max 1 per 3 sections */
-    .label {
-      font-family: 'Geist Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-3);
+// node_modules/hono/dist/middleware/secure-headers/secure-headers.js
+var HEADERS_MAP = {
+  crossOriginEmbedderPolicy: ["Cross-Origin-Embedder-Policy", "require-corp"],
+  crossOriginResourcePolicy: ["Cross-Origin-Resource-Policy", "same-origin"],
+  crossOriginOpenerPolicy: ["Cross-Origin-Opener-Policy", "same-origin"],
+  originAgentCluster: ["Origin-Agent-Cluster", "?1"],
+  referrerPolicy: ["Referrer-Policy", "no-referrer"],
+  strictTransportSecurity: ["Strict-Transport-Security", "max-age=15552000; includeSubDomains"],
+  xContentTypeOptions: ["X-Content-Type-Options", "nosniff"],
+  xDnsPrefetchControl: ["X-DNS-Prefetch-Control", "off"],
+  xDownloadOptions: ["X-Download-Options", "noopen"],
+  xFrameOptions: ["X-Frame-Options", "SAMEORIGIN"],
+  xPermittedCrossDomainPolicies: ["X-Permitted-Cross-Domain-Policies", "none"],
+  xXssProtection: ["X-XSS-Protection", "0"]
+};
+var DEFAULT_OPTIONS = {
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: true,
+  crossOriginOpenerPolicy: true,
+  originAgentCluster: true,
+  referrerPolicy: true,
+  strictTransportSecurity: true,
+  xContentTypeOptions: true,
+  xDnsPrefetchControl: true,
+  xDownloadOptions: true,
+  xFrameOptions: true,
+  xPermittedCrossDomainPolicies: true,
+  xXssProtection: true,
+  removePoweredBy: true,
+  permissionsPolicy: {}
+};
+var secureHeaders = (customOptions) => {
+  const options = { ...DEFAULT_OPTIONS, ...customOptions };
+  const headersToSet = getFilteredHeaders(options);
+  const callbacks = [];
+  if (options.contentSecurityPolicy) {
+    const [callback, value] = getCSPDirectives(
+      options.contentSecurityPolicy,
+      "Content-Security-Policy"
+    );
+    if (callback) {
+      callbacks.push(callback);
     }
-
-    /* \u2500\u2500 Navbar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center;
-      transition: background 0.25s, border-color 0.25s, box-shadow 0.2s;
-      border-bottom: 1px solid transparent;
+    headersToSet.push(["Content-Security-Policy", value]);
+  }
+  if (options.contentSecurityPolicyReportOnly) {
+    const [callback, value] = getCSPDirectives(
+      options.contentSecurityPolicyReportOnly,
+      "Content-Security-Policy-Report-Only"
+    );
+    if (callback) {
+      callbacks.push(callback);
     }
-    #nav.scrolled {
-      background: rgba(250,250,250,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: var(--surface-3);
-      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+    headersToSet.push(["Content-Security-Policy-Report-Only", value]);
+  }
+  if (options.permissionsPolicy && Object.keys(options.permissionsPolicy).length > 0) {
+    headersToSet.push([
+      "Permissions-Policy",
+      getPermissionsPolicyDirectives(options.permissionsPolicy)
+    ]);
+  }
+  if (options.reportingEndpoints) {
+    headersToSet.push(["Reporting-Endpoints", getReportingEndpoints(options.reportingEndpoints)]);
+  }
+  if (options.reportTo) {
+    headersToSet.push(["Report-To", getReportToOptions(options.reportTo)]);
+  }
+  return async function secureHeaders2(ctx, next) {
+    const headersToSetForReq = callbacks.length === 0 ? headersToSet : callbacks.reduce((acc, cb) => cb(ctx, acc), headersToSet);
+    await next();
+    setHeaders(ctx, headersToSetForReq);
+    if (options?.removePoweredBy) {
+      ctx.res.headers.delete("X-Powered-By");
     }
-    #nav .inner {
-      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
-      width: 100%;
-      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-weight: 800; font-size: 17px; letter-spacing: -0.03em;
-      color: var(--ink); text-decoration: none;
-    }
-    .nav-logo-mark {
-      width: 28px; height: 28px; border-radius: var(--radius);
-      background: var(--ink); display: flex; align-items: center; justify-content: center;
-      color: #fafafa; font-size: 13px; font-weight: 900; font-family: 'Geist Mono', monospace;
-      flex-shrink: 0;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 0.25rem; list-style: none;
-    }
-    .nav-links a {
-      font-size: 13.5px; font-weight: 500; color: var(--ink-3);
-      text-decoration: none; padding: 0.4rem 0.75rem; border-radius: var(--radius);
-      transition: color 0.15s, background 0.15s;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--ink); background: var(--surface-2);
-    }
-    .nav-cta {
-      font-size: 13px; font-weight: 600;
-      background: var(--ink); color: #fafafa;
-      padding: 0.5rem 1.1rem; border-radius: var(--radius);
-      text-decoration: none;
-      transition: opacity 0.15s, transform 0.15s;
-      white-space: nowrap;
-    }
-    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
-    .nav-mobile-btn {
-      display: none; background: none; border: none; cursor: pointer;
-      width: 36px; height: 36px; align-items: center; justify-content: center;
-      border-radius: var(--radius); transition: background 0.15s; color: var(--ink);
-    }
-    .nav-mobile-btn:hover { background: var(--surface-2); }
-    #mobile-menu {
-      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
-      background: rgba(250,250,250,0.98); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--surface-3);
-      padding: 1rem 2rem 1.5rem; z-index: 99;
-      flex-direction: column; gap: 0.25rem;
-    }
-    #mobile-menu.open { display: flex; }
-    #mobile-menu a {
-      font-size: 14px; font-weight: 500; color: var(--ink-2);
-      text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid var(--surface-2);
-      transition: color 0.15s;
-    }
-    #mobile-menu a:last-child { border-bottom: none; margin-top: 0.5rem; }
-    #mobile-menu a.cta-mobile {
-      background: var(--ink); color: #fafafa; text-align: center;
-      padding: 0.7rem; border-radius: var(--radius); border: none; margin-top: 0.5rem;
-    }
-
-    /* \u2500\u2500 Buttons \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-size: 13.5px; font-weight: 600;
-      padding: 0.6rem 1.25rem; border-radius: var(--radius);
-      text-decoration: none; transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
-      white-space: nowrap; cursor: pointer; border: none;
-    }
-    .btn:active { transform: translateY(1px) scale(0.99); }
-    .btn-dark { background: var(--ink); color: #fafafa; }
-    .btn-dark:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--ink);
-      border: 1.5px solid var(--surface-3);
-    }
-    .btn-outline:hover { border-color: var(--ink-3); background: var(--surface-2); }
-    .btn-accent { background: var(--accent); color: #fff; }
-    .btn-accent:hover { background: var(--accent-dk); transform: translateY(-1px); }
-
-    /* \u2500\u2500 Cards \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .card {
-      background: #fff; border: 1px solid var(--surface-3);
-      border-radius: var(--radius-lg); overflow: hidden;
-      transition: box-shadow 0.22s, transform 0.22s;
-    }
-    .card:hover {
-      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
-      transform: translateY(-3px);
-    }
-
-    /* \u2500\u2500 Scroll reveal \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-d1 { transition-delay: 0.08s; }
-    .reveal-d2 { transition-delay: 0.16s; }
-    .reveal-d3 { transition-delay: 0.24s; }
-
-    /* \u2500\u2500 Marquee \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .marquee-outer { overflow: hidden; }
-    .marquee-track {
-      display: flex; gap: 3.5rem;
-      animation: marquee 28s linear infinite;
-      width: max-content;
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* \u2500\u2500 Divider \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    .divider { border: none; border-top: 1px solid var(--surface-3); }
-
-    /* \u2500\u2500 Footer \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    footer {
-      background: var(--ink); color: rgba(255,255,255,0.5);
-      padding: 4rem 0 2.5rem;
-    }
-    footer h4 { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; margin-bottom: 1rem; }
-    footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color 0.15s; }
-    footer a:hover { color: rgba(255,255,255,0.9); }
-    footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-
-    /* \u2500\u2500 Responsive \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
-    @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
-      .nav-mobile-btn { display: flex; }
-      .container, .container-sm { padding: 0 1.25rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .marquee-track { animation: none; }
-      .card { transition: none; }
-      .btn { transition: none; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav id="nav">
-    <div class="inner">
-      <a href="/" class="nav-logo">
-        <div class="nav-logo-mark">N</div>
-        NusaTech
-      </a>
-      <ul class="nav-links">
-        <li><a href="/" class="${activePage === "home" ? "active" : ""}">Beranda</a></li>
-        <li><a href="/services" class="${activePage === "services" ? "active" : ""}">Layanan</a></li>
-        <li><a href="/portfolio" class="${activePage === "portfolio" ? "active" : ""}">Portfolio</a></li>
-        <li><a href="/about" class="${activePage === "about" ? "active" : ""}">Tim</a></li>
-        <li><a href="/contact" class="${activePage === "contact" ? "active" : ""}">Kontak</a></li>
-      </ul>
-      <a href="/contact" class="nav-cta">Hubungi kami</a>
-      <button class="nav-mobile-btn" id="hamburger" aria-label="Menu">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <rect id="bar1" y="2" width="18" height="1.8" rx="0.9" fill="currentColor"/>
-          <rect id="bar2" y="8.1" width="18" height="1.8" rx="0.9" fill="currentColor"/>
-          <rect id="bar3" y="14.2" width="18" height="1.8" rx="0.9" fill="currentColor"/>
-        </svg>
-      </button>
-    </div>
-  </nav>
-
-  <div id="mobile-menu">
-    <a href="/">Beranda</a>
-    <a href="/services">Layanan</a>
-    <a href="/portfolio">Portfolio</a>
-    <a href="/about">Tim</a>
-    <a href="/contact">Kontak</a>
-    <a href="/contact" class="cta-mobile">Hubungi kami</a>
-  </div>
-
-  <main>
-    ${content6}
-  </main>
-
-  <footer>
-    <div class="container">
-      <div style="display:grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.1)">
-        <div>
-          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem">
-            <div style="width:28px;height:28px;border-radius:6px;background:#fafafa;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;font-family:'Geist Mono',monospace;color:#111;flex-shrink:0">N</div>
-            <span style="font-weight:800;font-size:16px;color:#fafafa;letter-spacing:-0.02em">NusaTech</span>
-          </div>
-          <p style="font-size:13px;line-height:1.65;max-width:240px;margin-bottom:1.5rem">Tim teknologi Jakarta. 9 tahun, 500+ proyek, prinsip yang sama sejak hari pertama.</p>
-          <div style="display:flex;gap:0.5rem">
-            <a href="#" aria-label="LinkedIn" style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace">in</a>
-            <a href="#" aria-label="Twitter/X" style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace">x</a>
-            <a href="#" aria-label="GitHub" style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace">gh</a>
-          </div>
-        </div>
-        <div>
-          <h4>Layanan</h4>
-          <ul>
-            <li><a href="/services">Web Development</a></li>
-            <li><a href="/services">Mobile App</a></li>
-            <li><a href="/services">Cloud & DevOps</a></li>
-            <li><a href="/services">AI & Otomasi</a></li>
-            <li><a href="/services">Security Audit</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Perusahaan</h4>
-          <ul>
-            <li><a href="/about">Tim kami</a></li>
-            <li><a href="/portfolio">Portfolio</a></li>
-            <li><a href="/contact">Karir</a></li>
-            <li><a href="/contact">Blog teknis</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Kantor</h4>
-          <ul>
-            <li><a href="#">Jl. Wijaya I No. 37, Kebayoran Baru, Jakarta Selatan 12170</a></li>
-            <li><a href="tel:+622127884491">+62 21 2788 4491</a></li>
-            <li><a href="mailto:halo@nusatech.id">halo@nusatech.id</a></li>
-            <li style="color:rgba(255,255,255,0.3);font-size:12px">Sen-Jum, 09.00-18.00 WIB</li>
-          </ul>
-        </div>
-      </div>
-      <div style="padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
-        <p style="font-size:12px;color:rgba(255,255,255,0.3)">\xA9 2024 NusaTech Solutions. Dibuat di Jakarta.</p>
-        <div style="display:flex;gap:1.5rem">
-          <a href="#" style="font-size:12px">Privasi</a>
-          <a href="#" style="font-size:12px">Syarat</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Navbar scroll
-    const nav = document.getElementById('nav');
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          nav.classList.toggle('scrolled', window.scrollY > 16);
-          ticking = false;
+  };
+};
+function getFilteredHeaders(options) {
+  return Object.entries(HEADERS_MAP).filter(([key]) => options[key]).map(([key, defaultValue]) => {
+    const overrideValue = options[key];
+    return typeof overrideValue === "string" ? [defaultValue[0], overrideValue] : defaultValue;
+  });
+}
+function getCSPDirectives(contentSecurityPolicy, headerName) {
+  const callbacks = [];
+  const resultValues = [];
+  for (const [directive, value] of Object.entries(contentSecurityPolicy)) {
+    const valueArray = Array.isArray(value) ? value : [value];
+    valueArray.forEach((value2, i) => {
+      if (typeof value2 === "function") {
+        const index = i * 2 + 2 + resultValues.length;
+        callbacks.push((ctx, values) => {
+          values[index] = value2(ctx, directive);
         });
-        ticking = true;
       }
-    }, { passive: true });
-
-    // Mobile menu
-    const ham = document.getElementById('hamburger');
-    const mob = document.getElementById('mobile-menu');
-    let open = false;
-    ham.addEventListener('click', () => {
-      open = !open;
-      mob.classList.toggle('open', open);
     });
-
-    // Scroll reveal
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // Counter
-    function runCounter(el) {
-      const target = parseFloat(el.dataset.target);
-      const suffix = el.dataset.suffix || '';
-      const isFloat = el.dataset.float === '1';
-      const dur = 1400;
-      const start = performance.now();
-      function tick(now) {
-        const p = Math.min((now - start) / dur, 1);
-        const ease = 1 - Math.pow(1 - p, 4);
-        const val = target * ease;
-        el.textContent = (isFloat ? val.toFixed(1) : Math.floor(val)) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
+    resultValues.push(
+      directive.replace(
+        /[A-Z]+(?![a-z])|[A-Z]/g,
+        (match2, offset) => offset ? "-" + match2.toLowerCase() : match2.toLowerCase()
+      ),
+      ...valueArray.flatMap((value2) => [" ", value2]),
+      "; "
+    );
+  }
+  resultValues.pop();
+  return callbacks.length === 0 ? [void 0, resultValues.join("")] : [
+    (ctx, headersToSet) => headersToSet.map((values) => {
+      if (values[0] === headerName) {
+        const clone = values[1].slice();
+        callbacks.forEach((cb) => {
+          cb(ctx, clone);
+        });
+        return [values[0], clone.join("")];
+      } else {
+        return values;
       }
-      requestAnimationFrame(tick);
+    }),
+    resultValues
+  ];
+}
+function getPermissionsPolicyDirectives(policy) {
+  return Object.entries(policy).map(([directive, value]) => {
+    const kebabDirective = camelToKebab(directive);
+    if (typeof value === "boolean") {
+      return `${kebabDirective}=${value ? "*" : "()"}`;
     }
-    const cio = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { runCounter(e.target); cio.unobserve(e.target); } });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('[data-counter]').forEach(el => cio.observe(el));
-  </script>
-</body>
-</html>
-`;
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return `${kebabDirective}=()`;
+      }
+      if (value.length === 1 && value[0] === "*") {
+        return `${kebabDirective}=*`;
+      }
+      if (value.length === 1 && value[0] === "none") {
+        return `${kebabDirective}=()`;
+      }
+      const allowlist = value.map((item) => ["self", "src"].includes(item) ? item : `"${item}"`);
+      return `${kebabDirective}=(${allowlist.join(" ")})`;
+    }
+    return "";
+  }).filter(Boolean).join(", ");
+}
+function camelToKebab(str) {
+  return str.replace(/([a-z\d])([A-Z])/g, "$1-$2").toLowerCase();
+}
+function getReportingEndpoints(reportingEndpoints = []) {
+  return reportingEndpoints.map((endpoint) => `${endpoint.name}="${endpoint.url}"`).join(", ");
+}
+function getReportToOptions(reportTo = []) {
+  return reportTo.map((option) => JSON.stringify(option)).join(", ");
+}
+function setHeaders(ctx, headersToSet) {
+  headersToSet.forEach(([header, value]) => {
+    ctx.res.headers.set(header, value);
+  });
+}
+
+// node_modules/hono/dist/middleware/timing/timing.js
+var getTime = () => {
+  try {
+    return performance.now();
+  } catch {
+  }
+  return Date.now();
+};
+var timing = (config) => {
+  const options = {
+    total: true,
+    enabled: true,
+    totalDescription: "Total Response Time",
+    autoEnd: true,
+    crossOrigin: false,
+    ...config
+  };
+  return async function timing2(c, next) {
+    const headers = [];
+    const timers = /* @__PURE__ */ new Map();
+    if (c.get("metric")) {
+      return await next();
+    }
+    c.set("metric", { headers, timers });
+    if (options.total) {
+      startTime(c, "total", options.totalDescription);
+    }
+    await next();
+    if (options.total) {
+      endTime(c, "total");
+    }
+    if (options.autoEnd) {
+      timers.forEach((_, key) => {
+        endTime(c, key);
+      });
+    }
+    const enabled = typeof options.enabled === "function" ? options.enabled(c) : options.enabled;
+    if (enabled) {
+      c.res.headers.append("Server-Timing", headers.join(","));
+      const crossOrigin = typeof options.crossOrigin === "function" ? options.crossOrigin(c) : options.crossOrigin;
+      if (crossOrigin) {
+        c.res.headers.append(
+          "Timing-Allow-Origin",
+          typeof crossOrigin === "string" ? crossOrigin : "*"
+        );
+      }
+    }
+  };
+};
+var setMetric = (c, name, valueDescription, description, precision) => {
+  const metrics = c.get("metric");
+  if (!metrics) {
+    console.warn("Metrics not initialized! Please add the `timing()` middleware to this route!");
+    return;
+  }
+  if (typeof valueDescription === "number") {
+    const dur = valueDescription.toFixed(precision || 1);
+    const metric = description ? `${name};dur=${dur};desc="${description}"` : `${name};dur=${dur}`;
+    metrics.headers.push(metric);
+  } else {
+    const metric = valueDescription ? `${name};desc="${valueDescription}"` : `${name}`;
+    metrics.headers.push(metric);
+  }
+};
+var startTime = (c, name, description) => {
+  const metrics = c.get("metric");
+  if (!metrics) {
+    console.warn("Metrics not initialized! Please add the `timing()` middleware to this route!");
+    return;
+  }
+  metrics.timers.set(name, { description, start: getTime() });
+};
+var endTime = (c, name, precision) => {
+  const metrics = c.get("metric");
+  if (!metrics) {
+    console.warn("Metrics not initialized! Please add the `timing()` middleware to this route!");
+    return;
+  }
+  const timer = metrics.timers.get(name);
+  if (!timer) {
+    console.warn(`Timer "${name}" does not exist!`);
+    return;
+  }
+  const { description, start } = timer;
+  const duration = getTime() - start;
+  setMetric(c, name, duration, description, precision);
+  metrics.timers.delete(name);
+};
+
+// src/lib/constants.ts
+var PORT = Number(process.env.PORT) || 3e3;
+var NAV_LINKS = [
+  { href: "/", label: "Beranda" },
+  { href: "/services", label: "Layanan" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/about", label: "Tentang" },
+  { href: "/contact", label: "Kontak" }
+];
+var SEO = {
+  siteName: "NusaTech Solutions",
+  defaultDescription: "Solusi digital kelas dunia \u2014 product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
+  defaultOgImage: "/og-image.png",
+  twitterHandle: "@nusatech_id"
+};
 
 // src/data/company.ts
 var company = {
   name: "NusaTech Solutions",
-  tagline: "Kita bikin digital, beneran.",
-  description: "NusaTech bukan agensi biasa. Kita tim kecil yang obsesif soal detail \u2014 dari arsitektur backend sampai warna tombol. Sudah 9 tahun kami bantu bisnis Indonesia tumbuh lewat teknologi yang benar-benar bekerja.",
+  tagline: "Solusi Digital Kelas Dunia",
+  description: "Kami membangun produk digital yang skalabel, cepat, dan berdampak nyata \u2014 dari startup hingga enterprise.",
   founded: "2015",
   employees: "150+",
   projects: "500+",
   clients: "200+",
-  email: "halo@nusatech.id",
-  phone: "+62 21 2788 4491",
-  address: "Jl. Wijaya I No. 37, Kebayoran Baru, Jakarta Selatan 12170",
+  email: "hello@nusatech.id",
+  phone: "+62 21 1234 5678",
+  address: "Jl. Sudirman No. 88, Jakarta Selatan, DKI Jakarta 12190",
   social: {
     linkedin: "https://linkedin.com/company/nusatech",
     twitter: "https://twitter.com/nusatech_id",
     instagram: "https://instagram.com/nusatech.id",
-    github: "https://github.com/nusatech-id"
+    github: "https://github.com/nusatech"
   }
 };
 var services = [
   {
     id: 1,
-    icon: "\u{1F4BB}",
-    title: "Web Development",
-    description: "Bukan sekadar website cantik \u2014 kami bangun yang cepat, aman, dan tahan banting. Stack favorit kami: Bun, React, dan PostgreSQL. Tapi kami fleksibel sesuai kebutuhan Anda.",
-    detail: "Mulai dari landing page sampai SaaS kompleks"
+    icon: "\u{1F680}",
+    title: "Product Engineering",
+    description: "Kami rancang dan bangun produk digital dari nol \u2014 arsitektur solid, UX intuitif, dan delivery tepat waktu.",
+    detail: "Full-cycle product development"
   },
   {
     id: 2,
-    icon: "\u{1F4F1}",
-    title: "Mobile App",
-    description: "iOS & Android, native atau cross-platform. Kami tahu perbedaannya dan kapan harus pakai yang mana \u2014 bukan asal pilih yang murah.",
-    detail: "React Native \xB7 Flutter \xB7 Swift \xB7 Kotlin"
+    icon: "\u2601\uFE0F",
+    title: "Cloud & DevOps",
+    description: "Infrastructure as code, CI/CD pipeline, Kubernetes orchestration, dan observability end-to-end.",
+    detail: "AWS \xB7 GCP \xB7 Azure \xB7 K8s"
   },
   {
     id: 3,
-    icon: "\u2601\uFE0F",
-    title: "Cloud & DevOps",
-    description: "Deploy sekali, jalan terus. Kami setup infrastructure yang bisa tidur nyenyak \u2014 monitoring, auto-scaling, backup otomatis. AWS, GCP, atau on-premise.",
-    detail: "Uptime rata-rata klien kami: 99.94%"
+    icon: "\u{1F4F1}",
+    title: "Mobile Development",
+    description: "Aplikasi native iOS & Android, serta cross-platform React Native untuk reach yang lebih luas.",
+    detail: "iOS \xB7 Android \xB7 React Native"
   },
   {
     id: 4,
     icon: "\u{1F916}",
-    title: "AI & Otomasi",
-    description: "AI bukan hype buat kami \u2014 kami sudah pakai sejak 2019. Dari chatbot internal sampai sistem rekomendasi produk yang beneran naikkan konversi.",
-    detail: "LLM integration \xB7 Computer Vision \xB7 MLOps"
+    title: "AI & Data Engineering",
+    description: "Pipeline data real-time, model ML production-ready, dan integrasi LLM untuk produk cerdas.",
+    detail: "ML \xB7 LLM \xB7 Streaming Data"
   },
   {
     id: 5,
-    icon: "\u{1F512}",
-    title: "Security Audit",
-    description: "Penetration testing, code review, sampai compliance check. Kami temukan celah sebelum orang lain menemukannya \u2014 tanpa menghakimi kode lama Anda.",
-    detail: "OWASP \xB7 ISO 27001 \xB7 PCI-DSS"
+    icon: "\u{1F510}",
+    title: "Security & Compliance",
+    description: "Penetration testing, secure SDLC, dan compliance audit untuk produk yang aman dari ground up.",
+    detail: "PenTest \xB7 OWASP \xB7 ISO 27001"
   },
   {
     id: 6,
     icon: "\u{1F4CA}",
-    title: "Data & Analytics",
-    description: "Ribuan baris data Anda tersimpan tapi tidak terpakai? Kami ubah jadi dashboard yang benar-benar dibaca tim Anda setiap pagi.",
-    detail: "BI \xB7 Data Pipeline \xB7 Predictive Analytics"
+    title: "Analytics & BI",
+    description: "Dashboard real-time, data warehouse modern, dan insight actionable dari data bisnis Anda.",
+    detail: "dbt \xB7 Redshift \xB7 Metabase"
   }
 ];
 var team = [
   {
     id: 1,
     name: "Budi Santoso",
-    role: "Co-founder & CEO",
-    photo: "BS",
-    bio: "Mantan engineer Tokopedia. Pindah ke dunia konsultan karena capek lihat website perusahaan Indonesia yang lambat.",
-    color: "from-blue-500 to-indigo-600",
-    funFact: "Koleksi mechanical keyboard: 11 buah"
+    role: "CEO & Co-Founder",
+    initials: "BS",
+    bio: "10+ tahun di product engineering. Ex-Gojek, ex-Tokopedia. Passionate soal scalable systems.",
+    funFact: "Bisa debug production issue sambil makan soto."
   },
   {
     id: 2,
-    name: "Sari Dewi",
-    role: "Co-founder & CTO",
-    photo: "SD",
-    bio: "Lulusan ITS Surabaya, ex-Google Singapore. Balik ke Indonesia karena kangen soto ayam dan ingin bangun sesuatu yang lebih bermakna.",
-    color: "from-violet-500 to-purple-600",
-    funFact: "Contribute ke open source tiap Sabtu pagi"
+    name: "Dewi Rahayu",
+    role: "CTO & Co-Founder",
+    initials: "DR",
+    bio: "Distributed systems expert. Speaker di berbagai konferensi teknologi Asia Tenggara.",
+    funFact: "Koleksi mechanical keyboard lebih dari 20 unit."
   },
   {
     id: 3,
     name: "Ahmad Fauzi",
-    role: "Head of Product Design",
-    photo: "AF",
-    bio: "10 tahun desain digital, 3 tahun di Grab. Percaya bahwa UX yang bagus adalah yang pengguna tidak sadari \u2014 itu berarti sudah benar.",
-    color: "from-emerald-500 to-teal-600",
-    funFact: "Masih pakai Figma versi desktop, anti web app"
+    role: "Head of Engineering",
+    initials: "AF",
+    bio: "Platform engineer dengan spesialisasi Kubernetes dan observability. Open source contributor.",
+    funFact: "Pernah deploy ke production dari atas gunung."
   },
   {
     id: 4,
-    name: "Rina Kusuma",
-    role: "Head of Client Success",
-    photo: "RK",
-    bio: "Bergabung tahun 2017 sebagai staf pertama non-teknis. Sekarang pegang 40+ akun klien dan tidak pernah ada yang complain soal komunikasi.",
-    color: "from-rose-500 to-pink-600",
-    funFact: "Reply email dalam waktu <15 menit, selalu"
+    name: "Siti Nurhaliza",
+    role: "Head of Design",
+    initials: "SN",
+    bio: "Design systems practitioner. Percaya bahwa UX yang baik adalah invisible UX.",
+    funFact: "Mendesain sambil dengerin jazz \u2014 selalu jazz."
   }
 ];
 var testimonials = [
   {
     id: 1,
-    name: "Hendra Wijaya",
-    company: "PT Maju Bersama Tbk",
-    role: "CEO",
-    text: "Jujur, awalnya saya skeptis. Sudah dua vendor sebelumnya menjanjikan hal serupa. NusaTech beda \u2014 mereka mau jujur kalau ada masalah, dan itu yang kami butuhkan.",
+    name: "Rizky Pratama",
+    company: "FinPay Indonesia",
+    role: "CTO",
+    text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner.",
     rating: 5,
-    avatar: "HW",
-    color: "from-blue-500 to-cyan-500",
-    project: "Sistem ERP & Mobile App"
+    avatar: "RP"
   },
   {
     id: 2,
-    name: "Dewi Rahayu",
-    company: "Warung Pintar Digital",
-    role: "Founder",
-    text: "Kami UMKM, budget terbatas. Mereka tidak meremehkan. Malah kasih rekomendasi yang hemat tapi tetap solid. Platform kami handle 2000 transaksi/hari tanpa masalah.",
+    name: "Lisa Hartono",
+    company: "RetailGo",
+    role: "VP Engineering",
+    text: "Migration ke microservices selesai dalam 6 bulan tanpa downtime. Saya tidak pernah lihat eksekusi sekelas ini sebelumnya.",
     rating: 5,
-    avatar: "DR",
-    color: "from-emerald-500 to-teal-500",
-    project: "Platform E-Commerce B2B"
+    avatar: "LH"
   },
   {
     id: 3,
-    name: "Irfan Mahmud",
-    company: "Koin Fintech",
-    role: "VP Engineering",
-    text: "Yang saya suka: mereka mau bilang 'tidak' kalau request kami tidak masuk akal secara teknis. Vendor yang cuma bilang iya itu bahaya di jangka panjang.",
+    name: "Marco Tanuwijaya",
+    company: "EduNusa",
+    role: "Founder & CEO",
+    text: "Platform kami handle 500k concurrent users saat launch \u2014 sesuatu yang kami kira tidak mungkin dalam timeline itu.",
     rating: 5,
-    avatar: "IM",
-    color: "from-violet-500 to-purple-500",
-    project: "Core Banking System"
+    avatar: "MT"
   }
 ];
 var portfolios = [
   {
     id: 1,
-    title: "KoinPay \u2014 Super App",
+    title: "FinPay Super App",
     category: "Fintech \xB7 Mobile & Web",
-    description: "Core banking + dompet digital untuk koperasi simpan pinjam. 2,3 juta pengguna aktif, latency rata-rata <120ms. Dibangun dalam 14 bulan.",
-    tech: ["React Native", "Go", "PostgreSQL", "Redis"],
-    color: "from-blue-600 to-indigo-700",
-    emoji: "\u{1F3E6}",
+    description: "Platform pembayaran digital dengan 2M+ pengguna aktif. Real-time transaction processing, fraud detection ML, dan open banking integration.",
+    tech: ["Go", "Kafka", "React Native", "PostgreSQL", "Redis"],
     year: "2023",
-    result: "+340% transaksi digital dalam 6 bulan"
+    result: "2M+ pengguna aktif"
   },
   {
     id: 2,
-    title: "Warung Connect",
-    category: "E-Commerce \xB7 B2B",
-    description: "Marketplace grosir untuk 12.000+ warung di Jabodetabek. Integrasi langsung ke sistem distributor FMCG. Order processing <2 detik.",
-    tech: ["Next.js", "Bun", "MySQL", "Kafka"],
-    color: "from-emerald-500 to-teal-600",
-    emoji: "\u{1F6D2}",
+    title: "RetailGo Platform",
+    category: "E-commerce \xB7 Enterprise",
+    description: "Microservices re-architecture untuk platform retail dengan 50+ brand. Zero-downtime migration dari monolith legacy.",
+    tech: ["Node.js", "Kubernetes", "React", "MongoDB", "RabbitMQ"],
     year: "2023",
-    result: "Rp 4,2 miliar GMV di bulan ketiga"
+    result: "Zero-downtime migration"
   },
   {
     id: 3,
-    title: "CerdasRetail Analytics",
-    category: "Data & AI",
-    description: "Prediksi stok & demand forecasting untuk jaringan minimarket 200+ gerai. Akurasi prediksi 91%, turunkan overstock 28%.",
-    tech: ["Python", "FastAPI", "TensorFlow", "Metabase"],
-    color: "from-purple-600 to-violet-700",
-    emoji: "\u{1F4CA}",
+    title: "EduNusa LMS",
+    category: "EdTech \xB7 Platform",
+    description: "Learning management system untuk 500k+ pelajar. Live streaming, adaptive quiz engine, dan sertifikasi blockchain.",
+    tech: ["Next.js", "WebRTC", "Python", "PostgreSQL", "AWS"],
     year: "2022",
-    result: "Hemat Rp 1,8 miliar/tahun biaya inventory"
+    result: "500k+ pelajar aktif"
   },
   {
     id: 4,
-    title: "KlinikKu \u2014 Telemedicine",
-    category: "HealthTech \xB7 SaaS",
-    description: "Platform konsultasi dokter online dengan rekam medis digital. BPJS-integrated. Sudah dipakai 800+ klinik di 12 provinsi.",
-    tech: ["Vue.js", "Laravel", "AWS", "WebRTC"],
-    color: "from-rose-500 to-pink-600",
-    emoji: "\u{1FA7A}",
+    title: "LogiTrack",
+    category: "Logistik \xB7 IoT",
+    description: "Fleet management dan real-time cargo tracking untuk 1000+ kendaraan. IoT integration dengan prediksi rute AI.",
+    tech: ["Go", "MQTT", "TimescaleDB", "React", "Mapbox"],
     year: "2022",
-    result: "4,8/5 rating dari 50.000+ pasien"
+    result: "1000+ armada terpantau"
   }
 ];
 
+// src/layouts/base.ts
+function navbar(activePage) {
+  const links = NAV_LINKS.map(({ href, label }) => {
+    const isActive = activePage === href;
+    return `
+      <a href="${href}" style="
+        font-family:'Fredoka',sans-serif;
+        font-size:1rem;
+        font-weight:600;
+        text-decoration:none;
+        padding:0.4rem 1rem;
+        border-radius:8px;
+        border:2px solid ${isActive ? "#1A1A2E" : "transparent"};
+        background:${isActive ? "#FED41D" : "transparent"};
+        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+        box-shadow:${isActive ? "3px 3px 0px #1A1A2E" : "none"};
+        transition:background 0.15s,color 0.15s,border-color 0.15s,box-shadow 0.15s;
+        white-space:nowrap;
+      "
+      onmouseover="if(!this.classList.contains('active')){this.style.background='#FED41D33';this.style.color='#FED41D';}"
+      onmouseout="if(!this.classList.contains('active')){this.style.background='transparent';this.style.color='#FFFEF7';}"
+      ${isActive ? 'class="active"' : ""}
+      >${label}</a>`;
+  }).join("");
+  const mobileLinks = NAV_LINKS.map(({ href, label }) => {
+    const isActive = activePage === href;
+    return `
+      <a href="${href}" style="
+        font-family:'Fredoka',sans-serif;
+        font-size:1.1rem;
+        font-weight:600;
+        text-decoration:none;
+        padding:0.75rem 1.25rem;
+        border-radius:10px;
+        border:2px solid ${isActive ? "#1A1A2E" : "#FED41D33"};
+        background:${isActive ? "#FED41D" : "transparent"};
+        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+        display:block;
+      ">${label}</a>`;
+  }).join("");
+  return `
+  <nav id="navbar" style="
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:#1A1A2E;
+    border-bottom:3px solid #FED41D;
+    transition:box-shadow 0.2s;
+  ">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;">
+
+      <!-- Logo -->
+      <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;">
+        <div style="
+          width:38px;height:38px;
+          background:#FED41D;
+          border:3px solid #FED41D;
+          border-radius:10px;
+          box-shadow:3px 3px 0px #F5C400;
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Bangers',cursive;
+          font-size:1.2rem;
+          color:#1A1A2E;
+        ">NT</div>
+        <span style="
+          font-family:'Bangers',cursive;
+          font-size:1.4rem;
+          letter-spacing:0.06em;
+          color:#FFFEF7;
+        ">${company.name}</span>
+      </a>
+
+      <!-- Desktop links -->
+      <div id="nav-links" style="display:flex;align-items:center;gap:0.25rem;">
+        ${links}
+        <a href="/contact" style="
+          margin-left:0.75rem;
+          padding:0.4rem 1.25rem;
+          background:#FED41D;
+          color:#1A1A2E;
+          border:2px solid #1A1A2E;
+          border-radius:8px;
+          font-family:'Fredoka',sans-serif;
+          font-size:0.95rem;
+          font-weight:700;
+          text-decoration:none;
+          box-shadow:3px 3px 0px #1A1A2E;
+          transition:transform 0.1s,box-shadow 0.1s;
+          white-space:nowrap;
+        "
+        onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0px #1A1A2E'"
+        onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0px #1A1A2E'"
+        >Hubungi Kami</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-btn" aria-label="Menu" style="
+        display:none;
+        background:none;border:2px solid #FED41D;
+        border-radius:8px;padding:0.4rem 0.6rem;
+        cursor:pointer;color:#FED41D;font-size:1.3rem;
+        line-height:1;
+      ">\u2630</button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div id="mobile-menu" style="
+      display:none;
+      flex-direction:column;
+      gap:0.5rem;
+      padding:1rem 1.5rem 1.5rem;
+      border-top:2px solid #FED41D33;
+      background:#1A1A2E;
+    ">
+      ${mobileLinks}
+    </div>
+  </nav>`;
+}
+function footer() {
+  const year = (/* @__PURE__ */ new Date()).getFullYear();
+  const socials = [
+    { label: "LinkedIn", href: company.social.linkedin },
+    { label: "Twitter", href: company.social.twitter },
+    { label: "GitHub", href: company.social.github },
+    { label: "Instagram", href: company.social.instagram }
+  ].map(({ label, href }) => `
+    <a href="${href}" target="_blank" rel="noopener noreferrer" style="
+      font-family:'Fredoka',sans-serif;
+      font-size:0.9rem;
+      font-weight:500;
+      color:#87CEEB;
+      text-decoration:none;
+      transition:color 0.15s;
+    "
+    onmouseover="this.style.color='#FED41D'"
+    onmouseout="this.style.color='#87CEEB'"
+    >${label}</a>`).join("");
+  const footerLinks = NAV_LINKS.map(({ href, label }) => `
+    <a href="${href}" style="
+      font-family:'Fredoka',sans-serif;
+      font-size:0.9rem;
+      color:#FFFEF799;
+      text-decoration:none;
+      transition:color 0.15s;
+    "
+    onmouseover="this.style.color='#FED41D'"
+    onmouseout="this.style.color='#FFFEF799'"
+    >${label}</a>`).join("");
+  return `
+  <footer style="
+    background:#1A1A2E;
+    border-top:4px solid #FED41D;
+    padding:3rem 1.5rem 2rem;
+    margin-top:auto;
+  ">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="
+        display:grid;
+        grid-template-columns:2fr 1fr 1fr;
+        gap:2.5rem;
+        padding-bottom:2rem;
+        border-bottom:2px solid #FED41D22;
+      " class="footer-grid">
+
+        <!-- Brand -->
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <div style="
+              width:36px;height:36px;
+              background:#FED41D;
+              border:3px solid #FED41D;
+              border-radius:8px;
+              box-shadow:3px 3px 0px #F5C400;
+              display:flex;align-items:center;justify-content:center;
+              font-family:'Bangers',cursive;font-size:1.1rem;color:#1A1A2E;
+            ">NT</div>
+            <span style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#FFFEF7;">${company.name}</span>
+          </div>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;line-height:1.6;margin:0;max-width:280px;">
+            ${company.description}
+          </p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;">${socials}</div>
+        </div>
+
+        <!-- Nav -->
+        <div>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Halaman</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">${footerLinks}</div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Kontak</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.email}</span>
+            <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.phone}</span>
+            <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FFFEF766;line-height:1.5;">${company.address}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="
+        padding-top:1.5rem;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:1rem;
+      ">
+        <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FFFEF755;">
+          \xA9 ${year} ${company.name}. All rights reserved.
+        </span>
+        <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FED41D88;">
+          Built with \u2600\uFE0F Bun + Hono
+        </span>
+      </div>
+    </div>
+  </footer>`;
+}
+function globalStyles() {
+  return `
+  <style>
+    /* Reset & base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: #FFFEF7;
+      color: #1A1A2E;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Comic card hover */
+    .comic-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px #1A1A2E !important;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.05s; }
+    .reveal-d2 { transition-delay: 0.10s; }
+    .reveal-d3 { transition-delay: 0.15s; }
+    .reveal-d4 { transition-delay: 0.20s; }
+    .reveal-d5 { transition-delay: 0.25s; }
+    .reveal-d6 { transition-delay: 0.30s; }
+
+    /* Page main \u2014 leave room for fixed navbar */
+    main { padding-top: 64px; flex: 1; }
+
+    /* Section spacing */
+    .section { padding: 5rem 1.5rem; }
+    .section-sm { padding: 3rem 1.5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Comic separator */
+    .comic-divider {
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg, #FED41D 0px, #FED41D 20px, #1A1A2E 20px, #1A1A2E 24px
+      );
+    }
+
+    /* Responsive grid helpers */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+    /* Responsive navbar & footer */
+    @media (max-width: 768px) {
+      #nav-links { display: none !important; }
+      #menu-btn  { display: flex !important; }
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1A1A2E; }
+    ::-webkit-scrollbar-thumb { background: #FED41D; border-radius: 4px; }
+  </style>`;
+}
+function globalScripts() {
+  return `
+  <script>
+    // \u2500\u2500 Navbar scroll shadow
+    (function() {
+      var nav = document.getElementById('navbar');
+      window.addEventListener('scroll', function() {
+        nav.style.boxShadow = window.scrollY > 10
+          ? '0 4px 24px #00000066'
+          : 'none';
+      }, { passive: true });
+    })();
+
+    // \u2500\u2500 Mobile menu toggle
+    (function() {
+      var btn  = document.getElementById('menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        var open = menu.style.display === 'flex';
+        menu.style.display = open ? 'none' : 'flex';
+        btn.textContent = open ? '\u2630' : '\u2715';
+      });
+    })();
+
+    // \u2500\u2500 Scroll reveal
+    (function() {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+
+    // \u2500\u2500 Counter animation
+    (function() {
+      function animateCounter(el) {
+        var raw    = el.dataset.target || el.textContent;
+        var suffix = el.dataset.suffix || '';
+        var num    = parseFloat(raw.replace(/[^0-9.]/g, ''));
+        var isFloat = raw.includes('.');
+        if (isNaN(num)) return;
+        var start    = 0;
+        var duration = 1800;
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var ease     = 1 - Math.pow(1 - progress, 3);
+          var current  = start + (num - start) * ease;
+          el.textContent = (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var counterEls = document.querySelectorAll('[data-counter]');
+      if (!('IntersectionObserver' in window)) {
+        counterEls.forEach(animateCounter);
+        return;
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.5 });
+      counterEls.forEach(function(el) { obs.observe(el); });
+    })();
+  </script>`;
+}
+function baseLayout({ title, description, activePage, content }) {
+  const desc = description ?? SEO.defaultDescription;
+  const fullTitle = `${title} \u2014 ${SEO.siteName}`;
+  return `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${fullTitle}</title>
+  <meta name="description" content="${desc}" />
+  <meta property="og:title" content="${fullTitle}" />
+  <meta property="og:description" content="${desc}" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="${SEO.twitterHandle}" />
+  <!-- Google Fonts: Bangers (display) + Fredoka (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  ${globalStyles()}
+</head>
+<body>
+  ${navbar(activePage)}
+  <main>
+    ${content}
+  </main>
+  ${footer()}
+  ${globalScripts()}
+</body>
+</html>`;
+}
+
+// src/components/card.ts
+function card({ title, body, icon, badge: badgeText, footer: footer2 }) {
+  return `
+  <div class="comic-card" style="
+    background:#FFFEF7;
+    border:3px solid #1A1A2E;
+    border-radius:16px;
+    box-shadow:5px 5px 0px #1A1A2E;
+    padding:1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.75rem;
+    transition:transform 0.15s ease,box-shadow 0.15s ease;
+    cursor:default;
+  ">
+    ${icon ? `<div style="font-size:2rem;line-height:1;">${icon}</div>` : ""}
+    ${badgeText ? `<span style="
+            display:inline-block;width:fit-content;
+            padding:2px 10px;border-radius:999px;
+            border:2px solid #1A1A2E;
+            background:#FED41D;color:#1A1A2E;
+            font-family:'Fredoka',sans-serif;font-size:0.72rem;font-weight:600;
+          ">${badgeText}</span>` : ""}
+    <h3 style="
+      font-family:'Bangers',cursive;
+      font-size:1.4rem;
+      letter-spacing:0.04em;
+      color:#1A1A2E;
+      margin:0;
+      line-height:1.2;
+    ">${title}</h3>
+    <p style="
+      font-family:'Fredoka',sans-serif;
+      font-size:0.95rem;
+      color:#2D2D44;
+      line-height:1.6;
+      margin:0;
+      flex:1;
+    ">${body}</p>
+    ${footer2 ? `<div style="
+            padding-top:0.75rem;
+            border-top:2px solid #1A1A2E22;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.8rem;
+            font-weight:600;
+            color:#5BA8D4;
+          ">${footer2}</div>` : ""}
+  </div>`;
+}
+
+// src/components/stats.ts
+function statsStrip(items, dark = false) {
+  const bg = dark ? "#1A1A2E" : "#FED41D";
+  const color = dark ? "#FED41D" : "#1A1A2E";
+  const border = dark ? "border:3px solid #FED41D;" : "border:3px solid #1A1A2E;";
+  const cells = items.map(
+    ({ value, label, suffix = "" }) => `
+      <div style="text-align:center;padding:1.5rem 1rem;">
+        <div style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(2rem,5vw,3rem);
+          color:${color};
+          line-height:1;
+          letter-spacing:0.05em;
+        " data-counter data-target="${value}" data-suffix="${suffix}">${value}${suffix}</div>
+        <div style="
+          font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;
+          font-weight:500;
+          color:${dark ? "#87CEEB" : "#1A1A2E"};
+          margin-top:0.25rem;
+          opacity:0.85;
+        ">${label}</div>
+      </div>`
+  ).join(`<div style="width:3px;background:${dark ? "#FED41D44" : "#1A1A2E33"};margin:1rem 0;"></div>`);
+  return `
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(${items.length},1fr);
+    background:${bg};
+    ${border}
+    border-radius:16px;
+    box-shadow:5px 5px 0px ${dark ? "#FED41D44" : "#1A1A2E"};
+    overflow:hidden;
+  ">
+    ${cells}
+  </div>`;
+}
+
+// src/components/cta.ts
+function ctaSection({
+  heading,
+  subheading,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref
+}) {
+  const secondary = secondaryLabel && secondaryHref ? `<a href="${secondaryHref}" style="
+        display:inline-block;
+        padding:0.75rem 2rem;
+        border:3px solid #FED41D;
+        border-radius:12px;
+        background:transparent;
+        color:#FED41D;
+        font-family:'Fredoka',sans-serif;
+        font-size:1rem;
+        font-weight:600;
+        text-decoration:none;
+        transition:background 0.15s,color 0.15s;
+      " onmouseover="this.style.background='#FED41D';this.style.color='#1A1A2E'"
+         onmouseout="this.style.background='transparent';this.style.color='#FED41D'"
+      >${secondaryLabel}</a>` : "";
+  return `
+  <section style="
+    background:#1A1A2E;
+    border-top:4px solid #FED41D;
+    border-bottom:4px solid #FED41D;
+    padding:5rem 1.5rem;
+    text-align:center;
+  ">
+    <div style="max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem;">
+      <h2 style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.2rem,6vw,3.5rem);
+        color:#FED41D;
+        letter-spacing:0.06em;
+        line-height:1.1;
+        margin:0;
+      ">${heading}</h2>
+      <p style="
+        font-family:'Fredoka',sans-serif;
+        font-size:1.1rem;
+        color:#87CEEB;
+        line-height:1.6;
+        margin:0;
+      ">${subheading}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:0.5rem;">
+        <a href="${primaryHref}" style="
+          display:inline-block;
+          padding:0.85rem 2.25rem;
+          background:#FED41D;
+          color:#1A1A2E;
+          border:3px solid #1A1A2E;
+          border-radius:12px;
+          font-family:'Fredoka',sans-serif;
+          font-size:1rem;
+          font-weight:700;
+          text-decoration:none;
+          box-shadow:4px 4px 0px #F5C400;
+          transition:transform 0.1s,box-shadow 0.1s;
+        " onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0px #F5C400'"
+           onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0px #F5C400'"
+        >${primaryLabel}</a>
+        ${secondary}
+      </div>
+    </div>
+  </section>`;
+}
+
 // src/pages/home.ts
-var svcRows = services.slice(0, 4).map((s, i) => `
-  <div style="display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--surface-3)" class="reveal reveal-d${i % 3 + 1}">
-    <span class="mono" style="font-size:11px;color:var(--ink-3);padding-top:4px;min-width:24px">${String(i + 1).padStart(2, "0")}</span>
-    <div style="flex:1">
-      <h3 style="font-size:16px;font-weight:700;margin-bottom:0.35rem">${s.title}</h3>
-      <p style="font-size:13.5px;color:var(--ink-3);line-height:1.6;max-width:520px">${s.description}</p>
-    </div>
-    <span style="font-size:11px;color:var(--ink-3);font-family:'Geist Mono',monospace;white-space:nowrap;padding-top:4px">${s.detail}</span>
-  </div>
-`).join("");
-var tCards = testimonials.map((t, i) => `
-  <div class="reveal reveal-d${i + 1}" style="padding:1.75rem;background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg)">
-    <p style="font-size:14px;line-height:1.7;color:var(--ink-2);margin-bottom:1.25rem">"${t.text}"</p>
-    <hr class="divider" style="margin-bottom:1.25rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:0.75rem">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace;color:var(--ink-2);flex-shrink:0">${t.avatar}</div>
-        <div>
-          <p style="font-size:13px;font-weight:600;color:var(--ink)">${t.name}</p>
-          <p style="font-size:12px;color:var(--ink-3)">${t.role}, ${t.company}</p>
+function heroSection() {
+  return `
+  <section style="
+    background: linear-gradient(160deg, #1A1A2E 0%, #2D2D44 100%);
+    padding: 6rem 1.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  ">
+    <!-- Decorative blobs -->
+    <div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;
+      background:#FED41D22;border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;
+      background:#87CEEB18;border-radius:50%;pointer-events:none;"></div>
+
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="max-width:720px;">
+        <!-- Badge -->
+        <div class="reveal" style="margin-bottom:1.25rem;">
+          <span style="
+            display:inline-flex;align-items:center;gap:0.4rem;
+            padding:0.35rem 1rem;
+            background:#FED41D22;
+            border:2px solid #FED41D44;
+            border-radius:999px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.85rem;font-weight:600;
+            color:#FED41D;
+            letter-spacing:0.04em;
+          ">\u2600\uFE0F ${company.founded} \u2014 Hadir untuk Indonesia</span>
+        </div>
+
+        <h1 class="reveal reveal-d1" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(3rem,8vw,5.5rem);
+          line-height:1.0;
+          letter-spacing:0.04em;
+          color:#FFFEF7;
+          margin-bottom:0.5rem;
+        ">
+          Digital Solutions<br/>
+          <span style="
+            color:#FED41D;
+            text-shadow:4px 4px 0px #1A1A2E;
+          ">Kelas Dunia</span>
+        </h1>
+
+        <p class="reveal reveal-d2" style="
+          font-family:'Fredoka',sans-serif;
+          font-size:1.15rem;
+          color:#FFFEF7BB;
+          line-height:1.7;
+          margin:1.5rem 0 2.5rem;
+          max-width:560px;
+        ">${company.description}</p>
+
+        <div class="reveal reveal-d3" style="display:flex;flex-wrap:wrap;gap:1rem;">
+          <a href="/services" style="
+            padding:0.85rem 2.25rem;
+            background:#FED41D;
+            color:#1A1A2E;
+            border:3px solid #1A1A2E;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;font-weight:700;
+            text-decoration:none;
+            box-shadow:5px 5px 0px #F5C400;
+            transition:transform 0.1s,box-shadow 0.1s;
+          "
+          onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0px #F5C400'"
+          onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0px #F5C400'"
+          >Lihat Layanan \u2726</a>
+          <a href="/portfolio" style="
+            padding:0.85rem 2.25rem;
+            background:transparent;
+            color:#FFFEF7;
+            border:3px solid #FFFEF755;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;font-weight:600;
+            text-decoration:none;
+            transition:border-color 0.15s,color 0.15s;
+          "
+          onmouseover="this.style.borderColor='#FED41D';this.style.color='#FED41D'"
+          onmouseout="this.style.borderColor='#FFFEF755';this.style.color='#FFFEF7'"
+          >Lihat Portfolio \u2192</a>
         </div>
       </div>
-      <span style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3);background:var(--surface-2);padding:0.2rem 0.6rem;border-radius:4px">${t.project}</span>
-    </div>
-  </div>
-`).join("");
-var techItems = [
-  "Bun",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Go",
-  "Python",
-  "PostgreSQL",
-  "Redis",
-  "AWS",
-  "Docker",
-  "Kubernetes",
-  "React Native",
-  "Flutter",
-  "TensorFlow",
-  "Kafka",
-  "Bun",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Go",
-  "Python",
-  "PostgreSQL",
-  "Redis",
-  "AWS",
-  "Docker",
-  "Kubernetes",
-  "React Native",
-  "Flutter",
-  "TensorFlow",
-  "Kafka"
-].map((t) => `<span class="mono" style="font-size:12px;color:var(--ink-3);white-space:nowrap">${t}</span>`).join("");
-var content = `
-  <!-- \u2500\u2500 HERO \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="min-height:100dvh;display:flex;align-items:center;padding-top:var(--nav-h);background:var(--surface)">
-    <div class="container" style="padding-top:5rem;padding-bottom:5rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
 
-        <!-- Left -->
-        <div>
-          <h1 style="font-size:clamp(2.4rem,4.5vw,3.5rem);font-weight:900;line-height:1.08;letter-spacing:-0.035em;margin-bottom:1.5rem">
-            Software yang<br>benar-benar<br><em style="font-style:italic;color:var(--accent)">berfungsi.</em>
-          </h1>
-          <p style="font-size:16px;color:var(--ink-2);max-width:420px;line-height:1.7;margin-bottom:2rem">
-            Bukan portfolio kosong. Kami sudah 9 tahun bantu startup dan korporat Indonesia tumbuh lewat teknologi. 500+ proyek, 0 klien yang pergi marah.
-          </p>
-          <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
-            <a href="/contact" class="btn btn-dark">Ceritakan proyek Anda &rarr;</a>
-            <a href="/portfolio" class="btn btn-outline">Lihat hasil kerja</a>
-          </div>
-        </div>
-
-        <!-- Right: asymmetric stats panel -->
-        <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:2.5rem;position:relative">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
-            <div style="padding:1.5rem;border-right:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="500" data-suffix="+">0+</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Proyek selesai</p>
-            </div>
-            <div style="padding:1.5rem;border-bottom:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="200" data-suffix="+">0+</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Klien aktif</p>
-            </div>
-            <div style="padding:1.5rem;border-right:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="9" data-suffix=" thn">0 thn</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Di industri</p>
-            </div>
-            <div style="padding:1.5rem">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--accent)" data-counter data-target="99" data-suffix=".9%" data-float="0">0%</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Uptime rata-rata</p>
-            </div>
-          </div>
-          <!-- status badge -->
-          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--surface-3);display:flex;align-items:center;gap:0.6rem">
-            <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:ping 2s cubic-bezier(0,0,0.2,1) infinite;flex-shrink:0"></span>
-            <span style="font-size:12.5px;color:var(--ink-2)">Terbuka untuk proyek baru per Q3 2024</span>
-          </div>
-        </div>
-
+      <!-- Stats strip -->
+      <div class="reveal reveal-d4" style="margin-top:4rem;">
+        ${statsStrip([
+    { value: company.projects, label: "Proyek Selesai", suffix: "" },
+    { value: company.clients, label: "Klien Puas", suffix: "" },
+    { value: company.employees, label: "Profesional", suffix: "" },
+    { value: "9", label: "Tahun Pengalaman", suffix: " thn" }
+  ], true)}
       </div>
     </div>
-  </section>
-
-  <style>
-    @keyframes ping {
-      75%, 100% { transform: scale(1.8); opacity: 0; }
-    }
-    @media (max-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-    }
-  </style>
-
-  <!-- \u2500\u2500 TECH MARQUEE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="padding:1.25rem 0;background:#fff;border-top:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
-    <div class="marquee-outer">
-      <div class="marquee-track">${techItems}</div>
-    </div>
-  </section>
-
-  <!-- \u2500\u2500 SERVICES \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="padding:6rem 0;background:var(--surface)">
+  </section>`;
+}
+function servicesPreview() {
+  const cards = services.slice(0, 4).map(
+    (s, i) => `<div class="reveal reveal-d${i + 1}">
+      ${card({ title: s.title, body: s.description, icon: s.icon, footer: s.detail })}
+    </div>`
+  ).join("");
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:280px 1fr;gap:5rem;align-items:start">
-
-        <!-- Sticky label column -->
-        <div style="position:sticky;top:calc(var(--nav-h) + 2rem)">
-          <h2 style="font-size:clamp(1.6rem,2.5vw,2rem);margin-bottom:0.75rem">Yang kami kerjakan sehari-hari</h2>
-          <p style="font-size:14px;color:var(--ink-3);line-height:1.65;margin-bottom:1.5rem">Bukan semua hal. Hanya yang benar-benar kami kuasai.</p>
-          <a href="/services" class="btn btn-outline" style="font-size:13px">Semua layanan &rarr;</a>
-        </div>
-
-        <!-- Service rows -->
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;
+          color:#1A1A2E;
+          margin-bottom:0.75rem;
+        ">Apa yang Kami Lakukan</h2>
+        <p class="reveal reveal-d1" style="
+          font-family:'Fredoka',sans-serif;
+          font-size:1rem;color:#2D2D44BB;max-width:480px;margin:0 auto;line-height:1.6;
+        ">Dari product engineering sampai cloud infrastructure \u2014 kami cover semua kebutuhan digital Anda.</p>
+      </div>
+      <div class="grid-2" style="gap:1.5rem;">
+        ${cards}
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:2.5rem;">
+        <a href="/services" style="
+          display:inline-block;
+          padding:0.75rem 2rem;
+          border:3px solid #1A1A2E;
+          border-radius:12px;
+          background:#FED41D;
+          color:#1A1A2E;
+          font-family:'Fredoka',sans-serif;
+          font-size:0.95rem;font-weight:700;
+          text-decoration:none;
+          box-shadow:4px 4px 0px #1A1A2E;
+          transition:transform 0.1s,box-shadow 0.1s;
+        "
+        onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0px #1A1A2E'"
+        onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0px #1A1A2E'"
+        >Semua Layanan \u2192</a>
+      </div>
+    </div>
+  </section>`;
+}
+function whyUsSection() {
+  const points = [
+    { icon: "\u26A1", title: "Delivery Cepat", body: "Metodologi Agile ketat. Sprint dua minggu. Demo tiap akhir sprint \u2014 tidak ada surprise di akhir." },
+    { icon: "\u{1F512}", title: "Security First", body: "Secure SDLC dari hari pertama. Code review, SAST, dependency audit \u2014 bukan afterthought." },
+    { icon: "\u{1F4C8}", title: "Scalable by Design", body: "Arsitektur dirancang untuk tumbuh. Dari 100 user ke 10 juta user tanpa rearchitecture besar." },
+    { icon: "\u{1F91D}", title: "Partner, Bukan Vendor", body: "Kami duduk di sisi Anda \u2014 ikut memikirkan bisnis, bukan hanya mengerjakan tiket." }
+  ];
+  const items = points.map((p, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      display:flex;gap:1rem;align-items:flex-start;
+      padding:1.25rem;
+      border:2px solid #1A1A2E22;
+      border-radius:14px;
+      background:#FFFEF7;
+      transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onmouseover="this.style.borderColor='#FED41D';this.style.boxShadow='4px 4px 0px #FED41D'"
+    onmouseout="this.style.borderColor='#1A1A2E22';this.style.boxShadow='none'"
+    >
+      <div style="font-size:1.75rem;line-height:1;flex-shrink:0;">${p.icon}</div>
+      <div>
+        <h3 style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.35rem;">${p.title}</h3>
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${p.body}</p>
+      </div>
+    </div>`).join("");
+  return `
+  <section class="section" style="background:#1A1A2E;">
+    <div class="container">
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:4rem;
+        align-items:center;
+      " class="grid-why">
         <div>
-          ${svcRows}
+          <h2 class="reveal" style="
+            font-family:'Bangers',cursive;
+            font-size:clamp(2rem,5vw,3rem);
+            letter-spacing:0.05em;
+            color:#FED41D;
+            margin-bottom:1rem;
+            line-height:1.1;
+          ">Kenapa Pilih<br/>NusaTech?</h2>
+          <p class="reveal reveal-d1" style="
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;color:#FFFEF799;line-height:1.7;margin-bottom:2rem;
+          ">Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda \u2014 bukan hanya output teknis.</p>
+          <a class="reveal reveal-d2" href="/about" style="
+            display:inline-block;
+            padding:0.75rem 1.75rem;
+            background:#FED41D;
+            color:#1A1A2E;
+            border:3px solid #FED41D;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.95rem;font-weight:700;
+            text-decoration:none;
+            box-shadow:4px 4px 0px #F5C400;
+          ">Tentang Kami \u2192</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          ${items}
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- \u2500\u2500 WHY US \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+    <style>
+      @media(max-width:768px){.grid-why{grid-template-columns:1fr !important;gap:2rem !important;}}
+    </style>
+  </section>`;
+}
+function testimonialsSection() {
+  const cards = testimonials.map((t, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      background:#FFFEF7;
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      box-shadow:5px 5px 0px #FED41D;
+      padding:1.75rem;
+      display:flex;flex-direction:column;gap:1rem;
+    ">
+      <div style="color:#FED41D;font-size:1.1rem;letter-spacing:0.1em;">${"\u2605".repeat(t.rating)}</div>
+      <p style="
+        font-family:'Fredoka',sans-serif;
+        font-size:0.95rem;
+        color:#1A1A2E;
+        line-height:1.7;
+        flex:1;
+        font-style:italic;
+      ">"${t.text}"</p>
+      <div style="display:flex;align-items:center;gap:0.75rem;padding-top:0.75rem;border-top:2px solid #1A1A2E22;">
+        <div style="
+          width:40px;height:40px;
+          background:#FED41D;
+          border:2px solid #1A1A2E;
+          border-radius:50%;
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Bangers',cursive;
+          font-size:0.85rem;color:#1A1A2E;
+          flex-shrink:0;
+        ">${t.avatar}</div>
+        <div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:700;color:#1A1A2E;">${t.name}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#2D2D44AA;">${t.role}, ${t.company}</div>
+        </div>
+      </div>
+    </div>`).join("");
+  return `
+  <section class="section" style="background:#F5F5EC;">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
-
-        <div class="reveal">
-          <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Kami bukan yang paling murah. Tapi kami <span class="accent-text">worth it.</span></h2>
-          <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:2rem">
-            Ada vendor lebih murah, kami tidak akan bohong soal itu. Tapi kami yang datang ke meeting sudah baca brief, paham konteks bisnis, dan angkat telepon jam 11 malam kalau ada masalah sebelum launch.
-          </p>
-          <a href="/contact" class="btn btn-dark">Ngobrol gratis &rarr;</a>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:0">
-          ${[
-  ["Tidak ada hidden cost", "Scope, timeline, biaya dijelaskan di awal. Perubahan selalu dikomunikasikan sebelum dikerjakan."],
-  ["Kode yang bisa Anda baca", "Kami tulis dokumentasi, ikuti standar, dan pastikan tim Anda bisa maintain setelah kami selesai."],
-  ["Reply dalam jam kerja", "WA dibalas dalam jam kerja. Darurat? Ada hotline yang beneran diangkat, bukan bot."],
-  ["Garansi 3 bulan", "Bug-fix pasca-launch gratis 3 bulan. Tidak ada biaya tersembunyi untuk masalah yang kami buat."]
-].map(([title, desc], i) => `
-            <div class="reveal reveal-d${i + 1}" style="display:flex;gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--surface-3)">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px">
-                <circle cx="8" cy="8" r="7.5" stroke="var(--accent)" stroke-width="1"/>
-                <path d="M5 8l2 2 4-4" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <div>
-                <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:0.25rem">${title}</p>
-                <p style="font-size:13px;color:var(--ink-3);line-height:1.6">${desc}</p>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
+        ">Kata Klien Kami</h2>
+        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44BB;max-width:440px;margin:0 auto;">
+          Hasil bicara lebih keras dari janji. Ini yang mereka katakan.
+        </p>
       </div>
+      <div class="grid-3">${cards}</div>
     </div>
-  </section>
-
-  <!-- \u2500\u2500 TESTIMONIALS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap">
-        <h2 class="reveal" style="font-size:clamp(1.6rem,2.5vw,2rem)">Kata klien, bukan marketing kami</h2>
-        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Kami minta mereka jujur.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem">
-        ${tCards}
-      </div>
-    </div>
-  </section>
-
-  <!-- \u2500\u2500 CTA \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
-    <div class="container-sm reveal">
-      <div style="background:var(--ink);border-radius:var(--radius-lg);padding:4rem;text-align:center">
-        <p style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem">Mulai dari obrolan</p>
-        <h2 style="color:#fafafa;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Punya masalah teknis?<br>Kami dengerin.</h2>
-        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:2rem;line-height:1.65">Tidak perlu brief sempurna. Cukup ceritakan konteksnya, kita figureout bareng.</p>
-        <div style="display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap">
-          <a href="/contact" class="btn" style="background:#fafafa;color:var(--ink)">Hubungi kami</a>
-          <a href="/portfolio" class="btn" style="background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.2)">Lihat portfolio dulu</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    @media (max-width: 768px) {
-      section > .container > div[style*="grid-template-columns:1fr 1fr"],
-      section > .container > div[style*="grid-template-columns:280px"] {
-        grid-template-columns: 1fr !important;
-        gap: 2.5rem !important;
-      }
-      div[style*="grid-template-columns:repeat(3"] {
-        grid-template-columns: 1fr !important;
-      }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:0"] {
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-  </style>
-`;
-var homePage = () => layout("Beranda", content, "home");
+  </section>`;
+}
+function homePage() {
+  const content = `
+    ${heroSection()}
+    <div class="comic-divider"></div>
+    ${servicesPreview()}
+    ${whyUsSection()}
+    <div class="comic-divider"></div>
+    ${testimonialsSection()}
+    ${ctaSection({
+    heading: "Siap Memulai Proyek?",
+    subheading: "Ceritakan tantangan Anda \u2014 kami siap duduk bareng dan cari solusinya.",
+    primaryLabel: "Hubungi Kami \u2726",
+    primaryHref: "/contact",
+    secondaryLabel: "Lihat Portfolio",
+    secondaryHref: "/portfolio"
+  })}
+  `;
+  return baseLayout({
+    title: "Beranda",
+    description: company.description,
+    activePage: "/",
+    content
+  });
+}
 
 // src/pages/services.ts
-var svcItems = services.map((s, i) => `
-  <div class="reveal" style="padding:2rem 0;border-bottom:1px solid var(--surface-3);display:grid;grid-template-columns:48px 1fr auto;gap:1.5rem;align-items:flex-start">
-    <span class="mono" style="font-size:11px;color:var(--ink-3);padding-top:5px">${String(i + 1).padStart(2, "0")}</span>
-    <div>
-      <h3 style="font-size:18px;font-weight:700;margin-bottom:0.5rem">${s.title}</h3>
-      <p style="font-size:14px;color:var(--ink-2);line-height:1.65;max-width:560px">${s.description}</p>
-      <a href="/contact" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;margin-top:0.75rem">Diskusikan kebutuhan &rarr;</a>
-    </div>
-    <span class="mono" style="font-size:11px;color:var(--ink-3);white-space:nowrap;padding-top:5px;text-align:right">${s.detail}</span>
-  </div>
-`).join("");
-var techList = [
-  { name: "Bun", note: "Runtime utama" },
-  { name: "TypeScript", note: "Selalu" },
-  { name: "React / Next.js", note: "" },
-  { name: "Go", note: "Backend high-load" },
-  { name: "Python", note: "AI & data" },
-  { name: "PostgreSQL", note: "DB favorit" },
-  { name: "Redis", note: "" },
-  { name: "AWS", note: "Cloud utama" },
-  { name: "Docker + K8s", note: "" },
-  { name: "React Native", note: "" },
-  { name: "Flutter", note: "" },
-  { name: "TensorFlow", note: "" },
-  { name: "Kafka", note: "Event streaming" },
-  { name: "Vue.js", note: "" },
-  { name: "Laravel", note: "PHP legacy" }
-];
-var processSteps = [
-  ["Obrolan awal", "30-60 menit. Kami dengarkan masalah Anda, bukan langsung kasih penawaran. Kalau kami bukan yang tepat, kami bilang jujur."],
-  ["Scope & estimasi", "Proposal detail dalam 48 jam: lingkup, timeline, milestone, biaya. Tidak ada angka yang tiba-tiba berubah di tengah jalan."],
-  ["Bangun bareng", "Sprint 2 minggu, update rutin. Akses ke repo kapan saja. Tidak perlu nunggu 3 bulan buat lihat progress."],
-  ["Launch & lanjut", "Deploy, monitoring 30 hari, handover lengkap ke tim Anda. Garansi bug-fix 3 bulan setelah launch."]
-];
-var content2 = `
-  <!-- Header -->
-  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+function servicesHero() {
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;
+    text-align:center;
+  ">
     <div class="container">
-      <div style="max-width:600px">
-        <h1 style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1;margin-bottom:1rem">
-          Yang kami kerjakan sehari-hari
-        </h1>
-        <p style="font-size:16px;color:var(--ink-2);line-height:1.7">
-          Kami tidak menawarkan semua hal. Fokus di bidang yang benar-benar kami kuasai, dan hasilnya bisa Anda lihat di portfolio.
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;
+          border-radius:999px;font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">\u{1F6E0} Layanan Kami</span>
+      </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;
+        line-height:1.05;margin-bottom:1rem;
+      ">Solusi Lengkap<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">untuk Tim Anda</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:520px;margin:0 auto;line-height:1.7;
+      ">Dari ideasi produk hingga infrastruktur skala enterprise \u2014 satu partner untuk semua kebutuhan digital Anda.</p>
+    </div>
+  </section>`;
+}
+function servicesGrid() {
+  const cards = services.map(
+    (s, i) => `<div class="reveal reveal-d${i % 3 + 1}">
+      ${card({ title: s.title, body: s.description, icon: s.icon, badge: s.detail })}
+    </div>`
+  ).join("");
+  return `
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">${cards}</div>
+    </div>
+  </section>`;
+}
+function processSection() {
+  const steps = [
+    { num: "01", title: "Discovery", body: "Workshop intensif untuk memahami bisnis, pain point, dan target outcome. Kita align sebelum satu baris kode pun ditulis." },
+    { num: "02", title: "Architecture", body: "Technical design, ADR, dan pemilihan stack yang tepat. Dokumen arsitektur jadi living document sepanjang proyek." },
+    { num: "03", title: "Build", body: "Sprint dua minggu. Demo tiap akhir sprint. Continuous integration dari hari pertama \u2014 tidak ada big bang release." },
+    { num: "04", title: "Deploy & Scale", body: "Zero-downtime deployment, monitoring end-to-end, dan post-launch support untuk pastikan sistem stabil di production." }
+  ];
+  const items = steps.map((s, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      display:flex;gap:1.25rem;align-items:flex-start;
+      padding:1.5rem;
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      background:#FFFEF7;
+      box-shadow:4px 4px 0 #FED41D;
+    ">
+      <div style="
+        min-width:52px;height:52px;
+        background:#FED41D;
+        border:3px solid #1A1A2E;
+        border-radius:12px;
+        display:flex;align-items:center;justify-content:center;
+        font-family:'Bangers',cursive;
+        font-size:1.3rem;letter-spacing:0.05em;color:#1A1A2E;
+        flex-shrink:0;
+      ">${s.num}</div>
+      <div>
+        <h3 style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.4rem;">${s.title}</h3>
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${s.body}</p>
+      </div>
+    </div>`).join("");
+  return `
+  <section class="section" style="background:#1A1A2E;">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#FED41D;margin-bottom:0.75rem;
+        ">Cara Kami Bekerja</h2>
+        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#FFFEF799;max-width:440px;margin:0 auto;">
+          Proses yang terstruktur, komunikasi yang transparan.
         </p>
       </div>
+      <div class="grid-2" style="gap:1.25rem;">${items}</div>
     </div>
-  </section>
-
-  <!-- Service list -->
-  <section style="background:#fff;border-top:1px solid var(--surface-3);padding:0 0 4rem">
-    <div class="container">
-      ${svcItems}
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
-        <div class="reveal" style="position:sticky;top:calc(var(--nav-h) + 2rem)">
-          <h2 style="font-size:clamp(1.6rem,2.5vw,2rem);margin-bottom:0.75rem">Proses yang tidak ada yang disembunyikan</h2>
-          <p style="font-size:14px;color:var(--ink-3);line-height:1.65">Dari hari pertama sampai launch, ini yang terjadi.</p>
-        </div>
-        <div>
-          ${processSteps.map(([title, desc], i) => `
-            <div class="reveal reveal-d${i + 1}" style="display:flex;gap:1.5rem;padding:1.75rem 0;border-bottom:1px solid var(--surface-3)">
-              <div style="width:32px;height:32px;border-radius:6px;background:var(--ink);color:#fafafa;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0">${String(i + 1).padStart(2, "0")}</div>
-              <div>
-                <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:0.35rem">${title}</p>
-                <p style="font-size:13.5px;color:var(--ink-3);line-height:1.65">${desc}</p>
-              </div>
-            </div>
-          `).join("")}
-        </div>
+  </section>`;
+}
+function techStackSection() {
+  const stacks = [
+    { cat: "Backend", items: ["Go", "Node.js", "Python", "Rust"] },
+    { cat: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind"] },
+    { cat: "Mobile", items: ["React Native", "Swift", "Kotlin", "Flutter"] },
+    { cat: "Cloud & Infra", items: ["AWS", "GCP", "Kubernetes", "Terraform"] },
+    { cat: "Data", items: ["PostgreSQL", "MongoDB", "Kafka", "Redis"] },
+    { cat: "AI/ML", items: ["PyTorch", "LangChain", "Hugging Face", "MLflow"] }
+  ];
+  const groups = stacks.map((s, i) => `
+    <div class="reveal reveal-d${i % 3 + 1}" style="
+      padding:1.25rem;
+      border:3px solid #FED41D33;
+      border-radius:14px;
+      background:#FFFEF708;
+    ">
+      <h4 style="
+        font-family:'Bangers',cursive;font-size:1rem;
+        letter-spacing:0.06em;color:#FED41D;margin-bottom:0.75rem;
+      ">${s.cat}</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+        ${s.items.map((it) => `
+          <span style="
+            padding:0.2rem 0.7rem;
+            background:#FED41D18;
+            border:1.5px solid #FED41D44;
+            border-radius:999px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.8rem;font-weight:500;
+            color:#FFFEF7CC;
+          ">${it}</span>`).join("")}
       </div>
-    </div>
-  </section>
-
-  <!-- Tech -->
-  <section style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+    </div>`).join("");
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap">
-        <h2 class="reveal" style="font-size:1.5rem">Tools yang kami pakai, bukan yang kami pelajari bulan lalu</h2>
-        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Dipilih berdasarkan stabilitas produksi, bukan hype.</p>
-      </div>
-      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.5rem">
-        ${techList.map(({ name, note }) => `
-          <span title="${note}" style="background:var(--surface-2);color:var(--ink-2);padding:0.4rem 0.9rem;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:default;border:1px solid var(--surface-3);transition:background 0.15s,color 0.15s" onmouseover="this.style.background='var(--accent-bg)';this.style.color='var(--accent)'" onmouseout="this.style.background='var(--surface-2)';this.style.color='var(--ink-2)'">${name}</span>
-        `).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing philosophy -->
-  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container-sm reveal">
-      <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:3rem">
-        <h2 style="font-size:1.5rem;margin-bottom:0.75rem">Soal harga, kami jujur</h2>
-        <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:2rem">
-          Tidak ada daftar harga tetap, setiap proyek berbeda. Tapi kami bisa kasih estimasi jujur dalam 48 jam setelah brief diterima.
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
+        ">Tech Stack</h2>
+        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44AA;max-width:400px;margin:0 auto;">
+          Kami pilih tools yang tepat untuk masalah yang tepat \u2014 bukan yang lagi hype.
         </p>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--surface-3);border:1px solid var(--surface-3);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem">
-          ${[
-  ["Website", "Mulai Rp 25 juta"],
-  ["Mobile App", "Mulai Rp 80 juta"],
-  ["Enterprise", "Sesuai scope"]
-].map(([type, price]) => `
-            <div style="background:#fff;padding:1.25rem 1.5rem">
-              <p style="font-size:11px;color:var(--ink-3);margin-bottom:0.35rem;font-family:'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.08em">${type}</p>
-              <p style="font-size:14px;font-weight:700;color:var(--ink)">${price}</p>
-            </div>
-          `).join("")}
-        </div>
-        <a href="/contact" class="btn btn-dark">Minta estimasi gratis &rarr;</a>
+      </div>
+      <div class="grid-3" style="gap:1.25rem;">
+        ${groups}
       </div>
     </div>
-  </section>
+  </section>`;
+}
+function servicesPage() {
+  const content = `
+    ${servicesHero()}
+    <div class="comic-divider"></div>
+    ${servicesGrid()}
+    ${processSection()}
+    <div class="comic-divider"></div>
+    ${techStackSection()}
+    ${ctaSection({
+    heading: "Butuh Konsultasi Teknis?",
+    subheading: "Gratis 60 menit \u2014 kami review arsitektur atau stack Anda dan kasih feedback jujur.",
+    primaryLabel: "Jadwalkan Konsultasi",
+    primaryHref: "/contact",
+    secondaryLabel: "Lihat Portfolio",
+    secondaryHref: "/portfolio"
+  })}
+  `;
+  return baseLayout({
+    title: "Layanan",
+    description: "Product engineering, cloud/DevOps, mobile, AI, security, dan analytics \u2014 solusi lengkap untuk startup hingga enterprise.",
+    activePage: "/services",
+    content
+  });
+}
 
-  <style>
-    @media (max-width: 768px) {
-      div[style*="grid-template-columns:48px 1fr auto"] {
-        grid-template-columns: 1fr !important;
-        gap: 0.5rem !important;
-      }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:5rem"] {
-        grid-template-columns: 1fr !important;
-        gap: 2.5rem !important;
-      }
-      div[style*="grid-template-columns:repeat(3,1fr)"] {
-        grid-template-columns: 1fr !important;
-      }
-    }
-  </style>
-`;
-var servicesPage = () => layout("Layanan", content2, "services");
+// src/components/badge.ts
+function badge(text, variant = "yellow") {
+  const styles = {
+    yellow: "background:#FED41D;color:#1A1A2E;",
+    sky: "background:#87CEEB;color:#1A1A2E;",
+    ink: "background:#1A1A2E;color:#FED41D;",
+    coral: "background:#FF6B6B;color:#fff;"
+  };
+  return `<span style="
+    display:inline-block;
+    padding:2px 10px;
+    border-radius:999px;
+    border:2px solid #1A1A2E;
+    font-family:'Fredoka',sans-serif;
+    font-size:0.75rem;
+    font-weight:600;
+    letter-spacing:0.03em;
+    ${styles[variant]}
+  ">${text}</span>`;
+}
 
 // src/pages/portfolio.ts
-var featured = portfolios[0];
-var rest = portfolios.slice(1);
-var content3 = `
-  <!-- Header -->
-  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+function portfolioHero() {
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;text-align:center;
+  ">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end">
-        <h1 class="reveal" style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1">
-          Proyek nyata,<br>hasil yang terukur
-        </h1>
-        <p class="reveal" style="font-size:15px;color:var(--ink-2);line-height:1.7;max-width:400px">
-          Bukan mockup atau konsep. Ini proyek yang sudah jalan dan dipakai pengguna sungguhan.
-        </p>
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;
+          border-radius:999px;font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">\u{1F3C6} Portfolio</span>
       </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">Proyek yang<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Kami Banggakan</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:500px;margin:0 auto;line-height:1.7;
+      ">Setiap proyek adalah cerita tentang tantangan nyata dan solusi yang benar-benar bekerja.</p>
     </div>
-  </section>
+  </section>`;
+}
+function featuredProject() {
+  const featured = portfolios[0];
+  const techBadges = featured.tech.map((t) => badge(t, "sky")).join(" ");
+  return `
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;
+          font-weight:700;color:#FED41D;letter-spacing:0.08em;
+          text-transform:uppercase;
+        ">\u2605 Featured Project</span>
+      </div>
+      <div style="
+        border:3px solid #1A1A2E;
+        border-radius:20px;
+        box-shadow:8px 8px 0 #FED41D;
+        overflow:hidden;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+      " class="featured-grid">
 
-  <!-- Featured project (full-width asymmetric) -->
-  <section style="background:#fff;border-top:1px solid var(--surface-3);padding:4rem 0">
-    <div class="container reveal">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--surface-3);border-radius:var(--radius-lg);overflow:hidden">
-        <!-- Visual panel -->
-        <div style="background:var(--ink);padding:3.5rem;display:flex;align-items:flex-end;min-height:320px;position:relative">
-          <div style="position:absolute;top:2rem;right:2rem;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Geist Mono',monospace;font-size:10.5px;padding:0.3rem 0.6rem;border-radius:4px">${featured.year}</div>
-          <div>
-            <p style="font-family:'Geist Mono',monospace;font-size:10.5px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.5rem">${featured.category.split(" \xB7 ")[0]}</p>
-            <h2 style="font-size:1.75rem;color:#fafafa;margin-bottom:0.5rem">${featured.title}</h2>
+        <!-- Visual side -->
+        <div style="
+          background:linear-gradient(135deg,#1A1A2E 0%,#2D2D44 100%);
+          padding:3rem 2.5rem;
+          display:flex;flex-direction:column;justify-content:center;gap:1.5rem;
+          border-right:3px solid #FED41D;
+        ">
+          <div style="font-family:'Bangers',cursive;font-size:5rem;line-height:1;">\u{1F3E6}</div>
+          <h2 style="
+            font-family:'Bangers',cursive;
+            font-size:2.5rem;letter-spacing:0.05em;
+            color:#FED41D;line-height:1.1;margin:0;
+          ">${featured.title}</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">${techBadges}</div>
+          <div style="
+            display:inline-flex;align-items:center;gap:0.5rem;
+            padding:0.5rem 1rem;
+            background:#FED41D;
+            border:2px solid #1A1A2E;
+            border-radius:10px;
+            width:fit-content;
+          ">
+            <span style="font-family:'Bangers',cursive;font-size:1rem;color:#1A1A2E;letter-spacing:0.04em;">
+              \u{1F4CA} ${featured.result}
+            </span>
           </div>
         </div>
-        <!-- Content panel -->
-        <div style="padding:3.5rem;background:#fff;border-left:1px solid var(--surface-3)">
-          <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:1.5rem">${featured.description}</p>
-          <div style="display:flex;align-items:center;gap:0.6rem;padding:1rem;background:var(--accent-bg);border-radius:var(--radius);border:1px solid rgba(22,163,74,0.15);margin-bottom:1.5rem">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9l3 3 7-7" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <p style="font-size:12.5px;font-weight:600;color:var(--accent)">${featured.result}</p>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
-            ${featured.tech.map((t) => `<span style="background:var(--surface-2);color:var(--ink-2);padding:0.25rem 0.65rem;border-radius:4px;font-size:12px;font-family:'Geist Mono',monospace;border:1px solid var(--surface-3)">${t}</span>`).join("")}
+
+        <!-- Info side -->
+        <div style="padding:3rem 2.5rem;background:#FFFEF7;display:flex;flex-direction:column;justify-content:center;gap:1.25rem;">
+          ${badge(featured.category, "yellow")}
+          <h3 style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:0.04em;color:#1A1A2E;margin:0;">${featured.title}</h3>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">${featured.description}</p>
+          <div style="
+            padding:1rem;
+            background:#FED41D18;
+            border:2px solid #FED41D;
+            border-radius:12px;
+          ">
+            <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;">
+              \u{1F5D3} ${featured.year} \xB7 ${featured.result}
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Rest of portfolio: 2-col then 3-col variation -->
-  <section style="padding:2rem 0 5rem;background:#fff">
+    <style>
+      @media(max-width:768px){
+        .featured-grid{grid-template-columns:1fr !important;}
+        .featured-grid > div:first-child{border-right:none !important;border-bottom:3px solid #FED41D;}
+      }
+    </style>
+  </section>`;
+}
+function portfolioGrid() {
+  const rest = portfolios.slice(1);
+  const items = rest.map((p, i) => {
+    const techBadges = p.tech.slice(0, 3).map((t) => badge(t, "ink")).join(" ");
+    return `
+    <div class="reveal reveal-d${i + 1} comic-card" style="
+      background:#FFFEF7;
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      box-shadow:5px 5px 0 #1A1A2E;
+      overflow:hidden;
+      display:flex;flex-direction:column;
+      transition:transform 0.15s,box-shadow 0.15s;
+    ">
+      <div style="
+        padding:1.75rem 1.75rem 1.25rem;
+        background:linear-gradient(135deg,#1A1A2E,#2D2D44);
+        border-bottom:3px solid #FED41D;
+      ">
+        <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;font-weight:600;color:#FED41DAA;letter-spacing:0.06em;margin-bottom:0.5rem;">${p.year}</div>
+        <h3 style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:0.04em;color:#FED41D;margin-bottom:0.5rem;">${p.title}</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">${techBadges}</div>
+      </div>
+      <div style="padding:1.25rem 1.75rem 1.5rem;display:flex;flex-direction:column;gap:0.75rem;flex:1;">
+        ${badge(p.category, "yellow")}
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${p.description}</p>
+        <div style="
+          padding:0.6rem 0.9rem;
+          background:#FED41D18;
+          border:2px solid #FED41D66;
+          border-radius:8px;
+          font-family:'Fredoka',sans-serif;
+          font-size:0.82rem;font-weight:600;color:#1A1A2E;
+        ">\u{1F4CA} ${p.result}</div>
+      </div>
+    </div>`;
+  }).join("");
+  return `
+  <section class="section" style="background:#F5F5EC;">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem">
-        ${rest.map((p, i) => `
-          <div class="card reveal reveal-d${i + 1}" style="overflow:hidden">
-            <div style="background:var(--surface-2);padding:2rem;border-bottom:1px solid var(--surface-3);display:flex;align-items:center;justify-content:space-between">
-              <p style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3)">${p.category.split(" \xB7 ")[0]}</p>
-              <span style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3)">${p.year}</span>
-            </div>
-            <div style="padding:1.75rem">
-              <h3 style="font-size:16px;font-weight:700;margin-bottom:0.5rem">${p.title}</h3>
-              <p style="font-size:13px;color:var(--ink-3);line-height:1.6;margin-bottom:1.25rem">${p.description}</p>
-              <div style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--accent-bg);border-radius:var(--radius);border:1px solid rgba(22,163,74,0.12);margin-bottom:1.25rem">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.5 8l2.5 2.5 6.5-7" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <p style="font-size:11.5px;font-weight:600;color:var(--accent)">${p.result}</p>
-              </div>
-              <div style="display:flex;flex-wrap:wrap;gap:0.35rem">
-                ${p.tech.map((t) => `<span style="background:var(--surface-2);color:var(--ink-3);padding:0.2rem 0.55rem;border-radius:4px;font-size:11px;font-family:'Geist Mono',monospace">${t}</span>`).join("")}
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
+      <h2 class="reveal" style="
+        font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);
+        letter-spacing:0.05em;color:#1A1A2E;margin-bottom:2rem;
+      ">Proyek Lainnya</h2>
+      <div class="grid-3" style="gap:1.5rem;">${items}</div>
     </div>
-  </section>
-
-  <!-- Stats row -->
-  <section style="padding:5rem 0;background:var(--ink);border-top:1px solid rgba(255,255,255,0.06)">
+  </section>`;
+}
+function portfolioStats() {
+  return `
+  <section class="section-sm" style="background:#1A1A2E;">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
-        ${[
-  ["500", "+", "Proyek selesai"],
-  ["200", "+", "Klien aktif"],
-  ["99.94", "%", "Rata-rata uptime"],
-  ["4.9", "/5", "Rating klien"]
-].map(([num, suf, label], i) => `
-          <div class="reveal reveal-d${i + 1}" style="padding:2rem;${i < 3 ? "border-right:1px solid rgba(255,255,255,0.08)" : ""}">
-            <p style="font-size:2.4rem;font-weight:900;letter-spacing:-0.04em;color:#fafafa" data-counter data-target="${num}" data-suffix="${suf}">${0}${suf}</p>
-            <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:0.25rem;font-family:'Geist Mono',monospace">${label}</p>
-          </div>
-        `).join("")}
-      </div>
+      ${statsStrip([
+    { value: "500", label: "Proyek Delivered", suffix: "+" },
+    { value: "200", label: "Klien Puas", suffix: "+" },
+    { value: "99.9", label: "Uptime SLA", suffix: "%" },
+    { value: "4.9", label: "Rating Klien", suffix: "/5" }
+  ], true)}
     </div>
-  </section>
-
-  <!-- Industries -->
-  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap">
-        <h2 class="reveal" style="font-size:1.5rem">Industri yang pernah kami tangani</h2>
-        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Konteks yang sudah ada, bukan harus dipelajari dari nol.</p>
-      </div>
-      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.5rem">
-        ${["Fintech", "E-Commerce", "HealthTech", "EdTech", "Logistik", "Retail", "Manufaktur", "FMCG", "Property", "Media", "Perbankan", "Asuransi"].map((ind) => `
-          <span style="background:#fff;color:var(--ink-2);padding:0.45rem 1rem;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:default;border:1px solid var(--surface-3)">${ind}</span>
-        `).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
-    <div class="container-sm reveal" style="text-align:center">
-      <h2 style="font-size:1.75rem;margin-bottom:0.75rem">Proyek Anda bisa jadi yang berikutnya</h2>
-      <p style="font-size:14px;color:var(--ink-3);margin-bottom:2rem">Tidak perlu brief sempurna untuk mulai ngobrol.</p>
-      <a href="/contact" class="btn btn-dark">Mulai ngobrol &rarr;</a>
-    </div>
-  </section>
-
-  <style>
-    @media (max-width: 768px) {
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"] { grid-template-columns: 1fr !important; gap: 2rem !important; }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:0"][style*="overflow:hidden"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2,1fr) !important; }
-      div[style*="border-right:1px solid rgba(255,255,255,0.08)"] { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
-    }
-  </style>
-`;
-var portfolioPage = () => layout("Portfolio", content3, "portfolio");
+  </section>`;
+}
+function portfolioPage() {
+  const content = `
+    ${portfolioHero()}
+    <div class="comic-divider"></div>
+    ${featuredProject()}
+    ${portfolioGrid()}
+    ${portfolioStats()}
+    ${ctaSection({
+    heading: "Proyek Anda Berikutnya?",
+    subheading: "Mari jadikan proyek Anda sebagai salah satu success story yang kami banggakan.",
+    primaryLabel: "Diskusi Sekarang",
+    primaryHref: "/contact",
+    secondaryLabel: "Lihat Layanan",
+    secondaryHref: "/services"
+  })}
+  `;
+  return baseLayout({
+    title: "Portfolio",
+    description: "Portfolio proyek NusaTech Solutions \u2014 fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
+    activePage: "/portfolio",
+    content
+  });
+}
 
 // src/pages/about.ts
-var content4 = `
-  <!-- Header -->
-  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+function aboutHero() {
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;text-align:center;
+  ">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end">
-        <h1 class="reveal" style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1">
-          Tim di balik NusaTech
-        </h1>
-        <p class="reveal" style="font-size:15px;color:var(--ink-2);line-height:1.7">
-          Mulai dari garasi 4 orang pada 2015. Sekarang 150+, tapi prinsipnya sama: jujur, tepat waktu, dan hasilnya harus bisa diukur.
-        </p>
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;
+          border-radius:999px;font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">\u{1F3E2} Tentang Kami</span>
       </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">Kami Percaya<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Teknologi Mengubah Bisnis</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:520px;margin:0 auto;line-height:1.7;
+      ">Sejak ${company.founded}, kami membantu ratusan perusahaan Indonesia tumbuh lebih cepat lewat teknologi yang tepat.</p>
     </div>
-  </section>
-
-  <!-- Origin story -->
-  <section style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+  </section>`;
+}
+function storySection() {
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
-        <div class="reveal">
-          <h2 style="font-size:1.75rem;margin-bottom:1.25rem;line-height:1.2">Kenapa kami ada</h2>
-          <div style="display:flex;flex-direction:column;gap:1rem">
-            <p style="font-size:14px;color:var(--ink-2);line-height:1.75">
-              Budi dan Sari ketemu waktu kerja di Tokopedia 2014. Keduanya frustrasi melihat proyek teknologi perusahaan Indonesia yang gagal, bukan karena teknologinya jelek, tapi karena vendor tidak mengerti bisnis dan bisnis tidak mengerti teknologi.
+      <div style="
+        display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+      " class="story-grid">
+        <div>
+          <h2 class="reveal" style="
+            font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+            letter-spacing:0.05em;color:#1A1A2E;margin-bottom:1.5rem;line-height:1.1;
+          ">Asal Mula<br/>NusaTech</h2>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
+              Didirikan tahun ${company.founded} oleh dua engineer yang frustrasi melihat banyak proyek teknologi gagal bukan karena masalah teknis, melainkan karena komunikasi yang buruk antara tim bisnis dan tim engineering.
             </p>
-            <p style="font-size:14px;color:var(--ink-2);line-height:1.75">
-              Mereka keluar, sewa ruko kecil di Kebayoran, dan mulai dengan tiga prinsip: tidak ambil proyek yang tidak bisa dikerjakan dengan baik, selalu transparan soal progress, dan tidak menghilang setelah launch.
+            <p class="reveal reveal-d2" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
+              Kami membangun NusaTech dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.
             </p>
-            <p style="font-size:14px;color:var(--ink-2);line-height:1.75">
-              Sembilan tahun kemudian, tim bertambah dari 4 jadi 150+, tapi orang yang pertama kali telepon ke nomor kami masih akan dapat respons dari manusia, bukan bot.
+            <p class="reveal reveal-d3" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
+              Hari ini kami adalah tim ${company.employees} profesional yang telah menyelesaikan ${company.projects} proyek untuk ${company.clients} klien di berbagai industri.
             </p>
           </div>
         </div>
 
         <!-- Timeline -->
-        <div class="reveal">
-          <div style="display:flex;flex-direction:column;gap:0">
-            ${[
-  ["2015", "Berdiri", "4 orang, 1 ruko, 3 laptop. Proyek pertama: website company profile Rp 8 juta."],
-  ["2017", "Tumbuh", "Tim jadi 20 orang. Mulai ambil proyek mobile app dan klien enterprise pertama."],
-  ["2019", "Ekspansi AI", "Buka divisi data & AI. Proyek ML pertama untuk prediksi churn pelanggan telko."],
-  ["2021", "150+ Tim", "Buka kantor kedua di Surabaya. Mulai handle proyek lintas negara."],
-  ["2024", "Sekarang", "500+ proyek selesai. Masih jalan dengan prinsip yang sama sejak hari pertama."]
-].map(([year, title, desc], i, arr) => `
-              <div style="display:flex;gap:1.25rem;padding-bottom:${i < arr.length - 1 ? "1.75rem" : "0"}">
-                <div style="display:flex;flex-direction:column;align-items:center;gap:0">
-                  <div style="width:10px;height:10px;border-radius:50%;background:${i === arr.length - 1 ? "var(--accent)" : "var(--ink)"};flex-shrink:0;margin-top:4px"></div>
-                  ${i < arr.length - 1 ? `<div style="width:1px;flex:1;background:var(--surface-3);margin-top:4px"></div>` : ""}
-                </div>
-                <div style="padding-bottom:${i < arr.length - 1 ? "0" : "0"}">
-                  <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.25rem">
-                    <span style="font-size:13px;font-weight:700;color:var(--ink)">${title}</span>
-                    <span style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3)">${year}</span>
-                  </div>
-                  <p style="font-size:13px;color:var(--ink-3);line-height:1.6">${desc}</p>
-                </div>
+        <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:0;">
+          ${[
+    { year: "2015", event: "NusaTech didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
+    { year: "2017", event: "Ekspansi ke enterprise. Proyek pertama dengan bank nasional." },
+    { year: "2019", event: "Buka divisi Cloud & DevOps. Tim tumbuh ke 50 orang." },
+    { year: "2021", event: "Luncurkan AI Lab. Mulai bangun produk data-driven untuk klien." },
+    { year: "2023", event: "150+ tim, 500+ proyek, hadir di 5 kota Indonesia." }
+  ].map((t, i, arr) => `
+            <div style="display:flex;gap:1rem;align-items:flex-start;position:relative;">
+              <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+                <div style="
+                  width:44px;height:44px;
+                  background:#FED41D;
+                  border:3px solid #1A1A2E;
+                  border-radius:50%;
+                  display:flex;align-items:center;justify-content:center;
+                  font-family:'Bangers',cursive;font-size:0.78rem;
+                  color:#1A1A2E;letter-spacing:0.02em;
+                  flex-shrink:0;
+                ">${t.year}</div>
+                ${i < arr.length - 1 ? `<div style="width:3px;height:40px;background:#FED41D44;margin:2px 0;"></div>` : ""}
               </div>
-            `).join("")}
-          </div>
+              <div style="padding:0.5rem 0 ${i < arr.length - 1 ? "1.5rem" : "0"};">
+                <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${t.event}</p>
+              </div>
+            </div>`).join("")}
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Stats -->
-  <section style="background:var(--surface);border-top:1px solid var(--surface-3);padding:4rem 0">
+    <style>@media(max-width:768px){.story-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}}</style>
+  </section>`;
+}
+function statsSection() {
+  return `
+  <section class="section-sm" style="background:#FED41D;border-top:4px solid #1A1A2E;border-bottom:4px solid #1A1A2E;">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--surface-3);border-radius:var(--radius-lg);overflow:hidden;background:#fff">
-        ${[
-  ["2015", "", "Tahun berdiri"],
-  ["150", "+", "Tim saat ini"],
-  ["500", "+", "Proyek"],
-  ["200", "+", "Klien"]
-].map(([num, suf, label], i) => `
-          <div class="reveal reveal-d${i + 1}" style="padding:2rem;${i < 3 ? "border-right:1px solid var(--surface-3)" : ""}">
-            <p style="font-size:2.2rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="${num}" data-suffix="${suf}">${0}${suf}</p>
-            <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">${label}</p>
-          </div>
-        `).join("")}
-      </div>
+      ${statsStrip([
+    { value: company.founded, label: "Tahun Berdiri", suffix: "" },
+    { value: company.employees, label: "Profesional", suffix: "" },
+    { value: company.projects, label: "Proyek", suffix: "" },
+    { value: company.clients, label: "Klien", suffix: "" }
+  ], false)}
     </div>
-  </section>
-
-  <!-- Team -->
-  <section id="team" style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+  </section>`;
+}
+function teamSection() {
+  const cards = team.map((m, i) => `
+    <div class="reveal reveal-d${i + 1} comic-card" style="
+      background:#FFFEF7;
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      box-shadow:5px 5px 0 #1A1A2E;
+      padding:1.75rem;
+      display:flex;flex-direction:column;gap:1rem;
+      transition:transform 0.15s,box-shadow 0.15s;
+    ">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <div style="
+          width:56px;height:56px;
+          background:#FED41D;
+          border:3px solid #1A1A2E;
+          border-radius:14px;
+          box-shadow:3px 3px 0 #1A1A2E;
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Bangers',cursive;font-size:1.2rem;
+          color:#1A1A2E;flex-shrink:0;
+        ">${m.initials}</div>
+        <div>
+          <div style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:#1A1A2E;">${m.name}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.82rem;font-weight:600;color:#5BA8D4;">${m.role}</div>
+        </div>
+      </div>
+      <p style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${m.bio}</p>
+      <div style="
+        padding:0.6rem 0.9rem;
+        background:#FED41D18;
+        border:2px solid #FED41D66;
+        border-radius:8px;
+        font-family:'Fredoka',sans-serif;
+        font-size:0.8rem;font-weight:500;color:#1A1A2E;
+      ">\u{1F4A1} ${m.funFact}</div>
+    </div>`).join("");
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap">
-        <h2 class="reveal" style="font-size:1.75rem">Orang sungguhan, bukan foto stock</h2>
-        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Ini orang yang Anda ajak meeting, bukan nama di brosur.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem">
-        ${team.map((m, i) => `
-          <div class="reveal reveal-d${i % 4 + 1}" style="border:1px solid var(--surface-3);border-radius:var(--radius-lg);overflow:hidden;background:#fff">
-            <div style="background:var(--surface-2);padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--surface-3)">
-              <div style="width:44px;height:44px;border-radius:8px;background:var(--ink);color:#fafafa;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:700;margin-bottom:0.75rem">${m.photo}</div>
-              <p style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:0.2rem">${m.name}</p>
-              <p style="font-size:12px;color:var(--accent);font-weight:500">${m.role}</p>
-            </div>
-            <div style="padding:1.25rem 1.75rem">
-              <p style="font-size:13px;color:var(--ink-3);line-height:1.6;margin-bottom:1rem">${m.bio}</p>
-              <div style="display:flex;align-items:center;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--surface-3)">
-                <span style="font-size:13px">-</span>
-                <p style="font-size:12px;color:var(--ink-3);font-style:italic">${m.funFact}</p>
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- Culture -->
-  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container">
-      <div style="margin-bottom:2.5rem">
-        <h2 class="reveal" style="font-size:1.75rem;margin-bottom:0.5rem">Cara kerja kami</h2>
-        <p class="reveal" style="font-size:14px;color:var(--ink-3)">Tidak ada lembur paksa. Ada ping-pong (satu meja). Ini yang lebih penting:</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--surface-3);border-radius:var(--radius-lg);overflow:hidden">
-        ${[
-  ["Tulis dulu, kerjakan kemudian", "Semua keputusan teknis penting kami dokumentasikan. ADR, README, runbook, bukan cuma ada di kepala satu orang."],
-  ["Tidak ada lembur paksa", "Deadline ketat? Kami negosiasikan scope, bukan minta tim kerja sampai jam 2 pagi. Burnout itu mahal."],
-  ["Feedback loop cepat", "Code review dalam 24 jam, standup 15 menit, retrospective tiap sprint. Masalah ketahuan cepat, selesai juga cepat."]
-].map(([title, desc], i) => `
-          <div class="reveal reveal-d${i + 1}" style="padding:2rem;background:#fff;${i < 2 ? "border-right:1px solid var(--surface-3)" : ""}">
-            <p style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--accent);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.1em">${String(i + 1).padStart(2, "0")}</p>
-            <p style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:0.5rem">${title}</p>
-            <p style="font-size:13px;color:var(--ink-3);line-height:1.65">${desc}</p>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- Hiring CTA -->
-  <section style="padding:5rem 0;background:#fff;border-top:1px solid var(--surface-3)">
-    <div class="container-sm reveal">
-      <div style="border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:3rem;background:var(--surface)">
-        <h2 style="font-size:1.5rem;margin-bottom:0.75rem">Ingin bergabung?</h2>
-        <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:1.75rem;max-width:480px">
-          Kami cari orang yang bisa berpikir mandiri, nulis kode yang bisa dibaca orang lain, dan tidak takut bilang "saya tidak tahu" lalu langsung cari jawabannya.
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
+        ">Orang-Orang di Baliknya</h2>
+        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44AA;max-width:440px;margin:0 auto;">
+          Tim kecil yang dense \u2014 sedikit ego, banyak output.
         </p>
-        <a href="/contact" class="btn btn-dark">Kirim CV dan portfolio &rarr;</a>
       </div>
+      <div class="grid-2" style="gap:1.5rem;">${cards}</div>
     </div>
-  </section>
-
-  <style>
-    @media (max-width: 768px) {
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:5rem"] { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:6rem"] { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-      div[style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: 1fr 1fr !important; }
-      div[style*="grid-template-columns:repeat(4,1fr)"][style*="border:1px solid var(--surface-3)"] { grid-template-columns: 1fr 1fr !important; }
-      div[style*="grid-template-columns:repeat(3,1fr)"][style*="border:1px solid var(--surface-3)"] { grid-template-columns: 1fr !important; }
-      div[style*="border-right:1px solid var(--surface-3)"] { border-right: none !important; border-bottom: 1px solid var(--surface-3) !important; }
-    }
-  </style>
-`;
-var aboutPage = () => layout("Tim Kami", content4, "about");
+  </section>`;
+}
+function valuesSection() {
+  const values = [
+    { icon: "\u{1F3AF}", title: "Outcome over Output", body: "Kami tidak hitung story points. Kami hitung dampak nyata ke bisnis Anda." },
+    { icon: "\u{1F50D}", title: "Radical Transparency", body: "Kabar buruk disampaikan cepat. Tidak ada happy path reporting." },
+    { icon: "\u{1F331}", title: "Kaizen", body: "Setiap sprint lebih baik dari yang sebelumnya. Continuous improvement bukan slogan." },
+    { icon: "\u{1F91D}", title: "Respect & Inclusion", body: "Tim yang beragam menghasilkan solusi yang lebih kaya. Selalu." }
+  ];
+  const items = values.map((v, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      text-align:center;
+      padding:2rem 1.5rem;
+      border:3px solid #FED41D33;
+      border-radius:16px;
+      background:#FFFEF708;
+      transition:border-color 0.15s,background 0.15s;
+    "
+    onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
+    onmouseout="this.style.borderColor='#FED41D33';this.style.background='#FFFEF708'"
+    >
+      <div style="font-size:2.5rem;margin-bottom:1rem;">${v.icon}</div>
+      <h3 style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:#FED41D;margin-bottom:0.5rem;">${v.title}</h3>
+      <p style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#FFFEF799;line-height:1.6;margin:0;">${v.body}</p>
+    </div>`).join("");
+  return `
+  <section class="section" style="background:#1A1A2E;">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#FED41D;margin-bottom:0.75rem;
+        ">Nilai-Nilai Kami</h2>
+      </div>
+      <div class="grid-4" style="gap:1.25rem;">${items}</div>
+    </div>
+  </section>`;
+}
+function aboutPage() {
+  const content = `
+    ${aboutHero()}
+    <div class="comic-divider"></div>
+    ${storySection()}
+    ${statsSection()}
+    ${teamSection()}
+    ${valuesSection()}
+    ${ctaSection({
+    heading: "Bergabung dengan Kami?",
+    subheading: "Kami selalu mencari engineer, designer, dan PM yang passionate. Tidak ada posisi kosong? Kirim saja CV Anda.",
+    primaryLabel: "Lihat Karir",
+    primaryHref: "/contact",
+    secondaryLabel: "Hubungi Kami",
+    secondaryHref: "/contact"
+  })}
+  `;
+  return baseLayout({
+    title: "Tentang Kami",
+    description: `${company.name} \u2014 ${company.tagline}. Didirikan ${company.founded}, ${company.employees} profesional, ${company.projects} proyek selesai.`,
+    activePage: "/about",
+    content
+  });
+}
 
 // src/pages/contact.ts
-var faqItems = [
-  ["Apakah konsultasi pertama benar-benar gratis?", "Ya, benar-benar gratis. Kami dengarkan kebutuhan Anda, kasih opini teknis, dan kalau kami bukan yang tepat, kami bilang jujur."],
-  ["Berapa lama dari brief sampai proposal?", "Maksimal 48 jam kerja setelah brief lengkap kami terima. Proyek sederhana biasanya lebih cepat."],
-  ["Bisakah kami lihat source code di tengah pengerjaan?", "Tentu. Kami pakai private Git repo yang bisa Anda akses kapan saja. Tidak ada kode yang disembunyikan."],
-  ["Bagaimana kalau proyek meleset dari timeline?", "Kami komunikasikan di awal, bukan di hari deadline. Dan kami jelaskan penyebabnya."],
-  ["Apakah ada kontrak kerjanya?", "Ya, selalu. NDA dan perjanjian kerja yang mengatur scope, timeline, pembayaran, dan kepemilikan kode."],
-  ["Kami startup kecil, apakah bisa bekerja sama?", "Bisa. Beberapa klien terbaik kami dimulai dari startup dengan budget terbatas. Kami bantu prioritisasi agar budget dipakai seefektif mungkin."]
-];
-var content5 = `
-  <!-- Header -->
-  <section style="padding-top:calc(var(--nav-h) + 5rem);padding-bottom:4rem;background:var(--surface)">
+function contactHero() {
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;text-align:center;
+  ">
     <div class="container">
-      <div style="max-width:560px">
-        <h1 class="reveal" style="font-size:clamp(2.2rem,4vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1.1;margin-bottom:1rem">
-          Ngobrol dulu,<br>gratis dan tanpa<br><em style="color:var(--accent);font-style:italic">komitmen</em>
-        </h1>
-        <p class="reveal" style="font-size:15px;color:var(--ink-2);line-height:1.7">
-          Isi form atau langsung WhatsApp kami. Biasanya kami balas dalam 2-3 jam di hari kerja.
-        </p>
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;
+          border-radius:999px;font-family:'Fredoka',sans-serif;
+          font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">\u{1F4EC} Kontak</span>
       </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;
+        font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">Ayo Ngobrol<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Tentang Proyek Anda</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:480px;margin:0 auto;line-height:1.7;
+      ">Respon dalam 1 hari kerja. Tidak ada pertanyaan yang terlalu kecil atau terlalu besar.</p>
     </div>
-  </section>
-
-  <!-- Contact content -->
-  <section style="padding:2rem 0 5rem;background:#fff;border-top:1px solid var(--surface-3)">
+  </section>`;
+}
+function contactForm() {
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:start">
+      <div style="
+        display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start;
+      " class="contact-grid">
 
         <!-- Form -->
-        <div class="reveal">
-          <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:0.4rem">Ceritakan proyek Anda</h2>
-          <p style="font-size:13px;color:var(--ink-3);margin-bottom:2rem">Tidak perlu brief sempurna. Kita figureout bareng.</p>
+        <div class="reveal" style="
+          background:#FFFEF7;
+          border:3px solid #1A1A2E;
+          border-radius:20px;
+          box-shadow:8px 8px 0 #FED41D;
+          padding:2.5rem;
+        ">
+          <h2 style="
+            font-family:'Bangers',cursive;font-size:1.8rem;
+            letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;
+          ">Kirim Pesan</h2>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44AA;margin-bottom:2rem;">
+            Semua field wajib diisi. Kami balas dalam 1\xD724 jam kerja.
+          </p>
 
-          <form id="contactForm" novalidate style="display:flex;flex-direction:column;gap:1.25rem">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Nama *</label>
-                <input type="text" name="name" required placeholder="Nama Anda"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Email *</label>
-                <input type="email" name="email" required placeholder="nama@perusahaan.com"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
+          <form id="contact-form" method="POST" action="/api/contact"
+            style="display:flex;flex-direction:column;gap:1.25rem;"
+            onsubmit="handleSubmit(event)">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="form-row">
+              ${inputField("name", "Nama Lengkap", "text", "Budi Santoso")}
+              ${inputField("email", "Email", "email", "budi@perusahaan.com")}
             </div>
+            ${inputField("company", "Nama Perusahaan", "text", "PT Maju Bersama")}
+            ${selectField("service", "Kebutuhan Utama", [
+    "Product Engineering",
+    "Cloud & DevOps",
+    "Mobile Development",
+    "AI & Data Engineering",
+    "Security & Compliance",
+    "Analytics & BI",
+    "Lainnya"
+  ])}
+            ${textareaField("message", "Ceritakan Proyeknya", "Kami sedang membangun platform X dan butuh bantuan di bagian Y...")}
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Perusahaan</label>
-                <input type="text" name="company" placeholder="Opsional"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">No. WA</label>
-                <input type="tel" name="phone" placeholder="08xx"
-                  style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink)"
-                  onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                  onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"/>
-              </div>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Jenis proyek</label>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem">
-                ${["Web Development", "Mobile App", "Cloud & DevOps", "AI & Otomasi", "Security Audit", "Konsultasi"].map((s) => `
-                  <label style="display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.75rem;border:1.5px solid var(--surface-3);border-radius:var(--radius);cursor:pointer;font-size:12.5px;font-weight:500;color:var(--ink-2);transition:border-color 0.15s,background 0.15s">
-                    <input type="checkbox" name="services" value="${s}" style="accent-color:var(--ink);width:13px;height:13px">
-                    ${s}
-                  </label>
-                `).join("")}
-              </div>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Budget estimasi</label>
-              <select name="budget" style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;background:#fff;color:var(--ink-2);transition:border-color 0.15s"
-                onfocus="this.style.borderColor='var(--ink)'" onblur="this.style.borderColor='var(--surface-3)'">
-                <option value="">Pilih range (opsional)</option>
-                <option>Di bawah Rp 30 juta</option>
-                <option>Rp 30 - 100 juta</option>
-                <option>Rp 100 - 300 juta</option>
-                <option>Rp 300 juta - 1 miliar</option>
-                <option>Di atas Rp 1 miliar</option>
-                <option>Belum tahu, perlu diskusi</option>
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em;font-family:'Geist Mono',monospace">Ceritakan masalah Anda *</label>
-              <textarea name="message" required rows="5"
-                placeholder="Misalnya: kami punya toko offline 10 cabang dan ingin sistem kasir terintegrasi..."
-                style="width:100%;border:1.5px solid var(--surface-3);border-radius:var(--radius);padding:0.65rem 0.9rem;font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--ink);resize:vertical;line-height:1.65"
-                onfocus="this.style.borderColor='var(--ink)';this.style.boxShadow='0 0 0 3px rgba(15,15,15,0.06)'"
-                onblur="this.style.borderColor='var(--surface-3)';this.style.boxShadow='none'"></textarea>
-            </div>
-
-            <div>
-              <button type="submit" id="submitBtn" class="btn btn-dark" style="width:100%;justify-content:center;padding:0.8rem">
-                <span id="btnText">Kirim pesan</span>
-                <span id="btnArrow">&rarr;</span>
-              </button>
-            </div>
-
-            <div id="formMsg" style="display:none;font-size:13.5px;padding:0.9rem 1rem;border-radius:var(--radius)"></div>
+            <button type="submit" id="submit-btn" style="
+              padding:0.9rem 2rem;
+              background:#FED41D;
+              color:#1A1A2E;
+              border:3px solid #1A1A2E;
+              border-radius:12px;
+              font-family:'Fredoka',sans-serif;
+              font-size:1rem;font-weight:700;
+              cursor:pointer;
+              box-shadow:5px 5px 0 #1A1A2E;
+              transition:transform 0.1s,box-shadow 0.1s;
+              align-self:flex-start;
+            "
+            onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0 #1A1A2E'"
+            onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0 #1A1A2E'"
+            >Kirim Pesan \u2726</button>
           </form>
+
+          <!-- Success / Error feedback -->
+          <div id="form-success" style="display:none;
+            margin-top:1.5rem;padding:1rem 1.25rem;
+            background:#4CAF5018;border:2px solid #4CAF50;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D6A2D;
+          ">\u2705 Pesan berhasil dikirim! Kami akan membalas dalam 1\xD724 jam kerja.</div>
+          <div id="form-error" style="display:none;
+            margin-top:1.5rem;padding:1rem 1.25rem;
+            background:#FF6B6B18;border:2px solid #FF6B6B;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#8B0000;
+          ">\u274C Terjadi kesalahan. Silakan coba lagi atau hubungi kami langsung via email.</div>
         </div>
 
-        <!-- Sidebar -->
-        <div style="display:flex;flex-direction:column;gap:1rem" class="reveal">
-          <div style="background:var(--ink);border-radius:var(--radius-lg);padding:1.75rem">
-            <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Kontak langsung</p>
-            <a href="https://wa.me/622127884491" style="display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.08);border-radius:var(--radius);padding:0.9rem 1rem;text-decoration:none;margin-bottom:0.5rem;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a6 6 0 0 0-5.19 9.02L1.5 13.5l3.07-.8A6 6 0 1 0 7.5 1.5zm0 10.8a4.8 4.8 0 0 1-2.45-.67l-.18-.1-1.82.48.49-1.78-.12-.19A4.8 4.8 0 1 1 7.5 12.3z" fill="rgba(255,255,255,0.6)"/></svg>
-              <div>
-                <p style="font-size:13px;font-weight:600;color:#fafafa">WhatsApp</p>
-                <p style="font-size:12px;color:rgba(255,255,255,0.4)">${company.phone}</p>
-              </div>
-            </a>
-            <a href="mailto:${company.email}" style="display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.08);border-radius:var(--radius);padding:0.9rem 1rem;text-decoration:none;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1.5 3.5h12v8a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-8zm0 0 6 5 6-5" stroke="rgba(255,255,255,0.6)" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div>
-                <p style="font-size:13px;font-weight:600;color:#fafafa">Email</p>
-                <p style="font-size:12px;color:rgba(255,255,255,0.4)">${company.email}</p>
-              </div>
-            </a>
-          </div>
+        <!-- Sidebar info -->
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+          ${infoCard("\u{1F4CD}", "Alamat", company.address)}
+          ${infoCard("\u2709\uFE0F", "Email", `<a href="mailto:${company.email}" style="color:#5BA8D4;text-decoration:none;">${company.email}</a>`)}
+          ${infoCard("\u{1F4DE}", "Telepon", `<a href="tel:${company.phone.replace(/\s/g, "")}" style="color:#5BA8D4;text-decoration:none;">${company.phone}</a>`)}
 
-          <div style="background:var(--surface-2);border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:1.5rem">
-            <p style="font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Waktu respons</p>
-            <div style="display:flex;flex-direction:column;gap:0.6rem">
-              ${[
-  ["Form ini", "2-4 jam"],
-  ["WhatsApp", "< 1 jam"],
-  ["Email", "Hari yang sama"],
-  ["Darurat produksi", "< 30 menit"]
-].map(([ch, t]) => `
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="font-size:12.5px;color:var(--ink-2)">${ch}</span>
-                  <span style="font-size:12px;font-weight:600;color:var(--ink);font-family:'Geist Mono',monospace">${t}</span>
-                </div>
-              `).join("")}
+          <!-- Social links -->
+          <div class="reveal" style="
+            background:#1A1A2E;
+            border:3px solid #FED41D;
+            border-radius:16px;
+            box-shadow:5px 5px 0 #FED41D44;
+            padding:1.5rem;
+          ">
+            <h3 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin-bottom:1rem;">Temukan Kami</h3>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              ${socialLink("in", "LinkedIn", company.social.linkedin)}
+              ${socialLink("tw", "Twitter / X", company.social.twitter)}
+              ${socialLink("gh", "GitHub", company.social.github)}
+              ${socialLink("ig", "Instagram", company.social.instagram)}
             </div>
-          </div>
-
-          <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:1.5rem">
-            <p style="font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist Mono',monospace">Kantor</p>
-            <p style="font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:0.5rem">${company.address}</p>
-            <p style="font-size:12px;color:var(--ink-3)">Sen-Jum, 09.00-18.00 WIB</p>
           </div>
         </div>
-
       </div>
     </div>
-  </section>
-
-  <!-- FAQ -->
-  <section style="padding:5rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container-sm">
-      <h2 class="reveal" style="font-size:1.5rem;margin-bottom:2rem">Pertanyaan yang sering masuk</h2>
-      <div style="display:flex;flex-direction:column;gap:0" class="reveal">
-        ${faqItems.map(([q, a], i) => `
-          <div style="border-bottom:1px solid var(--surface-3)">
-            <button onclick="toggleFaq(this)" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;background:none;border:none;cursor:pointer;text-align:left;gap:1rem">
-              <span style="font-size:14px;font-weight:600;color:var(--ink)">${q}</span>
-              <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;transition:transform 0.2s"><path d="M4 6l4 4 4-4" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="faq-body" style="display:none;padding-bottom:1.1rem">
-              <p style="font-size:13.5px;color:var(--ink-3);line-height:1.7">${a}</p>
-            </div>
-          </div>
-        `).join("")}
-      </div>
+    <style>
+      @media(max-width:768px){
+        .contact-grid{grid-template-columns:1fr !important;}
+        .form-row{grid-template-columns:1fr !important;}
+      }
+    </style>
+  </section>`;
+}
+function inputField(name, label, type, placeholder) {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;
+      font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <input type="${type}" id="${name}" name="${name}" placeholder="${placeholder}" required
+      style="
+        padding:0.7rem 1rem;
+        border:2.5px solid #1A1A2E;
+        border-radius:10px;
+        font-family:'Fredoka',sans-serif;
+        font-size:0.95rem;color:#1A1A2E;
+        background:#FFFEF7;
+        outline:none;
+        transition:border-color 0.15s,box-shadow 0.15s;
+      "
+      onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+      onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    />
+  </div>`;
+}
+function selectField(name, label, options) {
+  const opts = options.map(
+    (o) => `<option value="${o.toLowerCase().replace(/\s+/g, "-")}">${o}</option>`
+  ).join("");
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <select id="${name}" name="${name}" required style="
+      padding:0.7rem 1rem;
+      border:2.5px solid #1A1A2E;
+      border-radius:10px;
+      font-family:'Fredoka',sans-serif;
+      font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;
+      outline:none;
+      cursor:pointer;
+      transition:border-color 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D'"
+    onblur="this.style.borderColor='#1A1A2E'"
+    >
+      <option value="" disabled selected>Pilih layanan...</option>
+      ${opts}
+    </select>
+  </div>`;
+}
+function textareaField(name, label, placeholder) {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${name}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
+    ">${label} <span style="color:#FF6B6B;">*</span></label>
+    <textarea id="${name}" name="${name}" placeholder="${placeholder}" required rows="5" style="
+      padding:0.7rem 1rem;
+      border:2.5px solid #1A1A2E;
+      border-radius:10px;
+      font-family:'Fredoka',sans-serif;
+      font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;
+      outline:none;resize:vertical;
+      transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+    onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    ></textarea>
+  </div>`;
+}
+function infoCard(icon, title, body) {
+  return `
+  <div class="reveal" style="
+    background:#FFFEF7;
+    border:3px solid #1A1A2E;
+    border-radius:14px;
+    box-shadow:4px 4px 0 #1A1A2E;
+    padding:1.25rem;
+    display:flex;gap:1rem;align-items:flex-start;
+  ">
+    <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">${icon}</div>
+    <div>
+      <div style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.25rem;">${title}</div>
+      <div style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.5;">${body}</div>
     </div>
-  </section>
-
+  </div>`;
+}
+function socialLink(code, label, href) {
+  return `
+  <a href="${href}" target="_blank" rel="noopener noreferrer" style="
+    display:flex;align-items:center;gap:0.75rem;
+    padding:0.6rem 0.75rem;
+    border:2px solid #FED41D22;
+    border-radius:8px;
+    text-decoration:none;
+    transition:border-color 0.15s,background 0.15s;
+  "
+  onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
+  onmouseout="this.style.borderColor='#FED41D22';this.style.background='transparent'"
+  >
+    <span style="
+      width:28px;height:28px;
+      background:#FED41D22;
+      border:1.5px solid #FED41D44;
+      border-radius:6px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Bangers',cursive;font-size:0.7rem;color:#FED41D;
+      flex-shrink:0;
+    ">${code.toUpperCase()}</span>
+    <span style="font-family:'Fredoka',sans-serif;font-size:0.88rem;font-weight:500;color:#FFFEF7CC;">${label}</span>
+  </a>`;
+}
+function contactScript() {
+  return `
   <script>
-    function toggleFaq(btn) {
-      const body = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-      const open = body.style.display === 'block';
-      document.querySelectorAll('.faq-body').forEach(b => b.style.display = 'none');
-      document.querySelectorAll('.faq-icon').forEach(ic => ic.style.transform = '');
-      if (!open) {
-        body.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
+    async function handleSubmit(e) {
+      e.preventDefault();
+      var btn     = document.getElementById('submit-btn');
+      var success = document.getElementById('form-success');
+      var error   = document.getElementById('form-error');
+      var form    = document.getElementById('contact-form');
+
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+      success.style.display = 'none';
+      error.style.display   = 'none';
+
+      var data = {
+        name:    form.name.value,
+        email:   form.email.value,
+        company: form.company.value,
+        service: form.service.value,
+        message: form.message.value,
+      };
+
+      try {
+        var res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          success.style.display = 'block';
+          form.reset();
+        } else {
+          error.style.display = 'block';
+        }
+      } catch (_) {
+        error.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Kirim Pesan \u2726';
       }
     }
-
-    const form = document.getElementById('contactForm');
-    const btnText = document.getElementById('btnText');
-    const btnArrow = document.getElementById('btnArrow');
-    const submitBtn = document.getElementById('submitBtn');
-    const formMsg = document.getElementById('formMsg');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      btnText.textContent = 'Mengirim...';
-      btnArrow.textContent = '';
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.6';
-      setTimeout(() => {
-        formMsg.style.display = 'block';
-        formMsg.style.background = 'var(--accent-bg)';
-        formMsg.style.border = '1px solid rgba(22,163,74,0.2)';
-        formMsg.style.color = 'var(--accent)';
-        formMsg.innerHTML = '<strong>Pesan terkirim.</strong> Kami akan balas dalam 2-4 jam di hari kerja.';
-        form.reset();
-        btnText.textContent = 'Kirim pesan';
-        btnArrow.innerHTML = '&rarr;';
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-      }, 1400);
-    });
-  </script>
-
-  <style>
-    @media (max-width: 768px) {
-      div[style*="grid-template-columns:1fr 380px"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:1rem"] { grid-template-columns: 1fr !important; }
-      div[style*="grid-template-columns:repeat(3,1fr)"][style*="gap:0.4rem"] { grid-template-columns: 1fr 1fr !important; }
-    }
-  </style>
-`;
-var contactPage = () => layout("Kontak", content5, "contact");
+  </script>`;
+}
+function contactPage() {
+  const content = `
+    ${contactHero()}
+    <div class="comic-divider"></div>
+    ${contactForm()}
+    ${contactScript()}
+  `;
+  return baseLayout({
+    title: "Kontak",
+    description: `Hubungi ${company.name} \u2014 kami siap mendiskusikan proyek digital Anda.`,
+    activePage: "/contact",
+    content
+  });
+}
 
 // src/router.ts
 var app = new Hono2();
+app.use("*", logger());
+app.use("*", timing());
+app.use("*", secureHeaders());
+app.use("*", async (c, next) => {
+  await next();
+  if (c.req.method === "GET" && c.res.status === 200) {
+    c.header("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
+  }
+});
 app.get("/", (c) => c.html(homePage()));
 app.get("/services", (c) => c.html(servicesPage()));
 app.get("/portfolio", (c) => c.html(portfolioPage()));
 app.get("/about", (c) => c.html(aboutPage()));
 app.get("/contact", (c) => c.html(contactPage()));
 app.post("/api/contact", async (c) => {
-  const body = await c.req.json();
-  console.log("\u{1F4EC} New contact form submission:", body);
-  return c.json({ success: true, message: "Pesan berhasil diterima!" });
+  try {
+    const body = await c.req.json();
+    if (!body.name || !body.email || !body.message) {
+      return c.json({ success: false, error: "Field name, email, dan message wajib diisi." }, 400);
+    }
+    console.log("[contact]", {
+      name: body.name,
+      email: body.email,
+      company: body.company,
+      service: body.service,
+      message: body.message.slice(0, 120)
+    });
+    return c.json({ success: true, message: "Pesan berhasil diterima." }, 200);
+  } catch {
+    return c.json({ success: false, error: "Request body tidak valid." }, 400);
+  }
 });
-app.notFound(
-  (c) => c.html(
-    `<!DOCTYPE html>
+app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
+app.notFound((c) => {
+  const html = `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>404 \u2014 Halaman Tidak Ditemukan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-  <style>* { font-family: 'Inter', sans-serif; }</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;600&display=swap" rel="stylesheet"/>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen text-center px-6">
-  <div>
-    <div class="text-8xl mb-6">\u{1F50D}</div>
-    <h1 class="text-6xl font-extrabold text-gray-900 mb-4">404</h1>
-    <p class="text-xl text-gray-500 mb-8">Halaman yang Anda cari tidak ditemukan.</p>
-    <a href="/" class="bg-gradient-to-r from-blue-600 to-violet-600 text-white px-8 py-3.5 rounded-xl font-bold inline-block hover:opacity-90 transition-opacity">
-      \u2190 Kembali ke Beranda
-    </a>
+<body style="margin:0;background:#1A1A2E;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;">
+  <div style="text-align:center;padding:2rem;">
+    <div style="font-size:5rem;margin-bottom:1rem;">\u{1F573}\uFE0F</div>
+    <h1 style="font-family:'Bangers',cursive;font-size:6rem;color:#FED41D;letter-spacing:0.1em;margin:0;text-shadow:6px 6px 0 #F5C400;">404</h1>
+    <p style="color:#FFFEF7AA;font-size:1.1rem;margin:0.75rem 0 2rem;">Halaman yang kamu cari tidak ada di Springfield ini.</p>
+    <a href="/" style="
+      display:inline-block;padding:0.85rem 2.25rem;
+      background:#FED41D;color:#1A1A2E;
+      border:3px solid #FED41D;border-radius:12px;
+      font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+      text-decoration:none;box-shadow:5px 5px 0 #F5C400;
+    ">Kembali ke Beranda</a>
   </div>
 </body>
-</html>`,
-    404
-  )
-);
+</html>`;
+  return c.html(html, 404);
+});
+app.onError((err, c) => {
+  console.error("[error]", err);
+  return c.json({ success: false, error: "Internal server error." }, 500);
+});
 var router_default = app;
 
 // api/index.ts

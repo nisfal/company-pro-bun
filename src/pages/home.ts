@@ -1,211 +1,308 @@
-import { layout } from "../templates/layout";
-import { services, testimonials } from "../data/company";
+import { baseLayout } from "../layouts/base";
+import { card } from "../components/card";
+import { statsStrip } from "../components/stats";
+import { ctaSection } from "../components/cta";
+import { company, services, testimonials } from "../data/company";
 
-// Only first 3 services for preview
-const svcRows = services.slice(0, 4).map((s, i) => `
-  <div style="display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--surface-3)" class="reveal reveal-d${(i % 3) + 1}">
-    <span class="mono" style="font-size:11px;color:var(--ink-3);padding-top:4px;min-width:24px">${String(i + 1).padStart(2, '0')}</span>
-    <div style="flex:1">
-      <h3 style="font-size:16px;font-weight:700;margin-bottom:0.35rem">${s.title}</h3>
-      <p style="font-size:13.5px;color:var(--ink-3);line-height:1.6;max-width:520px">${s.description}</p>
-    </div>
-    <span style="font-size:11px;color:var(--ink-3);font-family:'Geist Mono',monospace;white-space:nowrap;padding-top:4px">${s.detail}</span>
-  </div>
-`).join('');
+function heroSection(): string {
+  return `
+  <section style="
+    background: linear-gradient(160deg, #1A1A2E 0%, #2D2D44 100%);
+    padding: 6rem 1.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  ">
+    <!-- Decorative blobs -->
+    <div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;
+      background:#FED41D22;border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;
+      background:#87CEEB18;border-radius:50%;pointer-events:none;"></div>
 
-const tCards = testimonials.map((t, i) => `
-  <div class="reveal reveal-d${i + 1}" style="padding:1.75rem;background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg)">
-    <p style="font-size:14px;line-height:1.7;color:var(--ink-2);margin-bottom:1.25rem">"${t.text}"</p>
-    <hr class="divider" style="margin-bottom:1.25rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:0.75rem">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace;color:var(--ink-2);flex-shrink:0">${t.avatar}</div>
-        <div>
-          <p style="font-size:13px;font-weight:600;color:var(--ink)">${t.name}</p>
-          <p style="font-size:12px;color:var(--ink-3)">${t.role}, ${t.company}</p>
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="max-width:720px;">
+        <!-- Badge -->
+        <div class="reveal" style="margin-bottom:1.25rem;">
+          <span style="
+            display:inline-flex;align-items:center;gap:0.4rem;
+            padding:0.35rem 1rem;
+            background:#FED41D22;
+            border:2px solid #FED41D44;
+            border-radius:999px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.85rem;font-weight:600;
+            color:#FED41D;
+            letter-spacing:0.04em;
+          ">☀️ ${company.founded} — Hadir untuk Indonesia</span>
+        </div>
+
+        <h1 class="reveal reveal-d1" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(3rem,8vw,5.5rem);
+          line-height:1.0;
+          letter-spacing:0.04em;
+          color:#FFFEF7;
+          margin-bottom:0.5rem;
+        ">
+          Digital Solutions<br/>
+          <span style="
+            color:#FED41D;
+            text-shadow:4px 4px 0px #1A1A2E;
+          ">Kelas Dunia</span>
+        </h1>
+
+        <p class="reveal reveal-d2" style="
+          font-family:'Fredoka',sans-serif;
+          font-size:1.15rem;
+          color:#FFFEF7BB;
+          line-height:1.7;
+          margin:1.5rem 0 2.5rem;
+          max-width:560px;
+        ">${company.description}</p>
+
+        <div class="reveal reveal-d3" style="display:flex;flex-wrap:wrap;gap:1rem;">
+          <a href="/services" style="
+            padding:0.85rem 2.25rem;
+            background:#FED41D;
+            color:#1A1A2E;
+            border:3px solid #1A1A2E;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;font-weight:700;
+            text-decoration:none;
+            box-shadow:5px 5px 0px #F5C400;
+            transition:transform 0.1s,box-shadow 0.1s;
+          "
+          onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0px #F5C400'"
+          onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0px #F5C400'"
+          >Lihat Layanan ✦</a>
+          <a href="/portfolio" style="
+            padding:0.85rem 2.25rem;
+            background:transparent;
+            color:#FFFEF7;
+            border:3px solid #FFFEF755;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;font-weight:600;
+            text-decoration:none;
+            transition:border-color 0.15s,color 0.15s;
+          "
+          onmouseover="this.style.borderColor='#FED41D';this.style.color='#FED41D'"
+          onmouseout="this.style.borderColor='#FFFEF755';this.style.color='#FFFEF7'"
+          >Lihat Portfolio →</a>
         </div>
       </div>
-      <span style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--ink-3);background:var(--surface-2);padding:0.2rem 0.6rem;border-radius:4px">${t.project}</span>
-    </div>
-  </div>
-`).join('');
 
-const techItems = [
-  "Bun", "TypeScript", "React", "Next.js", "Go", "Python",
-  "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes",
-  "React Native", "Flutter", "TensorFlow", "Kafka",
-  "Bun", "TypeScript", "React", "Next.js", "Go", "Python",
-  "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes",
-  "React Native", "Flutter", "TensorFlow", "Kafka",
-].map(t => `<span class="mono" style="font-size:12px;color:var(--ink-3);white-space:nowrap">${t}</span>`).join('');
-
-const content = `
-  <!-- ── HERO ──────────────────────────────────────────── -->
-  <section style="min-height:100dvh;display:flex;align-items:center;padding-top:var(--nav-h);background:var(--surface)">
-    <div class="container" style="padding-top:5rem;padding-bottom:5rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
-
-        <!-- Left -->
-        <div>
-          <h1 style="font-size:clamp(2.4rem,4.5vw,3.5rem);font-weight:900;line-height:1.08;letter-spacing:-0.035em;margin-bottom:1.5rem">
-            Software yang<br>benar-benar<br><em style="font-style:italic;color:var(--accent)">berfungsi.</em>
-          </h1>
-          <p style="font-size:16px;color:var(--ink-2);max-width:420px;line-height:1.7;margin-bottom:2rem">
-            Bukan portfolio kosong. Kami sudah 9 tahun bantu startup dan korporat Indonesia tumbuh lewat teknologi. 500+ proyek, 0 klien yang pergi marah.
-          </p>
-          <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
-            <a href="/contact" class="btn btn-dark">Ceritakan proyek Anda &rarr;</a>
-            <a href="/portfolio" class="btn btn-outline">Lihat hasil kerja</a>
-          </div>
-        </div>
-
-        <!-- Right: asymmetric stats panel -->
-        <div style="background:#fff;border:1px solid var(--surface-3);border-radius:var(--radius-lg);padding:2.5rem;position:relative">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
-            <div style="padding:1.5rem;border-right:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="500" data-suffix="+">0+</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Proyek selesai</p>
-            </div>
-            <div style="padding:1.5rem;border-bottom:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="200" data-suffix="+">0+</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Klien aktif</p>
-            </div>
-            <div style="padding:1.5rem;border-right:1px solid var(--surface-3)">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--ink)" data-counter data-target="9" data-suffix=" thn">0 thn</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Di industri</p>
-            </div>
-            <div style="padding:1.5rem">
-              <p style="font-size:2.6rem;font-weight:900;letter-spacing:-0.04em;color:var(--accent)" data-counter data-target="99" data-suffix=".9%" data-float="0">0%</p>
-              <p style="font-size:12px;color:var(--ink-3);margin-top:0.25rem">Uptime rata-rata</p>
-            </div>
-          </div>
-          <!-- status badge -->
-          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--surface-3);display:flex;align-items:center;gap:0.6rem">
-            <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:ping 2s cubic-bezier(0,0,0.2,1) infinite;flex-shrink:0"></span>
-            <span style="font-size:12.5px;color:var(--ink-2)">Terbuka untuk proyek baru per Q3 2024</span>
-          </div>
-        </div>
-
+      <!-- Stats strip -->
+      <div class="reveal reveal-d4" style="margin-top:4rem;">
+        ${statsStrip([
+          { value: company.projects,  label: "Proyek Selesai",   suffix: "" },
+          { value: company.clients,   label: "Klien Puas",       suffix: "" },
+          { value: company.employees, label: "Profesional",      suffix: "" },
+          { value: "9",               label: "Tahun Pengalaman", suffix: " thn" },
+        ], true)}
       </div>
     </div>
-  </section>
+  </section>`;
+}
 
-  <style>
-    @keyframes ping {
-      75%, 100% { transform: scale(1.8); opacity: 0; }
-    }
-    @media (max-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-    }
-  </style>
+function servicesPreview(): string {
+  const cards = services.slice(0, 4).map((s, i) =>
+    `<div class="reveal reveal-d${i + 1}">
+      ${card({ title: s.title, body: s.description, icon: s.icon, footer: s.detail })}
+    </div>`
+  ).join("");
 
-  <!-- ── TECH MARQUEE ──────────────────────────────────── -->
-  <section style="padding:1.25rem 0;background:#fff;border-top:1px solid var(--surface-3);border-bottom:1px solid var(--surface-3)">
-    <div class="marquee-outer">
-      <div class="marquee-track">${techItems}</div>
-    </div>
-  </section>
-
-  <!-- ── SERVICES ──────────────────────────────────────── -->
-  <section style="padding:6rem 0;background:var(--surface)">
+  return `
+  <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:280px 1fr;gap:5rem;align-items:start">
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;
+          color:#1A1A2E;
+          margin-bottom:0.75rem;
+        ">Apa yang Kami Lakukan</h2>
+        <p class="reveal reveal-d1" style="
+          font-family:'Fredoka',sans-serif;
+          font-size:1rem;color:#2D2D44BB;max-width:480px;margin:0 auto;line-height:1.6;
+        ">Dari product engineering sampai cloud infrastructure — kami cover semua kebutuhan digital Anda.</p>
+      </div>
+      <div class="grid-2" style="gap:1.5rem;">
+        ${cards}
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:2.5rem;">
+        <a href="/services" style="
+          display:inline-block;
+          padding:0.75rem 2rem;
+          border:3px solid #1A1A2E;
+          border-radius:12px;
+          background:#FED41D;
+          color:#1A1A2E;
+          font-family:'Fredoka',sans-serif;
+          font-size:0.95rem;font-weight:700;
+          text-decoration:none;
+          box-shadow:4px 4px 0px #1A1A2E;
+          transition:transform 0.1s,box-shadow 0.1s;
+        "
+        onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0px #1A1A2E'"
+        onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0px #1A1A2E'"
+        >Semua Layanan →</a>
+      </div>
+    </div>
+  </section>`;
+}
 
-        <!-- Sticky label column -->
-        <div style="position:sticky;top:calc(var(--nav-h) + 2rem)">
-          <h2 style="font-size:clamp(1.6rem,2.5vw,2rem);margin-bottom:0.75rem">Yang kami kerjakan sehari-hari</h2>
-          <p style="font-size:14px;color:var(--ink-3);line-height:1.65;margin-bottom:1.5rem">Bukan semua hal. Hanya yang benar-benar kami kuasai.</p>
-          <a href="/services" class="btn btn-outline" style="font-size:13px">Semua layanan &rarr;</a>
-        </div>
+function whyUsSection(): string {
+  const points = [
+    { icon: "⚡", title: "Delivery Cepat",    body: "Metodologi Agile ketat. Sprint dua minggu. Demo tiap akhir sprint — tidak ada surprise di akhir." },
+    { icon: "🔒", title: "Security First",    body: "Secure SDLC dari hari pertama. Code review, SAST, dependency audit — bukan afterthought." },
+    { icon: "📈", title: "Scalable by Design", body: "Arsitektur dirancang untuk tumbuh. Dari 100 user ke 10 juta user tanpa rearchitecture besar." },
+    { icon: "🤝", title: "Partner, Bukan Vendor", body: "Kami duduk di sisi Anda — ikut memikirkan bisnis, bukan hanya mengerjakan tiket." },
+  ];
 
-        <!-- Service rows -->
+  const items = points.map((p, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      display:flex;gap:1rem;align-items:flex-start;
+      padding:1.25rem;
+      border:2px solid #1A1A2E22;
+      border-radius:14px;
+      background:#FFFEF7;
+      transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onmouseover="this.style.borderColor='#FED41D';this.style.boxShadow='4px 4px 0px #FED41D'"
+    onmouseout="this.style.borderColor='#1A1A2E22';this.style.boxShadow='none'"
+    >
+      <div style="font-size:1.75rem;line-height:1;flex-shrink:0;">${p.icon}</div>
+      <div>
+        <h3 style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.35rem;">${p.title}</h3>
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${p.body}</p>
+      </div>
+    </div>`).join("");
+
+  return `
+  <section class="section" style="background:#1A1A2E;">
+    <div class="container">
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:4rem;
+        align-items:center;
+      " class="grid-why">
         <div>
-          ${svcRows}
+          <h2 class="reveal" style="
+            font-family:'Bangers',cursive;
+            font-size:clamp(2rem,5vw,3rem);
+            letter-spacing:0.05em;
+            color:#FED41D;
+            margin-bottom:1rem;
+            line-height:1.1;
+          ">Kenapa Pilih<br/>NusaTech?</h2>
+          <p class="reveal reveal-d1" style="
+            font-family:'Fredoka',sans-serif;
+            font-size:1rem;color:#FFFEF799;line-height:1.7;margin-bottom:2rem;
+          ">Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda — bukan hanya output teknis.</p>
+          <a class="reveal reveal-d2" href="/about" style="
+            display:inline-block;
+            padding:0.75rem 1.75rem;
+            background:#FED41D;
+            color:#1A1A2E;
+            border:3px solid #FED41D;
+            border-radius:12px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.95rem;font-weight:700;
+            text-decoration:none;
+            box-shadow:4px 4px 0px #F5C400;
+          ">Tentang Kami →</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          ${items}
         </div>
       </div>
     </div>
-  </section>
+    <style>
+      @media(max-width:768px){.grid-why{grid-template-columns:1fr !important;gap:2rem !important;}}
+    </style>
+  </section>`;
+}
 
-  <!-- ── WHY US ─────────────────────────────────────────── -->
-  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
+function testimonialsSection(): string {
+  const cards = testimonials.map((t, i) => `
+    <div class="reveal reveal-d${i + 1}" style="
+      background:#FFFEF7;
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      box-shadow:5px 5px 0px #FED41D;
+      padding:1.75rem;
+      display:flex;flex-direction:column;gap:1rem;
+    ">
+      <div style="color:#FED41D;font-size:1.1rem;letter-spacing:0.1em;">${"★".repeat(t.rating)}</div>
+      <p style="
+        font-family:'Fredoka',sans-serif;
+        font-size:0.95rem;
+        color:#1A1A2E;
+        line-height:1.7;
+        flex:1;
+        font-style:italic;
+      ">"${t.text}"</p>
+      <div style="display:flex;align-items:center;gap:0.75rem;padding-top:0.75rem;border-top:2px solid #1A1A2E22;">
+        <div style="
+          width:40px;height:40px;
+          background:#FED41D;
+          border:2px solid #1A1A2E;
+          border-radius:50%;
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Bangers',cursive;
+          font-size:0.85rem;color:#1A1A2E;
+          flex-shrink:0;
+        ">${t.avatar}</div>
+        <div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:700;color:#1A1A2E;">${t.name}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#2D2D44AA;">${t.role}, ${t.company}</div>
+        </div>
+      </div>
+    </div>`).join("");
+
+  return `
+  <section class="section" style="background:#F5F5EC;">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
-
-        <div class="reveal">
-          <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Kami bukan yang paling murah. Tapi kami <span class="accent-text">worth it.</span></h2>
-          <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:2rem">
-            Ada vendor lebih murah, kami tidak akan bohong soal itu. Tapi kami yang datang ke meeting sudah baca brief, paham konteks bisnis, dan angkat telepon jam 11 malam kalau ada masalah sebelum launch.
-          </p>
-          <a href="/contact" class="btn btn-dark">Ngobrol gratis &rarr;</a>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:0">
-          ${[
-            ["Tidak ada hidden cost", "Scope, timeline, biaya dijelaskan di awal. Perubahan selalu dikomunikasikan sebelum dikerjakan."],
-            ["Kode yang bisa Anda baca", "Kami tulis dokumentasi, ikuti standar, dan pastikan tim Anda bisa maintain setelah kami selesai."],
-            ["Reply dalam jam kerja", "WA dibalas dalam jam kerja. Darurat? Ada hotline yang beneran diangkat, bukan bot."],
-            ["Garansi 3 bulan", "Bug-fix pasca-launch gratis 3 bulan. Tidak ada biaya tersembunyi untuk masalah yang kami buat."],
-          ].map(([title, desc], i) => `
-            <div class="reveal reveal-d${i + 1}" style="display:flex;gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--surface-3)">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px">
-                <circle cx="8" cy="8" r="7.5" stroke="var(--accent)" stroke-width="1"/>
-                <path d="M5 8l2 2 4-4" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <div>
-                <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:0.25rem">${title}</p>
-                <p style="font-size:13px;color:var(--ink-3);line-height:1.6">${desc}</p>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
+      <div style="text-align:center;margin-bottom:3rem;">
+        <h2 class="reveal" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
+        ">Kata Klien Kami</h2>
+        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44BB;max-width:440px;margin:0 auto;">
+          Hasil bicara lebih keras dari janji. Ini yang mereka katakan.
+        </p>
       </div>
+      <div class="grid-3">${cards}</div>
     </div>
-  </section>
+  </section>`;
+}
 
-  <!-- ── TESTIMONIALS ──────────────────────────────────── -->
-  <section style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--surface-3)">
-    <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap">
-        <h2 class="reveal" style="font-size:clamp(1.6rem,2.5vw,2rem)">Kata klien, bukan marketing kami</h2>
-        <p class="reveal" style="font-size:13px;color:var(--ink-3)">Kami minta mereka jujur.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem">
-        ${tCards}
-      </div>
-    </div>
-  </section>
+export function homePage(): string {
+  const content = `
+    ${heroSection()}
+    <div class="comic-divider"></div>
+    ${servicesPreview()}
+    ${whyUsSection()}
+    <div class="comic-divider"></div>
+    ${testimonialsSection()}
+    ${ctaSection({
+      heading: "Siap Memulai Proyek?",
+      subheading: "Ceritakan tantangan Anda — kami siap duduk bareng dan cari solusinya.",
+      primaryLabel: "Hubungi Kami ✦",
+      primaryHref: "/contact",
+      secondaryLabel: "Lihat Portfolio",
+      secondaryHref: "/portfolio",
+    })}
+  `;
 
-  <!-- ── CTA ───────────────────────────────────────────── -->
-  <section style="padding:6rem 0;background:#fff;border-top:1px solid var(--surface-3)">
-    <div class="container-sm reveal">
-      <div style="background:var(--ink);border-radius:var(--radius-lg);padding:4rem;text-align:center">
-        <p style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem">Mulai dari obrolan</p>
-        <h2 style="color:#fafafa;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem;line-height:1.15">Punya masalah teknis?<br>Kami dengerin.</h2>
-        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:2rem;line-height:1.65">Tidak perlu brief sempurna. Cukup ceritakan konteksnya, kita figureout bareng.</p>
-        <div style="display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap">
-          <a href="/contact" class="btn" style="background:#fafafa;color:var(--ink)">Hubungi kami</a>
-          <a href="/portfolio" class="btn" style="background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.2)">Lihat portfolio dulu</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    @media (max-width: 768px) {
-      section > .container > div[style*="grid-template-columns:1fr 1fr"],
-      section > .container > div[style*="grid-template-columns:280px"] {
-        grid-template-columns: 1fr !important;
-        gap: 2.5rem !important;
-      }
-      div[style*="grid-template-columns:repeat(3"] {
-        grid-template-columns: 1fr !important;
-      }
-      div[style*="grid-template-columns:1fr 1fr"][style*="gap:0"] {
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-  </style>
-`;
-
-export const homePage = () => layout("Beranda", content, "home");
+  return baseLayout({
+    title: "Beranda",
+    description: company.description,
+    activePage: "/",
+    content,
+  });
+}

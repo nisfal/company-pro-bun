@@ -1,196 +1,186 @@
-export const company = {
+import type {
+  CompanyInfo,
+  Service,
+  TeamMember,
+  Testimonial,
+  Portfolio,
+} from "../lib/types";
+
+export const company: CompanyInfo = {
   name: "NusaTech Solutions",
-  tagline: "Kita bikin digital, beneran.",
+  tagline: "Solusi Digital Kelas Dunia",
   description:
-    "NusaTech bukan agensi biasa. Kita tim kecil yang obsesif soal detail — dari arsitektur backend sampai warna tombol. Sudah 9 tahun kami bantu bisnis Indonesia tumbuh lewat teknologi yang benar-benar bekerja.",
+    "Kami membangun produk digital yang skalabel, cepat, dan berdampak nyata — dari startup hingga enterprise.",
   founded: "2015",
   employees: "150+",
   projects: "500+",
   clients: "200+",
-  email: "halo@nusatech.id",
-  phone: "+62 21 2788 4491",
-  address: "Jl. Wijaya I No. 37, Kebayoran Baru, Jakarta Selatan 12170",
+  email: "hello@nusatech.id",
+  phone: "+62 21 1234 5678",
+  address: "Jl. Sudirman No. 88, Jakarta Selatan, DKI Jakarta 12190",
   social: {
     linkedin: "https://linkedin.com/company/nusatech",
     twitter: "https://twitter.com/nusatech_id",
     instagram: "https://instagram.com/nusatech.id",
-    github: "https://github.com/nusatech-id",
+    github: "https://github.com/nusatech",
   },
 };
 
-export const services = [
+export const services: Service[] = [
   {
     id: 1,
-    icon: "💻",
-    title: "Web Development",
+    icon: "🚀",
+    title: "Product Engineering",
     description:
-      "Bukan sekadar website cantik — kami bangun yang cepat, aman, dan tahan banting. Stack favorit kami: Bun, React, dan PostgreSQL. Tapi kami fleksibel sesuai kebutuhan Anda.",
-    detail: "Mulai dari landing page sampai SaaS kompleks",
+      "Kami rancang dan bangun produk digital dari nol — arsitektur solid, UX intuitif, dan delivery tepat waktu.",
+    detail: "Full-cycle product development",
   },
   {
     id: 2,
-    icon: "📱",
-    title: "Mobile App",
-    description:
-      "iOS & Android, native atau cross-platform. Kami tahu perbedaannya dan kapan harus pakai yang mana — bukan asal pilih yang murah.",
-    detail: "React Native · Flutter · Swift · Kotlin",
-  },
-  {
-    id: 3,
     icon: "☁️",
     title: "Cloud & DevOps",
     description:
-      "Deploy sekali, jalan terus. Kami setup infrastructure yang bisa tidur nyenyak — monitoring, auto-scaling, backup otomatis. AWS, GCP, atau on-premise.",
-    detail: "Uptime rata-rata klien kami: 99.94%",
+      "Infrastructure as code, CI/CD pipeline, Kubernetes orchestration, dan observability end-to-end.",
+    detail: "AWS · GCP · Azure · K8s",
+  },
+  {
+    id: 3,
+    icon: "📱",
+    title: "Mobile Development",
+    description:
+      "Aplikasi native iOS & Android, serta cross-platform React Native untuk reach yang lebih luas.",
+    detail: "iOS · Android · React Native",
   },
   {
     id: 4,
     icon: "🤖",
-    title: "AI & Otomasi",
+    title: "AI & Data Engineering",
     description:
-      "AI bukan hype buat kami — kami sudah pakai sejak 2019. Dari chatbot internal sampai sistem rekomendasi produk yang beneran naikkan konversi.",
-    detail: "LLM integration · Computer Vision · MLOps",
+      "Pipeline data real-time, model ML production-ready, dan integrasi LLM untuk produk cerdas.",
+    detail: "ML · LLM · Streaming Data",
   },
   {
     id: 5,
-    icon: "🔒",
-    title: "Security Audit",
+    icon: "🔐",
+    title: "Security & Compliance",
     description:
-      "Penetration testing, code review, sampai compliance check. Kami temukan celah sebelum orang lain menemukannya — tanpa menghakimi kode lama Anda.",
-    detail: "OWASP · ISO 27001 · PCI-DSS",
+      "Penetration testing, secure SDLC, dan compliance audit untuk produk yang aman dari ground up.",
+    detail: "PenTest · OWASP · ISO 27001",
   },
   {
     id: 6,
     icon: "📊",
-    title: "Data & Analytics",
+    title: "Analytics & BI",
     description:
-      "Ribuan baris data Anda tersimpan tapi tidak terpakai? Kami ubah jadi dashboard yang benar-benar dibaca tim Anda setiap pagi.",
-    detail: "BI · Data Pipeline · Predictive Analytics",
+      "Dashboard real-time, data warehouse modern, dan insight actionable dari data bisnis Anda.",
+    detail: "dbt · Redshift · Metabase",
   },
 ];
 
-export const team = [
+export const team: TeamMember[] = [
   {
     id: 1,
     name: "Budi Santoso",
-    role: "Co-founder & CEO",
-    photo: "BS",
-    bio: "Mantan engineer Tokopedia. Pindah ke dunia konsultan karena capek lihat website perusahaan Indonesia yang lambat.",
-    color: "from-blue-500 to-indigo-600",
-    funFact: "Koleksi mechanical keyboard: 11 buah",
-  },
-  {
-    id: 2,
-    name: "Sari Dewi",
-    role: "Co-founder & CTO",
-    photo: "SD",
-    bio: "Lulusan ITS Surabaya, ex-Google Singapore. Balik ke Indonesia karena kangen soto ayam dan ingin bangun sesuatu yang lebih bermakna.",
-    color: "from-violet-500 to-purple-600",
-    funFact: "Contribute ke open source tiap Sabtu pagi",
-  },
-  {
-    id: 3,
-    name: "Ahmad Fauzi",
-    role: "Head of Product Design",
-    photo: "AF",
-    bio: "10 tahun desain digital, 3 tahun di Grab. Percaya bahwa UX yang bagus adalah yang pengguna tidak sadari — itu berarti sudah benar.",
-    color: "from-emerald-500 to-teal-600",
-    funFact: "Masih pakai Figma versi desktop, anti web app",
-  },
-  {
-    id: 4,
-    name: "Rina Kusuma",
-    role: "Head of Client Success",
-    photo: "RK",
-    bio: "Bergabung tahun 2017 sebagai staf pertama non-teknis. Sekarang pegang 40+ akun klien dan tidak pernah ada yang complain soal komunikasi.",
-    color: "from-rose-500 to-pink-600",
-    funFact: "Reply email dalam waktu <15 menit, selalu",
-  },
-];
-
-export const testimonials = [
-  {
-    id: 1,
-    name: "Hendra Wijaya",
-    company: "PT Maju Bersama Tbk",
-    role: "CEO",
-    text: "Jujur, awalnya saya skeptis. Sudah dua vendor sebelumnya menjanjikan hal serupa. NusaTech beda — mereka mau jujur kalau ada masalah, dan itu yang kami butuhkan.",
-    rating: 5,
-    avatar: "HW",
-    color: "from-blue-500 to-cyan-500",
-    project: "Sistem ERP & Mobile App",
+    role: "CEO & Co-Founder",
+    initials: "BS",
+    bio: "10+ tahun di product engineering. Ex-Gojek, ex-Tokopedia. Passionate soal scalable systems.",
+    funFact: "Bisa debug production issue sambil makan soto.",
   },
   {
     id: 2,
     name: "Dewi Rahayu",
-    company: "Warung Pintar Digital",
-    role: "Founder",
-    text: "Kami UMKM, budget terbatas. Mereka tidak meremehkan. Malah kasih rekomendasi yang hemat tapi tetap solid. Platform kami handle 2000 transaksi/hari tanpa masalah.",
-    rating: 5,
-    avatar: "DR",
-    color: "from-emerald-500 to-teal-500",
-    project: "Platform E-Commerce B2B",
+    role: "CTO & Co-Founder",
+    initials: "DR",
+    bio: "Distributed systems expert. Speaker di berbagai konferensi teknologi Asia Tenggara.",
+    funFact: "Koleksi mechanical keyboard lebih dari 20 unit.",
   },
   {
     id: 3,
-    name: "Irfan Mahmud",
-    company: "Koin Fintech",
-    role: "VP Engineering",
-    text: "Yang saya suka: mereka mau bilang 'tidak' kalau request kami tidak masuk akal secara teknis. Vendor yang cuma bilang iya itu bahaya di jangka panjang.",
-    rating: 5,
-    avatar: "IM",
-    color: "from-violet-500 to-purple-500",
-    project: "Core Banking System",
-  },
-];
-
-export const portfolios = [
-  {
-    id: 1,
-    title: "KoinPay — Super App",
-    category: "Fintech · Mobile & Web",
-    description:
-      "Core banking + dompet digital untuk koperasi simpan pinjam. 2,3 juta pengguna aktif, latency rata-rata <120ms. Dibangun dalam 14 bulan.",
-    tech: ["React Native", "Go", "PostgreSQL", "Redis"],
-    color: "from-blue-600 to-indigo-700",
-    emoji: "🏦",
-    year: "2023",
-    result: "+340% transaksi digital dalam 6 bulan",
-  },
-  {
-    id: 2,
-    title: "Warung Connect",
-    category: "E-Commerce · B2B",
-    description:
-      "Marketplace grosir untuk 12.000+ warung di Jabodetabek. Integrasi langsung ke sistem distributor FMCG. Order processing <2 detik.",
-    tech: ["Next.js", "Bun", "MySQL", "Kafka"],
-    color: "from-emerald-500 to-teal-600",
-    emoji: "🛒",
-    year: "2023",
-    result: "Rp 4,2 miliar GMV di bulan ketiga",
-  },
-  {
-    id: 3,
-    title: "CerdasRetail Analytics",
-    category: "Data & AI",
-    description:
-      "Prediksi stok & demand forecasting untuk jaringan minimarket 200+ gerai. Akurasi prediksi 91%, turunkan overstock 28%.",
-    tech: ["Python", "FastAPI", "TensorFlow", "Metabase"],
-    color: "from-purple-600 to-violet-700",
-    emoji: "📊",
-    year: "2022",
-    result: "Hemat Rp 1,8 miliar/tahun biaya inventory",
+    name: "Ahmad Fauzi",
+    role: "Head of Engineering",
+    initials: "AF",
+    bio: "Platform engineer dengan spesialisasi Kubernetes dan observability. Open source contributor.",
+    funFact: "Pernah deploy ke production dari atas gunung.",
   },
   {
     id: 4,
-    title: "KlinikKu — Telemedicine",
-    category: "HealthTech · SaaS",
+    name: "Siti Nurhaliza",
+    role: "Head of Design",
+    initials: "SN",
+    bio: "Design systems practitioner. Percaya bahwa UX yang baik adalah invisible UX.",
+    funFact: "Mendesain sambil dengerin jazz — selalu jazz.",
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: "Rizky Pratama",
+    company: "FinPay Indonesia",
+    role: "CTO",
+    text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor — mereka partner.",
+    rating: 5,
+    avatar: "RP",
+  },
+  {
+    id: 2,
+    name: "Lisa Hartono",
+    company: "RetailGo",
+    role: "VP Engineering",
+    text: "Migration ke microservices selesai dalam 6 bulan tanpa downtime. Saya tidak pernah lihat eksekusi sekelas ini sebelumnya.",
+    rating: 5,
+    avatar: "LH",
+  },
+  {
+    id: 3,
+    name: "Marco Tanuwijaya",
+    company: "EduNusa",
+    role: "Founder & CEO",
+    text: "Platform kami handle 500k concurrent users saat launch — sesuatu yang kami kira tidak mungkin dalam timeline itu.",
+    rating: 5,
+    avatar: "MT",
+  },
+];
+
+export const portfolios: Portfolio[] = [
+  {
+    id: 1,
+    title: "FinPay Super App",
+    category: "Fintech · Mobile & Web",
     description:
-      "Platform konsultasi dokter online dengan rekam medis digital. BPJS-integrated. Sudah dipakai 800+ klinik di 12 provinsi.",
-    tech: ["Vue.js", "Laravel", "AWS", "WebRTC"],
-    color: "from-rose-500 to-pink-600",
-    emoji: "🩺",
+      "Platform pembayaran digital dengan 2M+ pengguna aktif. Real-time transaction processing, fraud detection ML, dan open banking integration.",
+    tech: ["Go", "Kafka", "React Native", "PostgreSQL", "Redis"],
+    year: "2023",
+    result: "2M+ pengguna aktif",
+  },
+  {
+    id: 2,
+    title: "RetailGo Platform",
+    category: "E-commerce · Enterprise",
+    description:
+      "Microservices re-architecture untuk platform retail dengan 50+ brand. Zero-downtime migration dari monolith legacy.",
+    tech: ["Node.js", "Kubernetes", "React", "MongoDB", "RabbitMQ"],
+    year: "2023",
+    result: "Zero-downtime migration",
+  },
+  {
+    id: 3,
+    title: "EduNusa LMS",
+    category: "EdTech · Platform",
+    description:
+      "Learning management system untuk 500k+ pelajar. Live streaming, adaptive quiz engine, dan sertifikasi blockchain.",
+    tech: ["Next.js", "WebRTC", "Python", "PostgreSQL", "AWS"],
     year: "2022",
-    result: "4,8/5 rating dari 50.000+ pasien",
+    result: "500k+ pelajar aktif",
+  },
+  {
+    id: 4,
+    title: "LogiTrack",
+    category: "Logistik · IoT",
+    description:
+      "Fleet management dan real-time cargo tracking untuk 1000+ kendaraan. IoT integration dengan prediksi rute AI.",
+    tech: ["Go", "MQTT", "TimescaleDB", "React", "Mapbox"],
+    year: "2022",
+    result: "1000+ armada terpantau",
   },
 ];
