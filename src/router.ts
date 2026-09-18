@@ -112,6 +112,15 @@ app.get("/en/faq",       (c) => c.html(faqPage("en")));
 
 app.post("/api/contact", (c) => handleContact(c, DEFAULT_LOCALE));
 
+// ─── Unprefixed routes — redirect to default locale ───────────────────────────
+// Handles nav links that generate /services instead of /id/services
+
+app.get("/services",  (c) => c.redirect(`/${DEFAULT_LOCALE}/services`, 302));
+app.get("/portfolio", (c) => c.redirect(`/${DEFAULT_LOCALE}/portfolio`, 302));
+app.get("/about",     (c) => c.redirect(`/${DEFAULT_LOCALE}/about`, 302));
+app.get("/contact",   (c) => c.redirect(`/${DEFAULT_LOCALE}/contact`, 302));
+app.get("/faq",       (c) => c.redirect(`/${DEFAULT_LOCALE}/faq`, 302));
+
 // ─── QOTD ─────────────────────────────────────────────────────────────────────
 
 app.get("/api/quote", (c) => {
