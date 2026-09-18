@@ -42,7 +42,7 @@ export const id: Translation = {
     servicesHeading:    "Apa yang Kami Lakukan",
     servicesSubheading: "Dari product engineering sampai cloud infrastructure — kami cover semua kebutuhan digital Anda.",
     servicesCtaLabel:   "Semua Layanan →",
-    whyHeading:    "Kenapa Pilih NusaTech?",
+    whyHeading:    "Kenapa Pilih Simptecho?",
     whySubheading: "Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda — bukan hanya output teknis.",
     whyCtaLabel:   "Tentang Kami →",
     whyPoints: [
@@ -108,14 +108,14 @@ export const id: Translation = {
     heroHeadline1:   "Kami Percaya",
     heroHeadline2:   "Teknologi Mengubah Bisnis",
     heroDescription: "Sejak {founded}, kami membantu ratusan perusahaan Indonesia tumbuh lebih cepat lewat teknologi yang tepat.",
-    storyHeading:    "Asal Mula NusaTech",
+    storyHeading:    "Asal Mula Simptecho",
     storyParagraphs: [
       "Didirikan tahun {founded} oleh dua engineer yang frustrasi melihat banyak proyek teknologi gagal bukan karena masalah teknis, melainkan karena komunikasi yang buruk antara tim bisnis dan tim engineering.",
-      "Kami membangun NusaTech dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.",
+      "Kami membangun Simptecho dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.",
       "Hari ini kami adalah tim {employees} profesional yang telah menyelesaikan {projects} proyek untuk {clients} klien di berbagai industri.",
     ],
     timeline: [
-      { year: "2015", event: "NusaTech didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
+      { year: "2015", event: "Simptecho didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
       { year: "2017", event: "Ekspansi ke enterprise. Proyek pertama dengan bank nasional." },
       { year: "2019", event: "Buka divisi Cloud & DevOps. Tim tumbuh ke 50 orang." },
       { year: "2021", event: "Luncurkan AI Lab. Mulai bangun produk data-driven untuk klien." },
@@ -191,11 +191,30 @@ export const id: Translation = {
     servicesTitle:        "Layanan",
     servicesDescription:  "Product engineering, cloud/DevOps, mobile, AI, security, dan analytics — solusi lengkap untuk startup hingga enterprise.",
     portfolioTitle:       "Portfolio",
-    portfolioDescription: "Portfolio proyek NusaTech Solutions — fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
+    portfolioDescription: "Portfolio proyek Simptecho — fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
     aboutTitle:           "Tentang Kami",
     aboutDescription:     "{name} — {tagline}. Didirikan {founded}, {employees} profesional, {projects} proyek selesai.",
     contactTitle:         "Kontak",
     contactDescription:   "Hubungi {name} — kami siap mendiskusikan proyek digital Anda.",
+    faqTitle:             "FAQ",
+    faqDescription:       "Pertanyaan yang sering ditanyakan ke Simptecho — dijawab jujur.",
+  },
+
+  faq: {
+    badge:           "🍺 Tanya Moe",
+    heroHeadline1:   "Pertanyaan?",
+    heroHeadline2:   "Moe Siap Jawab",
+    heroDescription: "Semua yang ingin Anda tahu tentang Simptecho — dijawab langsung dari balik bar.",
+    items: [
+      { q: "Berapa lama biasanya satu proyek selesai?", a: "Tergantung scopenya. MVP sederhana bisa 6–8 minggu. Platform enterprise bisa 6–12 bulan. Yang pasti, kami tidak akan kasih estimasi sebelum benar-benar paham scope-nya." },
+      { q: "Apakah Simptecho juga handle maintenance setelah launch?", a: "Ya. Kami punya paket retainer bulanan untuk maintenance, monitoring, dan pengembangan lanjutan. Banyak klien kami yang sudah bareng kami 3+ tahun." },
+      { q: "Tech stack apa yang paling sering dipakai?", a: "Backend: Go dan Node.js. Frontend: React/Next.js. Mobile: React Native. Cloud: AWS dan GCP. Tapi kami pilih stack berdasarkan kebutuhan proyek, bukan kebiasaan." },
+      { q: "Bisa bantu project yang sudah jalan tapi butuh refactor?", a: "Bisa dan sering kami lakukan. Kami biasanya mulai dengan audit teknis dulu untuk pahami kondisi codebase, baru kasih roadmap refactor yang realistis." },
+      { q: "Bagaimana model engagement Simptecho?", a: "Ada dua: project-based (scope tetap, timeline tetap) atau dedicated team (tim kami embed ke tim Anda). Kami rekomendasikan dedicated team untuk proyek yang evolve cepat." },
+      { q: "Apakah ada minimum budget proyek?", a: "Untuk project-based, minimum engagement kami sekitar Rp 150 juta. Untuk konsultasi atau audit teknis, ada paket tersendiri yang lebih terjangkau." },
+      { q: "Simptecho pernah handle proyek fintech/healthcare yang butuh compliance ketat?", a: "Ya. Kami punya pengalaman dengan PCI-DSS, POJK fintech, dan standar keamanan data kesehatan. Security dan compliance bukan afterthought di sini." },
+      { q: "Bagaimana cara kerja sprint dan reporting-nya?", a: "Sprint dua minggu. Di akhir setiap sprint ada demo langsung ke stakeholder. Weekly async update via Slack/Notion. Tidak ada laporan PowerPoint yang panjang dan membosankan." },
+    ],
   },
 
   data: {
@@ -214,7 +233,7 @@ export const id: Translation = {
       { bio: "Design systems practitioner. Percaya bahwa UX yang baik adalah invisible UX.",                                      funFact: "Mendesain sambil dengerin jazz — selalu jazz." },
     ],
     testimonials: [
-      { text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor — mereka partner." },
+      { text: "Simptecho transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor — mereka partner." },
       { text: "Migration ke microservices selesai dalam 6 bulan tanpa downtime. Saya tidak pernah lihat eksekusi sekelas ini sebelumnya." },
       { text: "Platform kami handle 500k concurrent users saat launch — sesuatu yang kami kira tidak mungkin dalam timeline itu." },
     ],

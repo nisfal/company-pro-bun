@@ -7,22 +7,22 @@ import type {
 } from "../lib/types";
 
 export const company: CompanyInfo = {
-  name: "NusaTech Solutions",
-  tagline: "Solusi Digital Kelas Dunia",
+  name: "Simptecho",
+  tagline: "Solusi Digital Kelas Springfield",
   description:
-    "Kami membangun produk digital yang skalabel, cepat, dan berdampak nyata — dari startup hingga enterprise.",
+    "We don't just write code, we cook up surprises (the good kind). Scalable, fast digital products — from scrappy startup stalls to enterprises the size of a nuclear plant.",
   founded: "2015",
   employees: "150+",
   projects: "500+",
   clients: "200+",
-  email: "hello@nusatech.id",
+  email: "hello@simptecho.id",
   phone: "+62 21 1234 5678",
-  address: "Jl. Sudirman No. 88, Jakarta Selatan, DKI Jakarta 12190",
+  address: "Jl. Springfield No. 742, Jakarta Selatan, DKI Jakarta 12190",
   social: {
-    linkedin: "https://linkedin.com/company/nusatech",
-    twitter: "https://twitter.com/nusatech_id",
-    instagram: "https://instagram.com/nusatech.id",
-    github: "https://github.com/nusatech",
+    linkedin: "https://linkedin.com/company/simptecho",
+    twitter: "https://twitter.com/simptecho_id",
+    instagram: "https://instagram.com/simptecho.id",
+    github: "https://github.com/simptecho",
   },
 };
 
@@ -118,7 +118,7 @@ export const testimonials: Testimonial[] = [
     name: "Rizky Pratama",
     company: "FinPay Indonesia",
     role: "CTO",
-    text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor — mereka partner.",
+    text: "Simptecho transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor — mereka partner.",
     rating: 5,
     avatar: "RP",
   },

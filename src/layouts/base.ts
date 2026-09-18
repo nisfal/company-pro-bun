@@ -3,6 +3,15 @@ import { company } from "../data/company";
 import { getTranslation, localePath, stripLocale } from "../i18n/index";
 import type { Locale } from "../i18n/types";
 import type { LayoutOptions } from "../lib/types";
+import {
+  chalkboardScript,
+  themeToggleStyles,
+  themeToggleScript,
+  themeToggleButton,
+  beerLoadingBar,
+  donutConfettiScript,
+  konamiEasterEggScript,
+} from "../lib/scripts";
 
 // ─── Language Switcher ─────────────────────────────────────────────────────────
 
@@ -99,13 +108,15 @@ function navbar(locale: Locale, activePage: string): string {
           box-shadow:3px 3px 0px #F5C400;
           display:flex;align-items:center;justify-content:center;
           font-family:'Bangers',cursive;font-size:1.2rem;color:#1A1A2E;
-        ">NT</div>
+        ">ST</div>
         <span style="font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:0.06em;color:#FFFEF7;">${company.name}</span>
       </a>
 
       <!-- Desktop links + switcher + CTA -->
       <div id="nav-links" style="display:flex;align-items:center;gap:0.25rem;">
         ${desktopLinks}
+        <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
+        ${themeToggleButton()}
         <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
         ${langSwitcher(locale, activePage)}
         <a href="${ctaHref}" style="
@@ -202,7 +213,7 @@ function footer(locale: Locale): string {
               box-shadow:3px 3px 0px #F5C400;
               display:flex;align-items:center;justify-content:center;
               font-family:'Bangers',cursive;font-size:1.1rem;color:#1A1A2E;
-            ">NT</div>
+            ">ST</div>
             <span style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#FFFEF7;">${company.name}</span>
           </a>
           <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;line-height:1.6;margin:0;max-width:280px;">
@@ -385,21 +396,29 @@ export function baseLayout({ title, description, activePage, locale, content }: 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="${SEO.twitterHandle}" />
   <!-- Alternate language links for SEO -->
-  <link rel="alternate" hreflang="id" href="/id${activePage === "/" ? "" : activePage}" />
-  <link rel="alternate" hreflang="en" href="/en${activePage === "/" ? "" : activePage}" />
-  <link rel="alternate" hreflang="x-default" href="${activePage}" />
+  <link rel="alternate" hreflang="id" href="/id${stripLocale(activePage) === "/" ? "" : stripLocale(activePage)}" />
+  <link rel="alternate" hreflang="en" href="/en${stripLocale(activePage) === "/" ? "" : stripLocale(activePage)}" />
+  <link rel="alternate" hreflang="x-default" href="${stripLocale(activePage)}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  ${themeToggleStyles()}
+  <!-- Apply saved theme immediately to prevent flash -->
+  <script>(function(){var m=document.cookie.match('(?:^|; )spt_theme=([^;]*)');if(m&&decodeURIComponent(m[1])==='night'){document.documentElement.setAttribute('data-theme','night');}})();</script>
   ${globalStyles()}
 </head>
 <body>
   ${navbar(locale, activePage)}
+  ${beerLoadingBar()}
   <main>
     ${content}
   </main>
   ${footer(locale)}
   ${globalScripts()}
+  ${donutConfettiScript()}
+  ${konamiEasterEggScript()}
+  ${themeToggleScript()}
+  ${chalkboardScript()}
 </body>
 </html>`;
 }

@@ -3715,7 +3715,7 @@ var id = {
     servicesHeading: "Apa yang Kami Lakukan",
     servicesSubheading: "Dari product engineering sampai cloud infrastructure \u2014 kami cover semua kebutuhan digital Anda.",
     servicesCtaLabel: "Semua Layanan \u2192",
-    whyHeading: "Kenapa Pilih NusaTech?",
+    whyHeading: "Kenapa Pilih Simptecho?",
     whySubheading: "Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda \u2014 bukan hanya output teknis.",
     whyCtaLabel: "Tentang Kami \u2192",
     whyPoints: [
@@ -3778,14 +3778,14 @@ var id = {
     heroHeadline1: "Kami Percaya",
     heroHeadline2: "Teknologi Mengubah Bisnis",
     heroDescription: "Sejak {founded}, kami membantu ratusan perusahaan Indonesia tumbuh lebih cepat lewat teknologi yang tepat.",
-    storyHeading: "Asal Mula NusaTech",
+    storyHeading: "Asal Mula Simptecho",
     storyParagraphs: [
       "Didirikan tahun {founded} oleh dua engineer yang frustrasi melihat banyak proyek teknologi gagal bukan karena masalah teknis, melainkan karena komunikasi yang buruk antara tim bisnis dan tim engineering.",
-      "Kami membangun NusaTech dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.",
+      "Kami membangun Simptecho dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.",
       "Hari ini kami adalah tim {employees} profesional yang telah menyelesaikan {projects} proyek untuk {clients} klien di berbagai industri."
     ],
     timeline: [
-      { year: "2015", event: "NusaTech didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
+      { year: "2015", event: "Simptecho didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
       { year: "2017", event: "Ekspansi ke enterprise. Proyek pertama dengan bank nasional." },
       { year: "2019", event: "Buka divisi Cloud & DevOps. Tim tumbuh ke 50 orang." },
       { year: "2021", event: "Luncurkan AI Lab. Mulai bangun produk data-driven untuk klien." },
@@ -3858,11 +3858,29 @@ var id = {
     servicesTitle: "Layanan",
     servicesDescription: "Product engineering, cloud/DevOps, mobile, AI, security, dan analytics \u2014 solusi lengkap untuk startup hingga enterprise.",
     portfolioTitle: "Portfolio",
-    portfolioDescription: "Portfolio proyek NusaTech Solutions \u2014 fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
+    portfolioDescription: "Portfolio proyek Simptecho \u2014 fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
     aboutTitle: "Tentang Kami",
     aboutDescription: "{name} \u2014 {tagline}. Didirikan {founded}, {employees} profesional, {projects} proyek selesai.",
     contactTitle: "Kontak",
-    contactDescription: "Hubungi {name} \u2014 kami siap mendiskusikan proyek digital Anda."
+    contactDescription: "Hubungi {name} \u2014 kami siap mendiskusikan proyek digital Anda.",
+    faqTitle: "FAQ",
+    faqDescription: "Pertanyaan yang sering ditanyakan ke Simptecho \u2014 dijawab jujur."
+  },
+  faq: {
+    badge: "\u{1F37A} Tanya Moe",
+    heroHeadline1: "Pertanyaan?",
+    heroHeadline2: "Moe Siap Jawab",
+    heroDescription: "Semua yang ingin Anda tahu tentang Simptecho \u2014 dijawab langsung dari balik bar.",
+    items: [
+      { q: "Berapa lama biasanya satu proyek selesai?", a: "Tergantung scopenya. MVP sederhana bisa 6\u20138 minggu. Platform enterprise bisa 6\u201312 bulan. Yang pasti, kami tidak akan kasih estimasi sebelum benar-benar paham scope-nya." },
+      { q: "Apakah Simptecho juga handle maintenance setelah launch?", a: "Ya. Kami punya paket retainer bulanan untuk maintenance, monitoring, dan pengembangan lanjutan. Banyak klien kami yang sudah bareng kami 3+ tahun." },
+      { q: "Tech stack apa yang paling sering dipakai?", a: "Backend: Go dan Node.js. Frontend: React/Next.js. Mobile: React Native. Cloud: AWS dan GCP. Tapi kami pilih stack berdasarkan kebutuhan proyek, bukan kebiasaan." },
+      { q: "Bisa bantu project yang sudah jalan tapi butuh refactor?", a: "Bisa dan sering kami lakukan. Kami biasanya mulai dengan audit teknis dulu untuk pahami kondisi codebase, baru kasih roadmap refactor yang realistis." },
+      { q: "Bagaimana model engagement Simptecho?", a: "Ada dua: project-based (scope tetap, timeline tetap) atau dedicated team (tim kami embed ke tim Anda). Kami rekomendasikan dedicated team untuk proyek yang evolve cepat." },
+      { q: "Apakah ada minimum budget proyek?", a: "Untuk project-based, minimum engagement kami sekitar Rp 150 juta. Untuk konsultasi atau audit teknis, ada paket tersendiri yang lebih terjangkau." },
+      { q: "Simptecho pernah handle proyek fintech/healthcare yang butuh compliance ketat?", a: "Ya. Kami punya pengalaman dengan PCI-DSS, POJK fintech, dan standar keamanan data kesehatan. Security dan compliance bukan afterthought di sini." },
+      { q: "Bagaimana cara kerja sprint dan reporting-nya?", a: "Sprint dua minggu. Di akhir setiap sprint ada demo langsung ke stakeholder. Weekly async update via Slack/Notion. Tidak ada laporan PowerPoint yang panjang dan membosankan." }
+    ]
   },
   data: {
     services: [
@@ -3880,7 +3898,7 @@ var id = {
       { bio: "Design systems practitioner. Percaya bahwa UX yang baik adalah invisible UX.", funFact: "Mendesain sambil dengerin jazz \u2014 selalu jazz." }
     ],
     testimonials: [
-      { text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner." },
+      { text: "Simptecho transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner." },
       { text: "Migration ke microservices selesai dalam 6 bulan tanpa downtime. Saya tidak pernah lihat eksekusi sekelas ini sebelumnya." },
       { text: "Platform kami handle 500k concurrent users saat launch \u2014 sesuatu yang kami kira tidak mungkin dalam timeline itu." }
     ],
@@ -3932,7 +3950,7 @@ var en = {
     servicesHeading: "What We Do (And We're Cromulent at It)",
     servicesSubheading: "From product engineering to cloud infrastructure \u2014 one partner, every digital need. Woo-hoo!",
     servicesCtaLabel: "All Services \u2192",
-    whyHeading: "Why NusaTech? (Excellent Question...)",
+    whyHeading: "Why Simptecho? (Excellent Question...)",
     whySubheading: "We're not just a body shop. We're the engineering team that actually gives a D'oh about your business outcome.",
     whyCtaLabel: "About Us \u2192",
     whyPoints: [
@@ -3995,14 +4013,14 @@ var en = {
     heroHeadline1: "We Believe",
     heroHeadline2: "Tech Embiggens Business",
     heroDescription: "Since {founded}, we've helped hundreds of companies grow faster through technology that actually does something. Woo-hoo!",
-    storyHeading: "The Origin Story of NusaTech",
+    storyHeading: "The Origin Story of Simptecho",
     storyParagraphs: [
       "Founded in {founded} by two engineers who were, frankly, fed up watching tech projects fail \u2014 not because of technical problems, but because of terrible communication between business and engineering teams. D'oh!",
-      "We built NusaTech on one cromulent principle: be a partner, not a vendor. That means we think about your business, not just execute requirements that land in our inbox.",
+      "We built Simptecho on one cromulent principle: be a partner, not a vendor. That means we think about your business, not just execute requirements that land in our inbox.",
       "Today we're a team of {employees} professionals who've completed {projects} projects for {clients} clients across practically every industry you can think of. Excellent."
     ],
     timeline: [
-      { year: "2015", event: "NusaTech founded. First team of 5, first 3 startup clients. Woo-hoo!" },
+      { year: "2015", event: "Simptecho founded. First team of 5, first 3 startup clients. Woo-hoo!" },
       { year: "2017", event: "Expanded to enterprise. First project with a national bank. Excellent." },
       { year: "2019", event: "Launched Cloud & DevOps division. Team grew to 50. Mmm... growth." },
       { year: "2021", event: "Launched AI Lab. Started building data-driven products for clients." },
@@ -4075,11 +4093,29 @@ var en = {
     servicesTitle: "Services",
     servicesDescription: "Product engineering, cloud/DevOps, mobile, AI, security, and analytics \u2014 complete solutions for startups to enterprise.",
     portfolioTitle: "Portfolio",
-    portfolioDescription: "NusaTech Solutions portfolio \u2014 fintech, e-commerce, edtech, logistics, and more. Excellent.",
+    portfolioDescription: "Simptecho portfolio \u2014 fintech, e-commerce, edtech, logistics, and more. Excellent.",
     aboutTitle: "About Us",
     aboutDescription: "{name} \u2014 {tagline}. Founded {founded}, {employees} professionals, {projects} projects completed.",
     contactTitle: "Contact",
-    contactDescription: "Contact {name} \u2014 we're ready to discuss your digital project. Don't have a cow!"
+    contactDescription: "Contact {name} \u2014 we're ready to discuss your digital project. Don't have a cow!",
+    faqTitle: "FAQ",
+    faqDescription: "Everything you wanted to ask Simptecho \u2014 answered honestly from behind the bar."
+  },
+  faq: {
+    badge: "\u{1F37A} Ask Moe",
+    heroHeadline1: "Got Questions?",
+    heroHeadline2: "Moe's Got Answers",
+    heroDescription: "Everything you wanted to know about Simptecho \u2014 answered honestly from behind the bar. Mmm... answers.",
+    items: [
+      { q: "How long does a typical project take?", a: "Depends on the scope. A simple MVP? Six to eight weeks. An enterprise platform? Six to twelve months. We won't give you an estimate until we actually understand what you need. Excellent." },
+      { q: "Do you handle maintenance after launch?", a: "Yep. We have monthly retainer packages for maintenance, monitoring, and ongoing development. Many of our clients have been with us for 3+ years. Woo-hoo!" },
+      { q: "What's your go-to tech stack?", a: "Backend: Go and Node.js. Frontend: React/Next.js. Mobile: React Native. Cloud: AWS and GCP. But we pick the stack based on the project's needs, not just habit. Mmm... pragmatism." },
+      { q: "Can you help with a project that's already running but needs refactoring?", a: "Absolutely \u2014 we do it all the time. We usually start with a technical audit to understand the codebase, then give you a realistic refactor roadmap. D'oh, why didn't they call us earlier?" },
+      { q: "What engagement models do you offer?", a: "Two options: project-based (fixed scope, fixed timeline) or dedicated team (our team embeds into yours). We recommend dedicated team for fast-evolving products. Don't have a cow \u2014 both work great." },
+      { q: "Is there a minimum project budget?", a: "For project-based work, our minimum engagement is around IDR 150 million. For consultation or technical audits, there's a separate, more accessible package." },
+      { q: "Have you handled fintech or healthcare projects with strict compliance requirements?", a: "Yes. We have experience with PCI-DSS, Indonesian fintech regulations, and healthcare data security standards. Security and compliance are not afterthoughts here. Sweet Jebus!" },
+      { q: "How do sprints and reporting work?", a: "Two-week sprints. End of every sprint: live demo to stakeholders. Weekly async updates via Slack/Notion. No death-by-PowerPoint around here. Excellent." }
+    ]
   },
   data: {
     services: [
@@ -4097,7 +4133,7 @@ var en = {
       { bio: "Design systems practitioner. Believes good UX is invisible UX.", funFact: "Designs exclusively to jazz. Always jazz." }
     ],
     testimonials: [
-      { text: "NusaTech transformed the way our team works. 3x faster delivery, bug rate dropped dramatically. They're not a vendor \u2014 they're a partner. Woo-hoo!" },
+      { text: "Simptecho transformed the way our team works. 3x faster delivery, bug rate dropped dramatically. They're not a vendor \u2014 they're a partner. Woo-hoo!" },
       { text: "Microservices migration completed in 6 months with zero downtime. I've never seen execution of this caliber before. Excellent." },
       { text: "Our platform handled 500k concurrent users at launch \u2014 something we thought was impossible in that timeline. Sweet Jebus!" }
     ],
@@ -4142,33 +4178,34 @@ function getNavLinks(locale) {
     { href: localePath(locale, "/services"), label: t.nav.services },
     { href: localePath(locale, "/portfolio"), label: t.nav.portfolio },
     { href: localePath(locale, "/about"), label: t.nav.about },
-    { href: localePath(locale, "/contact"), label: t.nav.contact }
+    { href: localePath(locale, "/contact"), label: t.nav.contact },
+    { href: localePath(locale, "/faq"), label: locale === "en" ? "FAQ" : "FAQ" }
   ];
 }
 var SEO = {
-  siteName: "NusaTech Solutions",
-  defaultDescription: "Solusi digital kelas dunia \u2014 product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
+  siteName: "Simptecho",
+  defaultDescription: "Solusi digital kelas Springfield \u2014 product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
   defaultOgImage: "/og-image.png",
-  twitterHandle: "@nusatech_id"
+  twitterHandle: "@simptecho_id"
 };
 
 // src/data/company.ts
 var company = {
-  name: "NusaTech Solutions",
-  tagline: "Solusi Digital Kelas Dunia",
-  description: "Kami membangun produk digital yang skalabel, cepat, dan berdampak nyata \u2014 dari startup hingga enterprise.",
+  name: "Simptecho",
+  tagline: "Solusi Digital Kelas Springfield",
+  description: "We don't just write code, we cook up surprises (the good kind). Scalable, fast digital products \u2014 from scrappy startup stalls to enterprises the size of a nuclear plant.",
   founded: "2015",
   employees: "150+",
   projects: "500+",
   clients: "200+",
-  email: "hello@nusatech.id",
+  email: "hello@simptecho.id",
   phone: "+62 21 1234 5678",
-  address: "Jl. Sudirman No. 88, Jakarta Selatan, DKI Jakarta 12190",
+  address: "Jl. Springfield No. 742, Jakarta Selatan, DKI Jakarta 12190",
   social: {
-    linkedin: "https://linkedin.com/company/nusatech",
-    twitter: "https://twitter.com/nusatech_id",
-    instagram: "https://instagram.com/nusatech.id",
-    github: "https://github.com/nusatech"
+    linkedin: "https://linkedin.com/company/simptecho",
+    twitter: "https://twitter.com/simptecho_id",
+    instagram: "https://instagram.com/simptecho.id",
+    github: "https://github.com/simptecho"
   }
 };
 var services = [
@@ -4255,7 +4292,7 @@ var testimonials = [
     name: "Rizky Pratama",
     company: "FinPay Indonesia",
     role: "CTO",
-    text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner.",
+    text: "Simptecho transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner.",
     rating: 5,
     avatar: "RP"
   },
@@ -4316,6 +4353,409 @@ var portfolios = [
     result: "1000+ armada terpantau"
   }
 ];
+
+// src/lib/scripts.ts
+function chalkboardScript() {
+  const messages = [
+    "Saya tidak akan deploy ke production hari Jumat",
+    "Stack overflow bukan solusi, tapi kadang membantu",
+    "Saya sudah baca dokumentasinya (bohong)",
+    "Saya tidak akan commit langsung ke main",
+    "Console.log bukan debugging yang proper",
+    "Saya akan tulis unit test besok (janji)",
+    "Copy-paste dari internet bukan plagiat, itu efisiensi",
+    "Saya sudah backup sebelum menghapus ini",
+    "Dark mode bukan preferensi, ini kebutuhan medis",
+    "Saya tidak akan menyalahkan cache kalau ada bug"
+  ];
+  const msgsEN = [
+    "I will not push to production on Fridays",
+    "Stack Overflow is not a crutch (it totally is)",
+    "I have read the documentation (I have not)",
+    "I will not commit directly to main",
+    "console.log is not a debugging strategy",
+    "I will write unit tests tomorrow (for real this time)",
+    "Copy-pasting from the internet is research, not plagiarism",
+    "I backed up before deleting this (I did not)",
+    "Dark mode is a medical necessity, not a preference",
+    "I will not blame the cache when there is a bug"
+  ];
+  return `
+<script>
+(function() {
+  var SESSION_KEY = 'spt_chalk_shown';
+  if (sessionStorage.getItem(SESSION_KEY)) return;
+  sessionStorage.setItem(SESSION_KEY, '1');
+
+  var msgs    = ${JSON.stringify(messages)};
+  var msgsEN  = ${JSON.stringify(msgsEN)};
+  var isEN    = document.documentElement.lang === 'en';
+  var list    = isEN ? msgsEN : msgs;
+  var text    = list[Math.floor(Math.random() * list.length)];
+
+  var overlay = document.createElement('div');
+  overlay.id  = 'chalk-overlay';
+  overlay.innerHTML = \`
+    <div style="
+      position:fixed;inset:0;z-index:9999;
+      background:#1a1a2e;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:2rem;padding:2rem;
+    ">
+      <div style="
+        width:min(680px,90vw);
+        background:#2a2a1a;
+        border:4px solid #555;
+        border-radius:4px;
+        padding:2.5rem 3rem 3rem;
+        box-shadow:inset 0 0 40px #00000088, 0 8px 32px #00000099;
+        position:relative;
+      ">
+        <!-- chalk tray line -->
+        <div style="position:absolute;bottom:0;left:0;right:0;height:18px;background:#3a3828;border-top:3px solid #555;border-radius:0 0 4px 4px;"></div>
+        <p id="chalk-text" style="
+          font-family:'Bangers',cursive;
+          font-size:clamp(1.5rem,4vw,2.2rem);
+          color:#f0f0e0;
+          letter-spacing:0.06em;
+          line-height:1.4;
+          text-align:center;
+          margin:0;
+          text-shadow:0 0 8px #ffffff33;
+          opacity:0;
+          animation:chalkWrite 0.8s ease forwards 0.3s;
+        ">\${text}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;">
+        <div style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FED41D99;">
+          \${isEN ? 'click anywhere to enter Springfield...' : 'klik di mana saja untuk masuk...'}
+        </div>
+        <div style="
+          width:48px;height:48px;
+          background:#FED41D;
+          border:3px solid #1A1A2E;
+          border-radius:50%;
+          box-shadow:4px 4px 0 #F5C400;
+          display:flex;align-items:center;justify-content:center;
+          font-size:1.6rem;
+          animation:donutBounce 0.8s ease infinite alternate;
+        ">\u{1F369}</div>
+      </div>
+    </div>
+  \`;
+
+  var style = document.createElement('style');
+  style.textContent = \`
+    @keyframes chalkWrite {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes donutBounce {
+      from { transform:translateY(0); }
+      to   { transform:translateY(-8px); }
+    }
+    @keyframes fadeOut {
+      from { opacity:1; }
+      to   { opacity:0; pointer-events:none; }
+    }
+  \`;
+  document.head.appendChild(style);
+  document.body.appendChild(overlay);
+
+  function dismiss() {
+    overlay.style.animation = 'fadeOut 0.4s ease forwards';
+    setTimeout(function() { overlay.remove(); }, 400);
+  }
+  overlay.addEventListener('click', dismiss);
+  setTimeout(dismiss, 5000);
+})();
+</script>`;
+}
+function themeToggleStyles() {
+  return `
+<style>
+  /* Night override \u2014 applied via [data-theme="night"] on <html> */
+  [data-theme="night"] {
+    --spt-bg:        #0d0d1a;
+    --spt-surface:   #16162a;
+    --spt-text:      #e8e8f0;
+    --spt-text-muted:#8888aa;
+    --spt-yellow:    #FFE566;
+    --spt-sky:       #4466cc;
+  }
+  [data-theme="night"] body { background: var(--spt-bg) !important; }
+  [data-theme="night"] .comic-card { background: var(--spt-surface) !important; border-color: #FED41D88 !important; }
+  [data-theme="night"] .comic-divider {
+    background: repeating-linear-gradient(90deg, #FFE566 0,#FFE566 20px,#0d0d1a 20px,#0d0d1a 24px) !important;
+  }
+</style>`;
+}
+function themeToggleScript() {
+  return `
+<script>
+(function() {
+  // Read cookie
+  function getCookie(name) {
+    var m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value) {
+    document.cookie = name + '=' + encodeURIComponent(value) + ';path=/;max-age=31536000';
+  }
+
+  var current = getCookie('spt_theme') || 'day';
+  document.documentElement.setAttribute('data-theme', current);
+
+  window.__sptToggleTheme = function() {
+    current = current === 'day' ? 'night' : 'day';
+    document.documentElement.setAttribute('data-theme', current);
+    setCookie('spt_theme', current);
+    updateBtn();
+  };
+
+  function updateBtn() {
+    var btn = document.getElementById('theme-toggle-btn');
+    if (!btn) return;
+    var isNight = current === 'night';
+    var isEN    = document.documentElement.lang === 'en';
+    btn.textContent = isNight
+      ? (isEN ? '\u2600\uFE0F Springfield Day'   : '\u2600\uFE0F Siang di Springfield')
+      : (isEN ? '\u{1F319} Springfield Night' : '\u{1F319} Malam di Springfield');
+  }
+
+  document.addEventListener('DOMContentLoaded', updateBtn);
+})();
+</script>`;
+}
+function themeToggleButton() {
+  return `
+  <button id="theme-toggle-btn" onclick="__sptToggleTheme()" style="
+    background:transparent;
+    border:2px solid #FED41D55;
+    border-radius:8px;
+    padding:0.35rem 0.8rem;
+    font-family:'Fredoka',sans-serif;
+    font-size:0.82rem;font-weight:600;
+    color:#FED41DAA;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:border-color 0.15s,color 0.15s;
+  "
+  onmouseover="this.style.borderColor='#FED41D';this.style.color='#FED41D'"
+  onmouseout="this.style.borderColor='#FED41D55';this.style.color='#FED41DAA'"
+  >\u2600\uFE0F Siang di Springfield</button>`;
+}
+function beerLoadingBar() {
+  return `
+<style>
+  #beer-bar {
+    position:fixed;top:0;left:0;right:0;z-index:9998;
+    height:4px;
+    pointer-events:none;
+    overflow:hidden;
+    opacity:0;
+    transition:opacity 0.2s;
+  }
+  #beer-bar.active { opacity:1; }
+  #beer-bar-fill {
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, #F5C400, #FED41D 40%, #ffe566 60%, #FED41D);
+    box-shadow:0 0 8px #FED41Daa;
+    transition:width 0.3s ease;
+    position:relative;
+  }
+  #beer-bar-fill::after {
+    content:'';
+    position:absolute;right:0;top:0;bottom:0;width:20px;
+    background:linear-gradient(90deg,transparent,#ffffffaa);
+  }
+  #beer-bar-foam {
+    position:absolute;right:-6px;top:-4px;
+    width:14px;height:12px;
+    background:#fffef7;
+    border-radius:50% 50% 30% 30%;
+    box-shadow:0 0 4px #ffffffaa;
+  }
+</style>
+<div id="beer-bar"><div id="beer-bar-fill"><div id="beer-bar-foam"></div></div></div>
+<script>
+(function() {
+  var bar   = document.getElementById('beer-bar');
+  var fill  = document.getElementById('beer-bar-fill');
+  var tid, pct;
+
+  function start() {
+    pct = 0;
+    bar.classList.add('active');
+    clearInterval(tid);
+    tid = setInterval(function() {
+      pct = Math.min(pct + (Math.random() * 12 + 3), 85);
+      fill.style.width = pct + '%';
+    }, 180);
+  }
+  function finish() {
+    clearInterval(tid);
+    fill.style.width = '100%';
+    setTimeout(function() {
+      bar.classList.remove('active');
+      setTimeout(function() { fill.style.width = '0%'; }, 200);
+    }, 300);
+  }
+
+  // Trigger on <a> clicks (same origin, non-hash)
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (a.target === '_blank') return;
+    try {
+      var url = new URL(href, location.href);
+      if (url.origin !== location.origin) return;
+      // Normalize trailing slash before comparing
+      var norm = function(p) { return p.replace(//$/, '') || '/'; };
+      if (norm(url.pathname) === norm(location.pathname)) return;
+    } catch(e) { return; }
+    start();
+  });
+  window.addEventListener('pageshow', finish);
+  window.addEventListener('load', finish);
+})();
+</script>`;
+}
+function donutConfettiScript() {
+  return `
+<canvas id="confetti-canvas" style="
+  position:fixed;inset:0;pointer-events:none;z-index:9997;
+  width:100%;height:100%;
+"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('confetti-canvas');
+  var ctx    = canvas.getContext('2d');
+  var particles = [];
+  var raf;
+
+  var EMOJIS = ['\u{1F369}','\u{1F369}','\u2B50','\u2728','\u{1F389}','\u{1F37A}','\u{1F31F}'];
+  var COLORS  = ['#FED41D','#FF6B6B','#87CEEB','#4CAF50','#FFE566','#F5C400'];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function spawn(n) {
+    for (var i = 0; i < n; i++) {
+      particles.push({
+        x:   Math.random() * canvas.width,
+        y:   -20 - Math.random() * 100,
+        vx:  (Math.random() - 0.5) * 5,
+        vy:  2 + Math.random() * 4,
+        rot: Math.random() * Math.PI * 2,
+        rv:  (Math.random() - 0.5) * 0.2,
+        size: 18 + Math.random() * 16,
+        emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: 1,
+        life: 120 + Math.floor(Math.random() * 80),
+      });
+    }
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x   += p.vx;
+      p.y   += p.vy;
+      p.rot += p.rv;
+      p.vy  += 0.08; // gravity
+      p.life--;
+      if (p.life < 30) p.alpha = p.life / 30;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.font = p.size + 'px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(p.emoji, 0, 0);
+      ctx.restore();
+    }
+    if (particles.length > 0) raf = requestAnimationFrame(loop);
+    else cancelAnimationFrame(raf);
+  }
+
+  window.__sptDonutConfetti = function(n) {
+    spawn(n || 60);
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(loop);
+  };
+})();
+</script>`;
+}
+function konamiEasterEggScript() {
+  return `
+<script>
+(function() {
+  var SEQ  = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  var idx  = 0;
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === SEQ[idx]) {
+      idx++;
+      if (idx === SEQ.length) {
+        idx = 0;
+        triggerEasterEgg();
+      }
+    } else {
+      idx = e.key === SEQ[0] ? 1 : 0;
+    }
+  });
+
+  function triggerEasterEgg() {
+    if (typeof window.__sptDonutConfetti === 'function') window.__sptDonutConfetti(120);
+
+    var isEN   = document.documentElement.lang === 'en';
+    var msg    = isEN
+      ? "Woo-hoo! You found the secret! D'oh \u2014 now everyone knows."
+      : "Woo-hoo! Kamu menemukan rahasia Springfield! \u{1F369}";
+
+    var toast = document.createElement('div');
+    toast.style.cssText = [
+      'position:fixed','bottom:2rem','left:50%',
+      'transform:translateX(-50%)',
+      'background:#FED41D','color:#1A1A2E',
+      'border:3px solid #1A1A2E',
+      'border-radius:16px',
+      'padding:1rem 2rem',
+      'font-family:Fredoka,sans-serif',
+      'font-size:1rem','font-weight:700',
+      'box-shadow:5px 5px 0 #1A1A2E',
+      'z-index:9990',
+      'animation:toastIn 0.4s cubic-bezier(.175,.885,.32,1.275) forwards',
+      'text-align:center',
+      'max-width:90vw',
+    ].join(';');
+    toast.textContent = msg;
+
+    var s = document.createElement('style');
+    s.textContent = '@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+    document.head.appendChild(s);
+    document.body.appendChild(toast);
+    setTimeout(function() {
+      toast.style.transition = 'opacity 0.4s';
+      toast.style.opacity    = '0';
+      setTimeout(function() { toast.remove(); }, 400);
+    }, 4000);
+  }
+})();
+</script>`;
+}
 
 // src/layouts/base.ts
 function langSwitcher(locale, currentPath) {
@@ -4404,13 +4844,15 @@ function navbar(locale, activePage) {
           box-shadow:3px 3px 0px #F5C400;
           display:flex;align-items:center;justify-content:center;
           font-family:'Bangers',cursive;font-size:1.2rem;color:#1A1A2E;
-        ">NT</div>
+        ">ST</div>
         <span style="font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:0.06em;color:#FFFEF7;">${company.name}</span>
       </a>
 
       <!-- Desktop links + switcher + CTA -->
       <div id="nav-links" style="display:flex;align-items:center;gap:0.25rem;">
         ${desktopLinks}
+        <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
+        ${themeToggleButton()}
         <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
         ${langSwitcher(locale, activePage)}
         <a href="${ctaHref}" style="
@@ -4501,7 +4943,7 @@ function footer(locale) {
               box-shadow:3px 3px 0px #F5C400;
               display:flex;align-items:center;justify-content:center;
               font-family:'Bangers',cursive;font-size:1.1rem;color:#1A1A2E;
-            ">NT</div>
+            ">ST</div>
             <span style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#FFFEF7;">${company.name}</span>
           </a>
           <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;line-height:1.6;margin:0;max-width:280px;">
@@ -4674,21 +5116,29 @@ function baseLayout({ title, description, activePage, locale, content }) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="${SEO.twitterHandle}" />
   <!-- Alternate language links for SEO -->
-  <link rel="alternate" hreflang="id" href="/id${activePage === "/" ? "" : activePage}" />
-  <link rel="alternate" hreflang="en" href="/en${activePage === "/" ? "" : activePage}" />
-  <link rel="alternate" hreflang="x-default" href="${activePage}" />
+  <link rel="alternate" hreflang="id" href="/id${stripLocale(activePage) === "/" ? "" : stripLocale(activePage)}" />
+  <link rel="alternate" hreflang="en" href="/en${stripLocale(activePage) === "/" ? "" : stripLocale(activePage)}" />
+  <link rel="alternate" hreflang="x-default" href="${stripLocale(activePage)}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  ${themeToggleStyles()}
+  <!-- Apply saved theme immediately to prevent flash -->
+  <script>(function(){var m=document.cookie.match('(?:^|; )spt_theme=([^;]*)');if(m&&decodeURIComponent(m[1])==='night'){document.documentElement.setAttribute('data-theme','night');}})();</script>
   ${globalStyles()}
 </head>
 <body>
   ${navbar(locale, activePage)}
+  ${beerLoadingBar()}
   <main>
     ${content}
   </main>
   ${footer(locale)}
   ${globalScripts()}
+  ${donutConfettiScript()}
+  ${konamiEasterEggScript()}
+  ${themeToggleScript()}
+  ${chalkboardScript()}
 </body>
 </html>`;
 }
@@ -5349,32 +5799,82 @@ function portfolioGrid(locale) {
   const t = getTranslation(locale);
   const rest = portfolios.slice(1);
   const dps = t.data.portfolios.slice(1);
-  const items = rest.map((p, i) => {
+  const EMOJIS = ["\u{1F6D2}", "\u{1F4DA}", "\u{1F69B}", "\u{1F4A1}"];
+  const cards = rest.map((p, i) => {
     const dp = dps[i];
-    const techBadges = p.tech.slice(0, 3).map((tech) => badge(tech, "ink")).join(" ");
+    const emoji = EMOJIS[i] ?? "\u2B50";
+    const techStr = p.tech.join(" \xB7 ");
     return `
-    <div class="reveal reveal-d${i + 1} comic-card" style="
-      background:#FFFEF7;border:3px solid #1A1A2E;border-radius:16px;
-      box-shadow:5px 5px 0 #1A1A2E;overflow:hidden;
-      display:flex;flex-direction:column;transition:transform 0.15s,box-shadow 0.15s;
-    ">
-      <div style="
-        padding:1.75rem 1.75rem 1.25rem;
-        background:linear-gradient(135deg,#1A1A2E,#2D2D44);
-        border-bottom:3px solid #FED41D;
+    <div class="reveal reveal-d${i + 1}" style="perspective:800px;">
+      <div class="trade-card" onclick="this.classList.toggle('flipped')" style="
+        position:relative;
+        width:100%;padding-top:140%;
+        transform-style:preserve-3d;
+        transition:transform 0.55s cubic-bezier(.4,0,.2,1);
+        cursor:pointer;
       ">
-        <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;font-weight:600;color:#FED41DAA;letter-spacing:0.06em;margin-bottom:0.5rem;">${p.year}</div>
-        <h3 style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:0.04em;color:#FED41D;margin-bottom:0.5rem;">${p.title}</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">${techBadges}</div>
-      </div>
-      <div style="padding:1.25rem 1.75rem 1.5rem;display:flex;flex-direction:column;gap:0.75rem;flex:1;">
-        ${badge(p.category, "yellow")}
-        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${dp.description}</p>
+        <!-- FRONT -->
         <div style="
-          padding:0.6rem 0.9rem;background:#FED41D18;
-          border:2px solid #FED41D66;border-radius:8px;
-          font-family:'Fredoka',sans-serif;font-size:0.82rem;font-weight:600;color:#1A1A2E;
-        ">\u{1F4CA} ${dp.result}</div>
+          position:absolute;inset:0;
+          backface-visibility:hidden;-webkit-backface-visibility:hidden;
+          background:linear-gradient(135deg,#1A1A2E,#2D2D44);
+          border:3px solid #FED41D;border-radius:16px;
+          box-shadow:5px 5px 0 #FED41D44;
+          display:flex;flex-direction:column;align-items:center;
+          justify-content:center;gap:1rem;padding:1.5rem;
+          text-align:center;
+        ">
+          <div style="
+            font-size:3.5rem;line-height:1;
+            filter:drop-shadow(0 4px 8px #00000088);
+          ">${emoji}</div>
+          <h3 style="
+            font-family:'Bangers',cursive;font-size:1.5rem;
+            letter-spacing:0.05em;color:#FED41D;margin:0;line-height:1.2;
+          ">${p.title}</h3>
+          <div style="
+            padding:0.3rem 0.9rem;
+            background:#FED41D22;border:1.5px solid #FED41D44;border-radius:999px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#FED41DAA;
+          ">${p.category}</div>
+          <div style="
+            margin-top:auto;
+            font-family:'Fredoka',sans-serif;font-size:0.75rem;color:#FFFEF755;
+            letter-spacing:0.04em;
+          ">${locale === "en" ? "tap to flip \u21BB" : "ketuk untuk balik \u21BB"}</div>
+        </div>
+
+        <!-- BACK -->
+        <div style="
+          position:absolute;inset:0;
+          backface-visibility:hidden;-webkit-backface-visibility:hidden;
+          transform:rotateY(180deg);
+          background:#FFFEF7;
+          border:3px solid #1A1A2E;border-radius:16px;
+          box-shadow:5px 5px 0 #1A1A2E;
+          display:flex;flex-direction:column;gap:0.75rem;
+          padding:1.5rem;
+          overflow:hidden;
+        ">
+          <div style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#1A1A2E;">${p.title}</div>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.82rem;color:#2D2D44;line-height:1.5;margin:0;flex:1;">${dp.description}</p>
+          <div style="
+            padding:0.5rem 0.75rem;
+            background:#1A1A2E;border-radius:8px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;
+            color:#FED41D;font-weight:600;
+          ">\u{1F6E0} ${techStr}</div>
+          <div style="
+            padding:0.5rem 0.75rem;
+            background:#FED41D18;border:2px solid #FED41D66;border-radius:8px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;
+            color:#1A1A2E;font-weight:700;
+          ">\u{1F4CA} ${dp.result}</div>
+          <div style="
+            font-family:'Fredoka',sans-serif;font-size:0.7rem;
+            color:#1A1A2E88;text-align:right;
+          ">${p.year}</div>
+        </div>
       </div>
     </div>`;
   }).join("");
@@ -5383,11 +5883,18 @@ function portfolioGrid(locale) {
     <div class="container">
       <h2 class="reveal" style="
         font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);
-        letter-spacing:0.05em;color:#1A1A2E;margin-bottom:2rem;
+        letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;
       ">${t.ui.otherProjects}</h2>
-      <div class="grid-3" style="gap:1.5rem;">${items}</div>
+      <p class="reveal reveal-d1" style="
+        font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44AA;margin-bottom:2rem;
+      ">${locale === "en" ? "Tap a card to flip and reveal the tech stack." : "Ketuk kartu untuk balik dan lihat tech stack-nya."}</p>
+      <div class="grid-3" style="gap:1.5rem;">${cards}</div>
     </div>
-  </section>`;
+  </section>
+
+  <style>
+    .trade-card.flipped { transform: rotateY(180deg); }
+  </style>`;
 }
 function portfolioStats(locale) {
   const t = getTranslation(locale);
@@ -5865,8 +6372,13 @@ function contactScript(locale) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-        if (res.ok) { success.style.display = 'block'; form.reset(); }
-        else        { error.style.display   = 'block'; }
+        if (res.ok) {
+          success.style.display = 'block';
+          form.reset();
+          if (typeof window.__sptDonutConfetti === 'function') window.__sptDonutConfetti(80);
+        } else {
+          error.style.display = 'block';
+        }
       } catch (_) {
         error.style.display = 'block';
       } finally {
@@ -5892,6 +6404,179 @@ function contactPage(locale) {
     locale,
     content
   });
+}
+
+// src/pages/faq.ts
+function faqHero(locale) {
+  const t = getTranslation(locale);
+  const f = t.faq;
+  return `
+  <section style="
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:5rem 1.5rem 4rem;text-align:center;overflow:hidden;position:relative;
+  ">
+    <!-- Decorative beer mug SVG (100% generic, no IP) -->
+    <div style="
+      position:absolute;right:5%;top:50%;transform:translateY(-50%);
+      font-size:clamp(4rem,10vw,8rem);opacity:0.08;pointer-events:none;
+      line-height:1;
+    ">\u{1F37A}</div>
+    <div class="container">
+      <div class="reveal" style="margin-bottom:1rem;">
+        <span style="
+          display:inline-block;padding:0.3rem 1rem;
+          background:#FED41D22;border:2px solid #FED41D44;border-radius:999px;
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">${f.badge}</span>
+      </div>
+      <h1 class="reveal reveal-d1" style="
+        font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">${f.heroHeadline1}<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">${f.heroHeadline2}</span></h1>
+      <p class="reveal reveal-d2" style="
+        font-family:'Fredoka',sans-serif;font-size:1.05rem;
+        color:#FFFEF7AA;max-width:500px;margin:0 auto;line-height:1.7;
+      ">${f.heroDescription}</p>
+    </div>
+  </section>`;
+}
+function faqAccordion(locale) {
+  const t = getTranslation(locale);
+  const items = t.faq.items;
+  const entries = items.map((item, i) => `
+    <!-- FAQ item ${i} -->
+    <div class="faq-item reveal reveal-d${i % 4 + 1}" style="
+      border:3px solid #1A1A2E;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:4px 4px 0 #1A1A2E;
+      transition:box-shadow 0.15s;
+    ">
+      <!-- Question bubble (Moe asking) -->
+      <button onclick="toggleFaq(${i})" style="
+        width:100%;
+        background:#FED41D;
+        border:none;cursor:pointer;
+        padding:1.25rem 1.5rem;
+        display:flex;align-items:center;gap:1rem;
+        text-align:left;
+      ">
+        <div style="
+          width:38px;height:38px;flex-shrink:0;
+          background:#1A1A2E;
+          border:2px solid #1A1A2E;
+          border-radius:50%;
+          display:flex;align-items:center;justify-content:center;
+          font-size:1.2rem;
+        ">\u{1F64B}</div>
+        <span style="
+          font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+          color:#1A1A2E;flex:1;line-height:1.4;
+        ">${item.q}</span>
+        <span id="faq-icon-${i}" style="
+          font-size:1.4rem;color:#1A1A2E;transition:transform 0.25s;
+          flex-shrink:0;font-weight:700;
+        ">+</span>
+      </button>
+
+      <!-- Answer bubble (Moe answering) -->
+      <div id="faq-answer-${i}" style="
+        display:none;
+        background:#FFFEF7;
+        border-top:3px solid #1A1A2E;
+        padding:0;
+        overflow:hidden;
+      ">
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:1.25rem 1.5rem;">
+          <div style="
+            width:38px;height:38px;flex-shrink:0;
+            background:#87CEEB;
+            border:2px solid #1A1A2E;
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.2rem;margin-top:0.15rem;
+          ">\u{1F37A}</div>
+          <div style="
+            background:#F0F8FF;
+            border:2px solid #87CEEB;
+            border-radius:0 14px 14px 14px;
+            padding:0.9rem 1.1rem;
+            flex:1;
+          ">
+            <p style="
+              font-family:'Fredoka',sans-serif;font-size:0.95rem;
+              color:#1A1A2E;line-height:1.7;margin:0;
+            ">${item.a}</p>
+          </div>
+        </div>
+      </div>
+    </div>`).join("");
+  return `
+  <section class="section">
+    <div class="container" style="max-width:800px;">
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        ${entries}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleFaq(idx) {
+      var ans  = document.getElementById('faq-answer-' + idx);
+      var icon = document.getElementById('faq-icon-' + idx);
+      var open = ans.style.display === 'block';
+      ans.style.display  = open ? 'none' : 'block';
+      icon.textContent   = open ? '+' : '\u2212';
+      icon.style.transform = open ? '' : 'rotate(45deg)';
+    }
+  </script>`;
+}
+function faqPage(locale) {
+  const t = getTranslation(locale);
+  const content = `
+    ${faqHero(locale)}
+    <div class="comic-divider"></div>
+    ${faqAccordion(locale)}
+    ${ctaSection({
+    heading: locale === "en" ? "Still Got Questions?" : "Masih Ada Pertanyaan?",
+    subheading: locale === "en" ? "Don't have a cow \u2014 just send us a message and we'll get back to you. Woo-hoo!" : "Jangan sungkan \u2014 kirimi kami pesan dan kami akan segera membalas.",
+    primaryLabel: locale === "en" ? "Contact Us \u2726" : "Hubungi Kami \u2726",
+    primaryHref: localePath(locale, "/contact"),
+    secondaryLabel: locale === "en" ? "View Services" : "Lihat Layanan",
+    secondaryHref: localePath(locale, "/services")
+  })}
+  `;
+  return baseLayout({
+    title: t.seo.faqTitle,
+    description: t.seo.faqDescription,
+    activePage: localePath(locale, "/faq"),
+    locale,
+    content
+  });
+}
+
+// src/lib/quotes.ts
+var QUOTES = [
+  { text: "Any sufficiently advanced bug is indistinguishable from a feature.", author: "Springfield Engineering Proverb" },
+  { text: "There are only two hard problems in CS: naming things, cache invalidation, and off-by-one errors.", author: "Springfield CS Dept." },
+  { text: "It works on my machine. Perhaps we should ship your machine.", author: "Dev floor, circa every standup" },
+  { text: "Documentation is like a good donut: everyone wants it, nobody wants to make it.", author: "Anonymous Springfield Dev" },
+  { text: "Move fast and fix things. The breaking was the easy part.", author: "Revised Springfield Motto" },
+  { text: "A deploy on Friday is just a weekend adventure you didn't plan.", author: "Springfield SRE Handbook" },
+  { text: "Clean code is not written, it is rewritten.", author: "Springfield Refactor Guild" },
+  { text: "The best code is the code you didn't have to write.", author: "Lazy Engineer Quarterly" },
+  { text: "An estimate is just a guess wearing a suit and a tie.", author: "Springfield PM Conference 2019" },
+  { text: "Every legacy codebase is someone's passionate side project that got promoted.", author: "Tales from the On-Call Rotation" },
+  { text: "The first rule of optimization is: don't. The second rule is: not yet.", author: "Springfield Performance Guild" },
+  { text: "Comments should explain why, not what. The code already says what. Badly.", author: "Code Review Notes, vol. 7" },
+  { text: "Kubernetes is just Docker, but for people who like YAML the way Homer likes donuts.", author: "Springfield DevOps Zine" },
+  { text: "A good API is like a good traffic light: obvious, consistent, and nobody reads the manual.", author: "Springfield Platform Team" },
+  { text: "Ship it. The universe is 13.8 billion years old. Your bug can wait until Monday.", author: "Existential Engineering Notes" }
+];
+function getDailyQuote() {
+  const d = /* @__PURE__ */ new Date();
+  const seed = d.getUTCFullYear() * 1e4 + (d.getUTCMonth() + 1) * 100 + d.getUTCDate();
+  return QUOTES[seed % QUOTES.length];
 }
 
 // src/router.ts
@@ -5938,6 +6623,7 @@ app.get("/id/portfolio", (c) => c.html(portfolioPage("id")));
 app.get("/id/about", (c) => c.html(aboutPage("id")));
 app.get("/id/contact", (c) => c.html(contactPage("id")));
 app.post("/id/api/contact", (c) => handleContact(c, "id"));
+app.get("/id/faq", (c) => c.html(faqPage("id")));
 app.get("/en", (c) => c.html(homePage("en")));
 app.get("/en/", (c) => c.html(homePage("en")));
 app.get("/en/services", (c) => c.html(servicesPage("en")));
@@ -5945,7 +6631,16 @@ app.get("/en/portfolio", (c) => c.html(portfolioPage("en")));
 app.get("/en/about", (c) => c.html(aboutPage("en")));
 app.get("/en/contact", (c) => c.html(contactPage("en")));
 app.post("/en/api/contact", (c) => handleContact(c, "en"));
+app.get("/en/faq", (c) => c.html(faqPage("en")));
 app.post("/api/contact", (c) => handleContact(c, DEFAULT_LOCALE));
+app.get("/api/quote", (c) => {
+  const quote = getDailyQuote();
+  return c.json({
+    text: quote.text,
+    author: quote.author,
+    date: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10)
+  });
+});
 app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
 app.notFound((c) => {
   const loc = getLocaleFromPath(c.req.path);

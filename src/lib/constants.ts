@@ -16,6 +16,7 @@ export function getNavLinks(locale: Locale): NavLink[] {
     { href: localePath(locale, "/portfolio"), label: t.nav.portfolio },
     { href: localePath(locale, "/about"),     label: t.nav.about     },
     { href: localePath(locale, "/contact"),   label: t.nav.contact   },
+    { href: localePath(locale, "/faq"),       label: locale === "en" ? "FAQ" : "FAQ"   },
   ];
 }
 
@@ -42,8 +43,8 @@ export const THEME = {
 // ─── SEO Defaults ──────────────────────────────────────────────────────────────
 
 export const SEO = {
-  siteName:           "NusaTech Solutions",
-  defaultDescription: "Solusi digital kelas dunia — product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
+  siteName:           "Simptecho",
+  defaultDescription: "Solusi digital kelas Springfield — product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
   defaultOgImage:     "/og-image.png",
-  twitterHandle:      "@nusatech_id",
+  twitterHandle:      "@simptecho_id",
 } as const;

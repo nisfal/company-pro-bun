@@ -7,7 +7,7 @@ import { PORT } from "./src/lib/constants";
 
 console.log(`
 ╔═══════════════════════════════════════════╗
-║       NusaTech Solutions — Server         ║
+║       Simptecho — Server              ║
 ╠═══════════════════════════════════════════╣
 ║  ☀️  http://localhost:${PORT}              ║
 ║                                           ║

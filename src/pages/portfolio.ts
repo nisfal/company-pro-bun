@@ -1,7 +1,7 @@
 import { baseLayout } from "../layouts/base";
-import { badge } from "../components/badge";
 import { statsStrip } from "../components/stats";
 import { ctaSection } from "../components/cta";
+import { badge } from "../components/badge";
 import { portfolios } from "../data/company";
 import { getTranslation, localePath } from "../i18n/index";
 import type { Locale } from "../i18n/types";
@@ -99,32 +99,84 @@ function portfolioGrid(locale: Locale): string {
   const rest = portfolios.slice(1);
   const dps  = t.data.portfolios.slice(1);
 
-  const items = rest.map((p, i) => {
-    const dp = dps[i]!;
-    const techBadges = p.tech.slice(0, 3).map(tech => badge(tech, "ink")).join(" ");
+  // Trading card flip style
+  const EMOJIS = ["🛒", "📚", "🚛", "💡"];
+
+  const cards = rest.map((p, i) => {
+    const dp      = dps[i]!;
+    const emoji   = EMOJIS[i] ?? "⭐";
+    const techStr = p.tech.join(" · ");
     return `
-    <div class="reveal reveal-d${i + 1} comic-card" style="
-      background:#FFFEF7;border:3px solid #1A1A2E;border-radius:16px;
-      box-shadow:5px 5px 0 #1A1A2E;overflow:hidden;
-      display:flex;flex-direction:column;transition:transform 0.15s,box-shadow 0.15s;
-    ">
-      <div style="
-        padding:1.75rem 1.75rem 1.25rem;
-        background:linear-gradient(135deg,#1A1A2E,#2D2D44);
-        border-bottom:3px solid #FED41D;
+    <div class="reveal reveal-d${i + 1}" style="perspective:800px;">
+      <div class="trade-card" onclick="this.classList.toggle('flipped')" style="
+        position:relative;
+        width:100%;padding-top:140%;
+        transform-style:preserve-3d;
+        transition:transform 0.55s cubic-bezier(.4,0,.2,1);
+        cursor:pointer;
       ">
-        <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;font-weight:600;color:#FED41DAA;letter-spacing:0.06em;margin-bottom:0.5rem;">${p.year}</div>
-        <h3 style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:0.04em;color:#FED41D;margin-bottom:0.5rem;">${p.title}</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">${techBadges}</div>
-      </div>
-      <div style="padding:1.25rem 1.75rem 1.5rem;display:flex;flex-direction:column;gap:0.75rem;flex:1;">
-        ${badge(p.category, "yellow")}
-        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${dp.description}</p>
+        <!-- FRONT -->
         <div style="
-          padding:0.6rem 0.9rem;background:#FED41D18;
-          border:2px solid #FED41D66;border-radius:8px;
-          font-family:'Fredoka',sans-serif;font-size:0.82rem;font-weight:600;color:#1A1A2E;
-        ">📊 ${dp.result}</div>
+          position:absolute;inset:0;
+          backface-visibility:hidden;-webkit-backface-visibility:hidden;
+          background:linear-gradient(135deg,#1A1A2E,#2D2D44);
+          border:3px solid #FED41D;border-radius:16px;
+          box-shadow:5px 5px 0 #FED41D44;
+          display:flex;flex-direction:column;align-items:center;
+          justify-content:center;gap:1rem;padding:1.5rem;
+          text-align:center;
+        ">
+          <div style="
+            font-size:3.5rem;line-height:1;
+            filter:drop-shadow(0 4px 8px #00000088);
+          ">${emoji}</div>
+          <h3 style="
+            font-family:'Bangers',cursive;font-size:1.5rem;
+            letter-spacing:0.05em;color:#FED41D;margin:0;line-height:1.2;
+          ">${p.title}</h3>
+          <div style="
+            padding:0.3rem 0.9rem;
+            background:#FED41D22;border:1.5px solid #FED41D44;border-radius:999px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#FED41DAA;
+          ">${p.category}</div>
+          <div style="
+            margin-top:auto;
+            font-family:'Fredoka',sans-serif;font-size:0.75rem;color:#FFFEF755;
+            letter-spacing:0.04em;
+          ">${locale === "en" ? "tap to flip ↻" : "ketuk untuk balik ↻"}</div>
+        </div>
+
+        <!-- BACK -->
+        <div style="
+          position:absolute;inset:0;
+          backface-visibility:hidden;-webkit-backface-visibility:hidden;
+          transform:rotateY(180deg);
+          background:#FFFEF7;
+          border:3px solid #1A1A2E;border-radius:16px;
+          box-shadow:5px 5px 0 #1A1A2E;
+          display:flex;flex-direction:column;gap:0.75rem;
+          padding:1.5rem;
+          overflow:hidden;
+        ">
+          <div style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#1A1A2E;">${p.title}</div>
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.82rem;color:#2D2D44;line-height:1.5;margin:0;flex:1;">${dp.description}</p>
+          <div style="
+            padding:0.5rem 0.75rem;
+            background:#1A1A2E;border-radius:8px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;
+            color:#FED41D;font-weight:600;
+          ">🛠 ${techStr}</div>
+          <div style="
+            padding:0.5rem 0.75rem;
+            background:#FED41D18;border:2px solid #FED41D66;border-radius:8px;
+            font-family:'Fredoka',sans-serif;font-size:0.78rem;
+            color:#1A1A2E;font-weight:700;
+          ">📊 ${dp.result}</div>
+          <div style="
+            font-family:'Fredoka',sans-serif;font-size:0.7rem;
+            color:#1A1A2E88;text-align:right;
+          ">${p.year}</div>
+        </div>
       </div>
     </div>`;
   }).join("");
@@ -134,11 +186,18 @@ function portfolioGrid(locale: Locale): string {
     <div class="container">
       <h2 class="reveal" style="
         font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);
-        letter-spacing:0.05em;color:#1A1A2E;margin-bottom:2rem;
+        letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;
       ">${t.ui.otherProjects}</h2>
-      <div class="grid-3" style="gap:1.5rem;">${items}</div>
+      <p class="reveal reveal-d1" style="
+        font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44AA;margin-bottom:2rem;
+      ">${locale === "en" ? "Tap a card to flip and reveal the tech stack." : "Ketuk kartu untuk balik dan lihat tech stack-nya."}</p>
+      <div class="grid-3" style="gap:1.5rem;">${cards}</div>
     </div>
-  </section>`;
+  </section>
+
+  <style>
+    .trade-card.flipped { transform: rotateY(180deg); }
+  </style>`;
 }
 
 function portfolioStats(locale: Locale): string {

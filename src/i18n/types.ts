@@ -150,6 +150,15 @@ export interface Translation {
     cta: string;
   };
 
+  // ── FAQ page (Ask Moe)
+  faq: {
+    badge: string;
+    heroHeadline1: string;
+    heroHeadline2: string;
+    heroDescription: string;
+    items: Array<{ q: string; a: string }>;
+  };
+
   // ── SEO
   seo: {
     homeTitle: string;
@@ -162,6 +171,8 @@ export interface Translation {
     aboutDescription: string;
     contactTitle: string;
     contactDescription: string;
+    faqTitle: string;
+    faqDescription: string;
   };
 
   // ── Data overrides — translateable content fields

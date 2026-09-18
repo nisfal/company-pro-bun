@@ -55,7 +55,7 @@ export const en: Translation = {
     servicesHeading:    "What We Do (And We're Cromulent at It)",
     servicesSubheading: "From product engineering to cloud infrastructure — one partner, every digital need. Woo-hoo!",
     servicesCtaLabel:   "All Services →",
-    whyHeading:    "Why NusaTech? (Excellent Question...)",
+    whyHeading:    "Why Simptecho? (Excellent Question...)",
     whySubheading: "We're not just a body shop. We're the engineering team that actually gives a D'oh about your business outcome.",
     whyCtaLabel:   "About Us →",
     whyPoints: [
@@ -121,14 +121,14 @@ export const en: Translation = {
     heroHeadline1:   "We Believe",
     heroHeadline2:   "Tech Embiggens Business",
     heroDescription: "Since {founded}, we've helped hundreds of companies grow faster through technology that actually does something. Woo-hoo!",
-    storyHeading:    "The Origin Story of NusaTech",
+    storyHeading:    "The Origin Story of Simptecho",
     storyParagraphs: [
       "Founded in {founded} by two engineers who were, frankly, fed up watching tech projects fail — not because of technical problems, but because of terrible communication between business and engineering teams. D'oh!",
-      "We built NusaTech on one cromulent principle: be a partner, not a vendor. That means we think about your business, not just execute requirements that land in our inbox.",
+      "We built Simptecho on one cromulent principle: be a partner, not a vendor. That means we think about your business, not just execute requirements that land in our inbox.",
       "Today we're a team of {employees} professionals who've completed {projects} projects for {clients} clients across practically every industry you can think of. Excellent.",
     ],
     timeline: [
-      { year: "2015", event: "NusaTech founded. First team of 5, first 3 startup clients. Woo-hoo!" },
+      { year: "2015", event: "Simptecho founded. First team of 5, first 3 startup clients. Woo-hoo!" },
       { year: "2017", event: "Expanded to enterprise. First project with a national bank. Excellent." },
       { year: "2019", event: "Launched Cloud & DevOps division. Team grew to 50. Mmm... growth." },
       { year: "2021", event: "Launched AI Lab. Started building data-driven products for clients." },
@@ -204,11 +204,30 @@ export const en: Translation = {
     servicesTitle:        "Services",
     servicesDescription:  "Product engineering, cloud/DevOps, mobile, AI, security, and analytics — complete solutions for startups to enterprise.",
     portfolioTitle:       "Portfolio",
-    portfolioDescription: "NusaTech Solutions portfolio — fintech, e-commerce, edtech, logistics, and more. Excellent.",
+    portfolioDescription: "Simptecho portfolio — fintech, e-commerce, edtech, logistics, and more. Excellent.",
     aboutTitle:           "About Us",
     aboutDescription:     "{name} — {tagline}. Founded {founded}, {employees} professionals, {projects} projects completed.",
     contactTitle:         "Contact",
     contactDescription:   "Contact {name} — we're ready to discuss your digital project. Don't have a cow!",
+    faqTitle:             "FAQ",
+    faqDescription:       "Everything you wanted to ask Simptecho — answered honestly from behind the bar.",
+  },
+
+  faq: {
+    badge:           "🍺 Ask Moe",
+    heroHeadline1:   "Got Questions?",
+    heroHeadline2:   "Moe's Got Answers",
+    heroDescription: "Everything you wanted to know about Simptecho — answered honestly from behind the bar. Mmm... answers.",
+    items: [
+      { q: "How long does a typical project take?", a: "Depends on the scope. A simple MVP? Six to eight weeks. An enterprise platform? Six to twelve months. We won't give you an estimate until we actually understand what you need. Excellent." },
+      { q: "Do you handle maintenance after launch?", a: "Yep. We have monthly retainer packages for maintenance, monitoring, and ongoing development. Many of our clients have been with us for 3+ years. Woo-hoo!" },
+      { q: "What's your go-to tech stack?", a: "Backend: Go and Node.js. Frontend: React/Next.js. Mobile: React Native. Cloud: AWS and GCP. But we pick the stack based on the project's needs, not just habit. Mmm... pragmatism." },
+      { q: "Can you help with a project that's already running but needs refactoring?", a: "Absolutely — we do it all the time. We usually start with a technical audit to understand the codebase, then give you a realistic refactor roadmap. D'oh, why didn't they call us earlier?" },
+      { q: "What engagement models do you offer?", a: "Two options: project-based (fixed scope, fixed timeline) or dedicated team (our team embeds into yours). We recommend dedicated team for fast-evolving products. Don't have a cow — both work great." },
+      { q: "Is there a minimum project budget?", a: "For project-based work, our minimum engagement is around IDR 150 million. For consultation or technical audits, there's a separate, more accessible package." },
+      { q: "Have you handled fintech or healthcare projects with strict compliance requirements?", a: "Yes. We have experience with PCI-DSS, Indonesian fintech regulations, and healthcare data security standards. Security and compliance are not afterthoughts here. Sweet Jebus!" },
+      { q: "How do sprints and reporting work?", a: "Two-week sprints. End of every sprint: live demo to stakeholders. Weekly async updates via Slack/Notion. No death-by-PowerPoint around here. Excellent." },
+    ],
   },
 
   data: {
@@ -227,7 +246,7 @@ export const en: Translation = {
       { bio: "Design systems practitioner. Believes good UX is invisible UX.",                                                    funFact: "Designs exclusively to jazz. Always jazz." },
     ],
     testimonials: [
-      { text: "NusaTech transformed the way our team works. 3x faster delivery, bug rate dropped dramatically. They're not a vendor — they're a partner. Woo-hoo!" },
+      { text: "Simptecho transformed the way our team works. 3x faster delivery, bug rate dropped dramatically. They're not a vendor — they're a partner. Woo-hoo!" },
       { text: "Microservices migration completed in 6 months with zero downtime. I've never seen execution of this caliber before. Excellent." },
       { text: "Our platform handled 500k concurrent users at launch — something we thought was impossible in that timeline. Sweet Jebus!" },
     ],

@@ -9,6 +9,8 @@ import { servicesPage }  from "./pages/services";
 import { portfolioPage } from "./pages/portfolio";
 import { aboutPage }     from "./pages/about";
 import { contactPage }   from "./pages/contact";
+import { faqPage }       from "./pages/faq";
+import { getDailyQuote } from "./lib/quotes";
 
 import {
   DEFAULT_LOCALE,
@@ -93,6 +95,7 @@ app.get("/id/portfolio", (c) => c.html(portfolioPage("id")));
 app.get("/id/about",     (c) => c.html(aboutPage("id")));
 app.get("/id/contact",   (c) => c.html(contactPage("id")));
 app.post("/id/api/contact", (c) => handleContact(c, "id"));
+app.get("/id/faq",       (c) => c.html(faqPage("id")));
 
 // ─── EN routes ────────────────────────────────────────────────────────────────
 
@@ -103,10 +106,22 @@ app.get("/en/portfolio", (c) => c.html(portfolioPage("en")));
 app.get("/en/about",     (c) => c.html(aboutPage("en")));
 app.get("/en/contact",   (c) => c.html(contactPage("en")));
 app.post("/en/api/contact", (c) => handleContact(c, "en"));
+app.get("/en/faq",       (c) => c.html(faqPage("en")));
 
 // ─── Legacy /api/contact — fallback to default locale ─────────────────────────
 
 app.post("/api/contact", (c) => handleContact(c, DEFAULT_LOCALE));
+
+// ─── QOTD ─────────────────────────────────────────────────────────────────────
+
+app.get("/api/quote", (c) => {
+  const quote = getDailyQuote();
+  return c.json({
+    text:   quote.text,
+    author: quote.author,
+    date:   new Date().toISOString().slice(0, 10),
+  });
+});
 
 // ─── Health check ─────────────────────────────────────────────────────────────
 

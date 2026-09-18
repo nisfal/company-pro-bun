@@ -241,8 +241,13 @@ function contactScript(locale: Locale): string {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-        if (res.ok) { success.style.display = 'block'; form.reset(); }
-        else        { error.style.display   = 'block'; }
+        if (res.ok) {
+          success.style.display = 'block';
+          form.reset();
+          if (typeof window.__sptDonutConfetti === 'function') window.__sptDonutConfetti(80);
+        } else {
+          error.style.display = 'block';
+        }
       } catch (_) {
         error.style.display = 'block';
       } finally {
