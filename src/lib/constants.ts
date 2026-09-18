@@ -1,49 +1,49 @@
 import type { NavLink } from "./types";
+import type { Locale } from "../i18n/types";
+import { getTranslation, localePath } from "../i18n/index";
 
 // ─── Server ────────────────────────────────────────────────────────────────────
 
 export const PORT = Number(process.env.PORT) || 3000;
 
-// ─── Navigation ────────────────────────────────────────────────────────────────
+// ─── Navigation — locale-aware ─────────────────────────────────────────────────
 
-export const NAV_LINKS: NavLink[] = [
-  { href: "/", label: "Beranda" },
-  { href: "/services", label: "Layanan" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/about", label: "Tentang" },
-  { href: "/contact", label: "Kontak" },
-];
+export function getNavLinks(locale: Locale): NavLink[] {
+  const t = getTranslation(locale);
+  return [
+    { href: localePath(locale, "/"),          label: t.nav.home      },
+    { href: localePath(locale, "/services"),  label: t.nav.services  },
+    { href: localePath(locale, "/portfolio"), label: t.nav.portfolio },
+    { href: localePath(locale, "/about"),     label: t.nav.about     },
+    { href: localePath(locale, "/contact"),   label: t.nav.contact   },
+  ];
+}
 
 // ─── Theme — Simpsons-inspired ─────────────────────────────────────────────────
 
 export const THEME = {
-  // Primary palette
-  yellow: "#FED41D",
-  yellowDeep: "#F5C400",
-  sky: "#87CEEB",
-  skyDeep: "#5BA8D4",
-  ink: "#1A1A2E",
-  inkLight: "#2D2D44",
-  white: "#FFFEF7",
-  // Accent
-  coralRed: "#FF6B6B",
-  grassGreen: "#4CAF50",
-  // Comic outline
+  yellow:       "#FED41D",
+  yellowDeep:   "#F5C400",
+  sky:          "#87CEEB",
+  skyDeep:      "#5BA8D4",
+  ink:          "#1A1A2E",
+  inkLight:     "#2D2D44",
+  white:        "#FFFEF7",
+  coralRed:     "#FF6B6B",
+  grassGreen:   "#4CAF50",
   outlineWidth: "3px",
   outlineColor: "#1A1A2E",
-  // Shadow (comic style — hard offset)
-  shadowSm: "3px 3px 0px #1A1A2E",
-  shadowMd: "5px 5px 0px #1A1A2E",
-  shadowLg: "8px 8px 0px #1A1A2E",
+  shadowSm:     "3px 3px 0px #1A1A2E",
+  shadowMd:     "5px 5px 0px #1A1A2E",
+  shadowLg:     "8px 8px 0px #1A1A2E",
   shadowYellow: "5px 5px 0px #F5C400",
 } as const;
 
 // ─── SEO Defaults ──────────────────────────────────────────────────────────────
 
 export const SEO = {
-  siteName: "NusaTech Solutions",
-  defaultDescription:
-    "Solusi digital kelas dunia — product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
-  defaultOgImage: "/og-image.png",
-  twitterHandle: "@nusatech_id",
+  siteName:           "NusaTech Solutions",
+  defaultDescription: "Solusi digital kelas dunia — product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
+  defaultOgImage:     "/og-image.png",
+  twitterHandle:      "@nusatech_id",
 } as const;

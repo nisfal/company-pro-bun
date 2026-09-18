@@ -1,54 +1,84 @@
-import { NAV_LINKS, SEO } from "../lib/constants";
+import { getNavLinks, SEO } from "../lib/constants";
 import { company } from "../data/company";
+import { getTranslation, localePath, stripLocale } from "../i18n/index";
+import type { Locale } from "../i18n/types";
+import type { LayoutOptions } from "../lib/types";
 
-export interface LayoutOptions {
-  title: string;
-  description?: string;
-  activePage: string;
-  content: string;
+// ─── Language Switcher ─────────────────────────────────────────────────────────
+
+function langSwitcher(locale: Locale, currentPath: string): string {
+  const t        = getTranslation(locale);
+  const pagePath = stripLocale(currentPath);
+  const otherLocale: Locale = locale === "id" ? "en" : "id";
+  const switchHref  = localePath(otherLocale, pagePath);
+  const flag        = locale === "id" ? "🇮🇩" : "🇺🇸";
+  const switchFlag  = locale === "id" ? "🇺🇸" : "🇮🇩";
+
+  return `
+  <a href="${switchHref}" title="Switch language" style="
+    display:inline-flex;align-items:center;gap:0.35rem;
+    padding:0.35rem 0.75rem;
+    background:#FED41D22;
+    border:2px solid #FED41D66;
+    border-radius:8px;
+    font-family:'Fredoka',sans-serif;
+    font-size:0.85rem;font-weight:700;
+    color:#FED41D;
+    text-decoration:none;
+    transition:background 0.15s,border-color 0.15s;
+    white-space:nowrap;
+  "
+  onmouseover="this.style.background='#FED41D33';this.style.borderColor='#FED41D'"
+  onmouseout="this.style.background='#FED41D22';this.style.borderColor='#FED41D66'"
+  aria-label="Switch to ${otherLocale === 'en' ? 'English' : 'Bahasa Indonesia'}"
+  >
+    <span style="font-size:1rem;line-height:1;">${flag}</span>
+    <span style="opacity:0.5;font-size:0.7rem;">→</span>
+    <span style="font-size:1rem;line-height:1;">${switchFlag}</span>
+    <span>${t.nav.switchLang}</span>
+  </a>`;
 }
 
 // ─── Navbar ────────────────────────────────────────────────────────────────────
 
-function navbar(activePage: string): string {
-  const links = NAV_LINKS.map(({ href, label }) => {
+function navbar(locale: Locale, activePage: string): string {
+  const t       = getTranslation(locale);
+  const links   = getNavLinks(locale);
+  const ctaHref = localePath(locale, "/contact");
+
+  const desktopLinks = links.map(({ href, label }) => {
     const isActive = activePage === href;
     return `
-      <a href="${href}" style="
-        font-family:'Fredoka',sans-serif;
-        font-size:1rem;
-        font-weight:600;
-        text-decoration:none;
-        padding:0.4rem 1rem;
-        border-radius:8px;
-        border:2px solid ${isActive ? "#1A1A2E" : "transparent"};
-        background:${isActive ? "#FED41D" : "transparent"};
-        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
-        box-shadow:${isActive ? "3px 3px 0px #1A1A2E" : "none"};
-        transition:background 0.15s,color 0.15s,border-color 0.15s,box-shadow 0.15s;
-        white-space:nowrap;
-      "
-      onmouseover="if(!this.classList.contains('active')){this.style.background='#FED41D33';this.style.color='#FED41D';}"
-      onmouseout="if(!this.classList.contains('active')){this.style.background='transparent';this.style.color='#FFFEF7';}"
-      ${isActive ? 'class="active"' : ""}
-      >${label}</a>`;
+    <a href="${href}" style="
+      font-family:'Fredoka',sans-serif;
+      font-size:1rem;font-weight:600;
+      text-decoration:none;
+      padding:0.4rem 1rem;
+      border-radius:8px;
+      border:2px solid ${isActive ? "#1A1A2E" : "transparent"};
+      background:${isActive ? "#FED41D" : "transparent"};
+      color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+      box-shadow:${isActive ? "3px 3px 0px #1A1A2E" : "none"};
+      transition:background 0.15s,color 0.15s,border-color 0.15s,box-shadow 0.15s;
+      white-space:nowrap;
+    "
+    onmouseover="if(!this.dataset.active){this.style.background='#FED41D33';this.style.color='#FED41D';}"
+    onmouseout="if(!this.dataset.active){this.style.background='transparent';this.style.color='#FFFEF7';}"
+    ${isActive ? 'data-active="true"' : ""}
+    >${label}</a>`;
   }).join("");
 
-  const mobileLinks = NAV_LINKS.map(({ href, label }) => {
+  const mobileLinks = links.map(({ href, label }) => {
     const isActive = activePage === href;
     return `
-      <a href="${href}" style="
-        font-family:'Fredoka',sans-serif;
-        font-size:1.1rem;
-        font-weight:600;
-        text-decoration:none;
-        padding:0.75rem 1.25rem;
-        border-radius:10px;
-        border:2px solid ${isActive ? "#1A1A2E" : "#FED41D33"};
-        background:${isActive ? "#FED41D" : "transparent"};
-        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
-        display:block;
-      ">${label}</a>`;
+    <a href="${href}" style="
+      font-family:'Fredoka',sans-serif;font-size:1.1rem;font-weight:600;
+      text-decoration:none;padding:0.75rem 1.25rem;border-radius:10px;
+      border:2px solid ${isActive ? "#1A1A2E" : "#FED41D33"};
+      background:${isActive ? "#FED41D" : "transparent"};
+      color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+      display:block;
+    ">${label}</a>`;
   }).join("");
 
   return `
@@ -58,105 +88,95 @@ function navbar(activePage: string): string {
     border-bottom:3px solid #FED41D;
     transition:box-shadow 0.2s;
   ">
-    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;">
 
       <!-- Logo -->
-      <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;">
+      <a href="${localePath(locale, "/")}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
         <div style="
-          width:38px;height:38px;
-          background:#FED41D;
-          border:3px solid #FED41D;
-          border-radius:10px;
+          width:38px;height:38px;background:#FED41D;
+          border:3px solid #FED41D;border-radius:10px;
           box-shadow:3px 3px 0px #F5C400;
           display:flex;align-items:center;justify-content:center;
-          font-family:'Bangers',cursive;
-          font-size:1.2rem;
-          color:#1A1A2E;
+          font-family:'Bangers',cursive;font-size:1.2rem;color:#1A1A2E;
         ">NT</div>
-        <span style="
-          font-family:'Bangers',cursive;
-          font-size:1.4rem;
-          letter-spacing:0.06em;
-          color:#FFFEF7;
-        ">${company.name}</span>
+        <span style="font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:0.06em;color:#FFFEF7;">${company.name}</span>
       </a>
 
-      <!-- Desktop links -->
+      <!-- Desktop links + switcher + CTA -->
       <div id="nav-links" style="display:flex;align-items:center;gap:0.25rem;">
-        ${links}
-        <a href="/contact" style="
-          margin-left:0.75rem;
+        ${desktopLinks}
+        <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
+        ${langSwitcher(locale, activePage)}
+        <a href="${ctaHref}" style="
+          margin-left:0.5rem;
           padding:0.4rem 1.25rem;
-          background:#FED41D;
-          color:#1A1A2E;
-          border:2px solid #1A1A2E;
-          border-radius:8px;
-          font-family:'Fredoka',sans-serif;
-          font-size:0.95rem;
-          font-weight:700;
-          text-decoration:none;
-          box-shadow:3px 3px 0px #1A1A2E;
-          transition:transform 0.1s,box-shadow 0.1s;
-          white-space:nowrap;
+          background:#FED41D;color:#1A1A2E;
+          border:2px solid #1A1A2E;border-radius:8px;
+          font-family:'Fredoka',sans-serif;font-size:0.95rem;font-weight:700;
+          text-decoration:none;box-shadow:3px 3px 0px #1A1A2E;
+          transition:transform 0.1s,box-shadow 0.1s;white-space:nowrap;
         "
         onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0px #1A1A2E'"
         onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0px #1A1A2E'"
-        >Hubungi Kami</a>
+        >${t.nav.cta}</a>
       </div>
 
       <!-- Mobile hamburger -->
       <button id="menu-btn" aria-label="Menu" style="
-        display:none;
-        background:none;border:2px solid #FED41D;
-        border-radius:8px;padding:0.4rem 0.6rem;
-        cursor:pointer;color:#FED41D;font-size:1.3rem;
-        line-height:1;
+        display:none;background:none;
+        border:2px solid #FED41D;border-radius:8px;
+        padding:0.4rem 0.6rem;cursor:pointer;
+        color:#FED41D;font-size:1.3rem;line-height:1;
       ">☰</button>
     </div>
 
     <!-- Mobile drawer -->
     <div id="mobile-menu" style="
-      display:none;
-      flex-direction:column;
-      gap:0.5rem;
+      display:none;flex-direction:column;gap:0.5rem;
       padding:1rem 1.5rem 1.5rem;
-      border-top:2px solid #FED41D33;
-      background:#1A1A2E;
+      border-top:2px solid #FED41D33;background:#1A1A2E;
     ">
       ${mobileLinks}
+      <div style="padding-top:0.5rem;display:flex;align-items:center;gap:0.75rem;">
+        ${langSwitcher(locale, activePage)}
+        <a href="${ctaHref}" style="
+          flex:1;text-align:center;
+          padding:0.75rem;background:#FED41D;color:#1A1A2E;
+          border:2px solid #1A1A2E;border-radius:10px;
+          font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+          text-decoration:none;
+        ">${t.nav.cta}</a>
+      </div>
     </div>
   </nav>`;
 }
 
 // ─── Footer ────────────────────────────────────────────────────────────────────
 
-function footer(): string {
-  const year = new Date().getFullYear();
+function footer(locale: Locale): string {
+  const t     = getTranslation(locale);
+  const links = getNavLinks(locale);
+  const year  = new Date().getFullYear();
+
   const socials = [
-    { label: "LinkedIn", href: company.social.linkedin },
-    { label: "Twitter",  href: company.social.twitter  },
-    { label: "GitHub",   href: company.social.github   },
-    { label: "Instagram",href: company.social.instagram},
+    { label: "LinkedIn",  href: company.social.linkedin  },
+    { label: "Twitter",   href: company.social.twitter   },
+    { label: "GitHub",    href: company.social.github    },
+    { label: "Instagram", href: company.social.instagram },
   ].map(({ label, href }) => `
     <a href="${href}" target="_blank" rel="noopener noreferrer" style="
-      font-family:'Fredoka',sans-serif;
-      font-size:0.9rem;
-      font-weight:500;
-      color:#87CEEB;
-      text-decoration:none;
-      transition:color 0.15s;
+      font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:500;
+      color:#87CEEB;text-decoration:none;transition:color 0.15s;
     "
     onmouseover="this.style.color='#FED41D'"
     onmouseout="this.style.color='#87CEEB'"
     >${label}</a>`).join("");
 
-  const footerLinks = NAV_LINKS.map(({ href, label }) => `
+  const footerLinks = links.map(({ href, label }) => `
     <a href="${href}" style="
-      font-family:'Fredoka',sans-serif;
-      font-size:0.9rem;
-      color:#FFFEF799;
-      text-decoration:none;
-      transition:color 0.15s;
+      font-family:'Fredoka',sans-serif;font-size:0.9rem;
+      color:#FFFEF799;text-decoration:none;transition:color 0.15s;
     "
     onmouseover="this.style.color='#FED41D'"
     onmouseout="this.style.color='#FFFEF799'"
@@ -164,34 +184,27 @@ function footer(): string {
 
   return `
   <footer style="
-    background:#1A1A2E;
-    border-top:4px solid #FED41D;
-    padding:3rem 1.5rem 2rem;
-    margin-top:auto;
+    background:#1A1A2E;border-top:4px solid #FED41D;
+    padding:3rem 1.5rem 2rem;margin-top:auto;
   ">
     <div style="max-width:1200px;margin:0 auto;">
       <div style="
-        display:grid;
-        grid-template-columns:2fr 1fr 1fr;
-        gap:2.5rem;
-        padding-bottom:2rem;
-        border-bottom:2px solid #FED41D22;
+        display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;
+        padding-bottom:2rem;border-bottom:2px solid #FED41D22;
       " class="footer-grid">
 
         <!-- Brand -->
         <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div style="display:flex;align-items:center;gap:0.5rem;">
+          <a href="${localePath(locale, "/")}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;">
             <div style="
-              width:36px;height:36px;
-              background:#FED41D;
-              border:3px solid #FED41D;
-              border-radius:8px;
+              width:36px;height:36px;background:#FED41D;
+              border:3px solid #FED41D;border-radius:8px;
               box-shadow:3px 3px 0px #F5C400;
               display:flex;align-items:center;justify-content:center;
               font-family:'Bangers',cursive;font-size:1.1rem;color:#1A1A2E;
             ">NT</div>
             <span style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#FFFEF7;">${company.name}</span>
-          </div>
+          </a>
           <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;line-height:1.6;margin:0;max-width:280px;">
             ${company.description}
           </p>
@@ -200,13 +213,17 @@ function footer(): string {
 
         <!-- Nav -->
         <div>
-          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Halaman</h4>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">
+            ${t.footer.pagesHeading}
+          </h4>
           <div style="display:flex;flex-direction:column;gap:0.5rem;">${footerLinks}</div>
         </div>
 
         <!-- Contact -->
         <div>
-          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Kontak</h4>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">
+            ${t.footer.contactHeading}
+          </h4>
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
             <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.email}</span>
             <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.phone}</span>
@@ -217,17 +234,14 @@ function footer(): string {
 
       <div style="
         padding-top:1.5rem;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        flex-wrap:wrap;
-        gap:1rem;
+        display:flex;justify-content:space-between;align-items:center;
+        flex-wrap:wrap;gap:1rem;
       ">
         <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FFFEF755;">
-          © ${year} ${company.name}. All rights reserved.
+          © ${year} ${company.name}. ${t.footer.rights}
         </span>
         <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FED41D88;">
-          Built with ☀️ Bun + Hono
+          ${t.footer.builtWith}
         </span>
       </div>
     </div>
@@ -239,30 +253,17 @@ function footer(): string {
 function globalStyles(): string {
   return `
   <style>
-    /* Reset & base */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
-      background: #FFFEF7;
-      color: #1A1A2E;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      background: #FFFEF7; color: #1A1A2E;
+      min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
     }
-
-    /* Comic card hover */
     .comic-card:hover {
       transform: translate(-2px, -2px);
       box-shadow: 7px 7px 0px #1A1A2E !important;
     }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-d1 { transition-delay: 0.05s; }
     .reveal-d2 { transition-delay: 0.10s; }
@@ -270,45 +271,29 @@ function globalStyles(): string {
     .reveal-d4 { transition-delay: 0.20s; }
     .reveal-d5 { transition-delay: 0.25s; }
     .reveal-d6 { transition-delay: 0.30s; }
-
-    /* Page main — leave room for fixed navbar */
     main { padding-top: 64px; flex: 1; }
-
-    /* Section spacing */
-    .section { padding: 5rem 1.5rem; }
+    .section    { padding: 5rem 1.5rem; }
     .section-sm { padding: 3rem 1.5rem; }
-    .container { max-width: 1200px; margin: 0 auto; }
-
-    /* Comic separator */
+    .container  { max-width: 1200px; margin: 0 auto; }
     .comic-divider {
       height: 4px;
       background: repeating-linear-gradient(
         90deg, #FED41D 0px, #FED41D 20px, #1A1A2E 20px, #1A1A2E 24px
       );
     }
-
-    /* Responsive grid helpers */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-
-    /* Responsive navbar & footer */
     @media (max-width: 768px) {
       #nav-links { display: none !important; }
       #menu-btn  { display: flex !important; }
-      .footer-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .grid-2, .grid-3, .grid-4 {
-        grid-template-columns: 1fr !important;
-      }
+      .footer-grid { grid-template-columns: 1fr !important; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
     }
     @media (min-width: 769px) and (max-width: 1024px) {
       .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
       .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
     }
-
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #1A1A2E; }
     ::-webkit-scrollbar-thumb { background: #FED41D; border-radius: 4px; }
@@ -320,17 +305,12 @@ function globalStyles(): string {
 function globalScripts(): string {
   return `
   <script>
-    // ── Navbar scroll shadow
     (function() {
       var nav = document.getElementById('navbar');
       window.addEventListener('scroll', function() {
-        nav.style.boxShadow = window.scrollY > 10
-          ? '0 4px 24px #00000066'
-          : 'none';
+        nav.style.boxShadow = window.scrollY > 10 ? '0 4px 24px #00000066' : 'none';
       }, { passive: true });
     })();
-
-    // ── Mobile menu toggle
     (function() {
       var btn  = document.getElementById('menu-btn');
       var menu = document.getElementById('mobile-menu');
@@ -341,8 +321,6 @@ function globalScripts(): string {
         btn.textContent = open ? '☰' : '✕';
       });
     })();
-
-    // ── Scroll reveal
     (function() {
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window)) {
@@ -351,16 +329,11 @@ function globalScripts(): string {
       }
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            obs.unobserve(e.target);
-          }
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
         });
       }, { threshold: 0.12 });
       els.forEach(function(el) { obs.observe(el); });
     })();
-
-    // ── Counter animation
     (function() {
       function animateCounter(el) {
         var raw    = el.dataset.target || el.textContent;
@@ -368,24 +341,19 @@ function globalScripts(): string {
         var num    = parseFloat(raw.replace(/[^0-9.]/g, ''));
         var isFloat = raw.includes('.');
         if (isNaN(num)) return;
-        var start    = 0;
-        var duration = 1800;
-        var startTime = null;
+        var duration = 1800, startTime = null;
         function step(ts) {
           if (!startTime) startTime = ts;
           var progress = Math.min((ts - startTime) / duration, 1);
           var ease     = 1 - Math.pow(1 - progress, 3);
-          var current  = start + (num - start) * ease;
+          var current  = num * ease;
           el.textContent = (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
           if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       }
       var counterEls = document.querySelectorAll('[data-counter]');
-      if (!('IntersectionObserver' in window)) {
-        counterEls.forEach(animateCounter);
-        return;
-      }
+      if (!('IntersectionObserver' in window)) { counterEls.forEach(animateCounter); return; }
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
           if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); }
@@ -398,12 +366,14 @@ function globalScripts(): string {
 
 // ─── Base Layout ───────────────────────────────────────────────────────────────
 
-export function baseLayout({ title, description, activePage, content }: LayoutOptions): string {
-  const desc = description ?? SEO.defaultDescription;
+export function baseLayout({ title, description, activePage, locale, content }: LayoutOptions): string {
+  const t         = getTranslation(locale);
+  const desc      = description ?? SEO.defaultDescription;
   const fullTitle = `${title} — ${SEO.siteName}`;
+  const htmlLang  = locale === "en" ? "en" : "id";
 
   return `<!DOCTYPE html>
-<html lang="id">
+<html lang="${htmlLang}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -414,18 +384,21 @@ export function baseLayout({ title, description, activePage, content }: LayoutOp
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="${SEO.twitterHandle}" />
-  <!-- Google Fonts: Bangers (display) + Fredoka (body) -->
+  <!-- Alternate language links for SEO -->
+  <link rel="alternate" hreflang="id" href="/id${activePage === "/" ? "" : activePage}" />
+  <link rel="alternate" hreflang="en" href="/en${activePage === "/" ? "" : activePage}" />
+  <link rel="alternate" hreflang="x-default" href="${activePage}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   ${globalStyles()}
 </head>
 <body>
-  ${navbar(activePage)}
+  ${navbar(locale, activePage)}
   <main>
     ${content}
   </main>
-  ${footer()}
+  ${footer(locale)}
   ${globalScripts()}
 </body>
 </html>`;

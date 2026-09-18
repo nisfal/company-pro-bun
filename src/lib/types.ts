@@ -56,6 +56,10 @@ export interface Portfolio {
   result: string;
 }
 
+// ─── i18n ─────────────────────────────────────────────────────────────────────
+
+export type { Locale, Translation } from "../i18n/types";
+
 // ─── Component Props Types ─────────────────────────────────────────────────────
 
 export interface StatItem {
@@ -67,6 +71,14 @@ export interface StatItem {
 export interface NavLink {
   href: string;
   label: string;
+}
+
+export interface LayoutOptions {
+  title: string;
+  description?: string;
+  activePage: string;
+  locale: import("../i18n/types").Locale;
+  content: string;
 }
 
 export interface CtaProps {

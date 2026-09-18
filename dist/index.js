@@ -3676,15 +3676,475 @@ var endTime = (c, name, precision) => {
   metrics.timers.delete(name);
 };
 
+// src/i18n/id.ts
+var id = {
+  locale: "id",
+  nav: {
+    home: "Beranda",
+    services: "Layanan",
+    portfolio: "Portfolio",
+    about: "Tentang",
+    contact: "Kontak",
+    cta: "Hubungi Kami",
+    switchLang: "EN"
+  },
+  footer: {
+    pagesHeading: "Halaman",
+    contactHeading: "Kontak",
+    builtWith: "Dibangun dengan \u2600\uFE0F Bun + Hono",
+    rights: "Hak cipta dilindungi."
+  },
+  ui: {
+    learnMore: "Pelajari Lebih \u2192",
+    viewAll: "Lihat Semua \u2192",
+    sendMessage: "Kirim Pesan \u2726",
+    sending: "Mengirim...",
+    backHome: "Kembali ke Beranda",
+    year: "Tahun",
+    featuredProject: "\u2605 Proyek Unggulan",
+    otherProjects: "Proyek Lainnya",
+    readMore: "Baca Selengkapnya"
+  },
+  home: {
+    heroBadge: "\u2600\uFE0F {founded} \u2014 Hadir untuk Indonesia",
+    heroHeadline1: "Digital Solutions",
+    heroHeadline2: "Kelas Dunia",
+    heroDescription: "{description}",
+    heroCtaPrimary: "Lihat Layanan \u2726",
+    heroCtaSecondary: "Lihat Portfolio \u2192",
+    servicesHeading: "Apa yang Kami Lakukan",
+    servicesSubheading: "Dari product engineering sampai cloud infrastructure \u2014 kami cover semua kebutuhan digital Anda.",
+    servicesCtaLabel: "Semua Layanan \u2192",
+    whyHeading: "Kenapa Pilih NusaTech?",
+    whySubheading: "Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda \u2014 bukan hanya output teknis.",
+    whyCtaLabel: "Tentang Kami \u2192",
+    whyPoints: [
+      { icon: "\u26A1", title: "Delivery Cepat", body: "Metodologi Agile ketat. Sprint dua minggu. Demo tiap akhir sprint \u2014 tidak ada surprise di akhir." },
+      { icon: "\u{1F512}", title: "Security First", body: "Secure SDLC dari hari pertama. Code review, SAST, dependency audit \u2014 bukan afterthought." },
+      { icon: "\u{1F4C8}", title: "Scalable by Design", body: "Arsitektur dirancang untuk tumbuh. Dari 100 user ke 10 juta user tanpa rearchitecture besar." },
+      { icon: "\u{1F91D}", title: "Partner, Bukan Vendor", body: "Kami duduk di sisi Anda \u2014 ikut memikirkan bisnis, bukan hanya mengerjakan tiket." }
+    ],
+    testimonialsHeading: "Kata Klien Kami",
+    testimonialsSubheading: "Hasil bicara lebih keras dari janji. Ini yang mereka katakan.",
+    ctaHeading: "Siap Memulai Proyek?",
+    ctaSubheading: "Ceritakan tantangan Anda \u2014 kami siap duduk bareng dan cari solusinya.",
+    ctaPrimary: "Hubungi Kami \u2726",
+    ctaSecondary: "Lihat Portfolio",
+    stats: [
+      { label: "Proyek Selesai" },
+      { label: "Klien Puas" },
+      { label: "Profesional" },
+      { label: "Tahun Pengalaman" }
+    ]
+  },
+  services: {
+    badge: "\u{1F6E0} Layanan Kami",
+    heroHeadline1: "Solusi Lengkap",
+    heroHeadline2: "untuk Tim Anda",
+    heroDescription: "Dari ideasi produk hingga infrastruktur skala enterprise \u2014 satu partner untuk semua kebutuhan digital Anda.",
+    processHeading: "Cara Kami Bekerja",
+    processSubheading: "Proses yang terstruktur, komunikasi yang transparan.",
+    steps: [
+      { num: "01", title: "Discovery", body: "Workshop intensif untuk memahami bisnis, pain point, dan target outcome. Kita align sebelum satu baris kode pun ditulis." },
+      { num: "02", title: "Architecture", body: "Technical design, ADR, dan pemilihan stack yang tepat. Dokumen arsitektur jadi living document sepanjang proyek." },
+      { num: "03", title: "Build", body: "Sprint dua minggu. Demo tiap akhir sprint. Continuous integration dari hari pertama \u2014 tidak ada big bang release." },
+      { num: "04", title: "Deploy & Scale", body: "Zero-downtime deployment, monitoring end-to-end, dan post-launch support untuk pastikan sistem stabil di production." }
+    ],
+    techHeading: "Tech Stack",
+    techSubheading: "Kami pilih tools yang tepat untuk masalah yang tepat \u2014 bukan yang lagi hype.",
+    ctaHeading: "Butuh Konsultasi Teknis?",
+    ctaSubheading: "Gratis 60 menit \u2014 kami review arsitektur atau stack Anda dan kasih feedback jujur.",
+    ctaPrimary: "Jadwalkan Konsultasi",
+    ctaSecondary: "Lihat Portfolio"
+  },
+  portfolio: {
+    badge: "\u{1F3C6} Portfolio",
+    heroHeadline1: "Proyek yang",
+    heroHeadline2: "Kami Banggakan",
+    heroDescription: "Setiap proyek adalah cerita tentang tantangan nyata dan solusi yang benar-benar bekerja.",
+    ctaHeading: "Proyek Anda Berikutnya?",
+    ctaSubheading: "Mari jadikan proyek Anda sebagai salah satu success story yang kami banggakan.",
+    ctaPrimary: "Diskusi Sekarang",
+    ctaSecondary: "Lihat Layanan",
+    stats: [
+      { label: "Proyek Delivered" },
+      { label: "Klien Puas" },
+      { label: "Uptime SLA" },
+      { label: "Rating Klien" }
+    ]
+  },
+  about: {
+    badge: "\u{1F3E2} Tentang Kami",
+    heroHeadline1: "Kami Percaya",
+    heroHeadline2: "Teknologi Mengubah Bisnis",
+    heroDescription: "Sejak {founded}, kami membantu ratusan perusahaan Indonesia tumbuh lebih cepat lewat teknologi yang tepat.",
+    storyHeading: "Asal Mula NusaTech",
+    storyParagraphs: [
+      "Didirikan tahun {founded} oleh dua engineer yang frustrasi melihat banyak proyek teknologi gagal bukan karena masalah teknis, melainkan karena komunikasi yang buruk antara tim bisnis dan tim engineering.",
+      "Kami membangun NusaTech dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.",
+      "Hari ini kami adalah tim {employees} profesional yang telah menyelesaikan {projects} proyek untuk {clients} klien di berbagai industri."
+    ],
+    timeline: [
+      { year: "2015", event: "NusaTech didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
+      { year: "2017", event: "Ekspansi ke enterprise. Proyek pertama dengan bank nasional." },
+      { year: "2019", event: "Buka divisi Cloud & DevOps. Tim tumbuh ke 50 orang." },
+      { year: "2021", event: "Luncurkan AI Lab. Mulai bangun produk data-driven untuk klien." },
+      { year: "2023", event: "150+ tim, 500+ proyek, hadir di 5 kota Indonesia." }
+    ],
+    teamHeading: "Orang-Orang di Baliknya",
+    teamSubheading: "Tim kecil yang dense \u2014 sedikit ego, banyak output.",
+    valuesHeading: "Nilai-Nilai Kami",
+    values: [
+      { icon: "\u{1F3AF}", title: "Outcome over Output", body: "Kami tidak hitung story points. Kami hitung dampak nyata ke bisnis Anda." },
+      { icon: "\u{1F50D}", title: "Radical Transparency", body: "Kabar buruk disampaikan cepat. Tidak ada happy path reporting." },
+      { icon: "\u{1F331}", title: "Kaizen", body: "Setiap sprint lebih baik dari yang sebelumnya. Continuous improvement bukan slogan." },
+      { icon: "\u{1F91D}", title: "Respect & Inclusion", body: "Tim yang beragam menghasilkan solusi yang lebih kaya. Selalu." }
+    ],
+    ctaHeading: "Bergabung dengan Kami?",
+    ctaSubheading: "Kami selalu mencari engineer, designer, dan PM yang passionate. Tidak ada posisi kosong? Kirim saja CV Anda.",
+    ctaPrimary: "Lihat Karir",
+    ctaSecondary: "Hubungi Kami",
+    stats: [
+      { label: "Tahun Berdiri" },
+      { label: "Profesional" },
+      { label: "Proyek" },
+      { label: "Klien" }
+    ]
+  },
+  contact: {
+    badge: "\u{1F4EC} Kontak",
+    heroHeadline1: "Ayo Ngobrol",
+    heroHeadline2: "Tentang Proyek Anda",
+    heroDescription: "Respon dalam 1 hari kerja. Tidak ada pertanyaan yang terlalu kecil atau terlalu besar.",
+    formHeading: "Kirim Pesan",
+    formSubheading: "Semua field wajib diisi. Kami balas dalam 1\xD724 jam kerja.",
+    fields: {
+      name: "Nama Lengkap",
+      namePlaceholder: "Budi Santoso",
+      email: "Email",
+      emailPlaceholder: "budi@perusahaan.com",
+      company: "Nama Perusahaan",
+      companyPlaceholder: "PT Maju Bersama",
+      service: "Kebutuhan Utama",
+      servicePlaceholder: "Pilih layanan...",
+      serviceOptions: [
+        "Product Engineering",
+        "Cloud & DevOps",
+        "Mobile Development",
+        "AI & Data Engineering",
+        "Security & Compliance",
+        "Analytics & BI",
+        "Lainnya"
+      ],
+      message: "Ceritakan Proyeknya",
+      messagePlaceholder: "Kami sedang membangun platform X dan butuh bantuan di bagian Y..."
+    },
+    submitLabel: "Kirim Pesan \u2726",
+    successMessage: "\u2705 Pesan berhasil dikirim! Kami akan membalas dalam 1\xD724 jam kerja.",
+    errorMessage: "\u274C Terjadi kesalahan. Silakan coba lagi atau hubungi kami langsung via email.",
+    infoAddress: "Alamat",
+    infoEmail: "Email",
+    infoPhone: "Telepon",
+    socialHeading: "Temukan Kami"
+  },
+  notFound: {
+    code: "404",
+    message: "Halaman yang kamu cari tidak ada di Springfield ini.",
+    cta: "Kembali ke Beranda"
+  },
+  seo: {
+    homeTitle: "Beranda",
+    homeDescription: "{description}",
+    servicesTitle: "Layanan",
+    servicesDescription: "Product engineering, cloud/DevOps, mobile, AI, security, dan analytics \u2014 solusi lengkap untuk startup hingga enterprise.",
+    portfolioTitle: "Portfolio",
+    portfolioDescription: "Portfolio proyek NusaTech Solutions \u2014 fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
+    aboutTitle: "Tentang Kami",
+    aboutDescription: "{name} \u2014 {tagline}. Didirikan {founded}, {employees} profesional, {projects} proyek selesai.",
+    contactTitle: "Kontak",
+    contactDescription: "Hubungi {name} \u2014 kami siap mendiskusikan proyek digital Anda."
+  },
+  data: {
+    services: [
+      { title: "Product Engineering", description: "Kami rancang dan bangun produk digital dari nol \u2014 arsitektur solid, UX intuitif, dan delivery tepat waktu.", detail: "Full-cycle product development" },
+      { title: "Cloud & DevOps", description: "Infrastructure as code, CI/CD pipeline, Kubernetes orchestration, dan observability end-to-end.", detail: "AWS \xB7 GCP \xB7 Azure \xB7 K8s" },
+      { title: "Mobile Development", description: "Aplikasi native iOS & Android, serta cross-platform React Native untuk reach yang lebih luas.", detail: "iOS \xB7 Android \xB7 React Native" },
+      { title: "AI & Data Engineering", description: "Pipeline data real-time, model ML production-ready, dan integrasi LLM untuk produk cerdas.", detail: "ML \xB7 LLM \xB7 Streaming Data" },
+      { title: "Security & Compliance", description: "Penetration testing, secure SDLC, dan compliance audit untuk produk yang aman dari ground up.", detail: "PenTest \xB7 OWASP \xB7 ISO 27001" },
+      { title: "Analytics & BI", description: "Dashboard real-time, data warehouse modern, dan insight actionable dari data bisnis Anda.", detail: "dbt \xB7 Redshift \xB7 Metabase" }
+    ],
+    team: [
+      { bio: "10+ tahun di product engineering. Ex-Gojek, ex-Tokopedia. Passionate soal scalable systems.", funFact: "Bisa debug production issue sambil makan soto." },
+      { bio: "Distributed systems expert. Speaker di berbagai konferensi teknologi Asia Tenggara.", funFact: "Koleksi mechanical keyboard lebih dari 20 unit." },
+      { bio: "Platform engineer dengan spesialisasi Kubernetes dan observability. Open source contributor.", funFact: "Pernah deploy ke production dari atas gunung." },
+      { bio: "Design systems practitioner. Percaya bahwa UX yang baik adalah invisible UX.", funFact: "Mendesain sambil dengerin jazz \u2014 selalu jazz." }
+    ],
+    testimonials: [
+      { text: "NusaTech transform cara tim kami bekerja. Delivery 3x lebih cepat, bug rate turun drastis. Mereka bukan vendor \u2014 mereka partner." },
+      { text: "Migration ke microservices selesai dalam 6 bulan tanpa downtime. Saya tidak pernah lihat eksekusi sekelas ini sebelumnya." },
+      { text: "Platform kami handle 500k concurrent users saat launch \u2014 sesuatu yang kami kira tidak mungkin dalam timeline itu." }
+    ],
+    portfolios: [
+      { description: "Platform pembayaran digital dengan 2M+ pengguna aktif. Real-time transaction processing, fraud detection ML, dan open banking integration.", result: "2M+ pengguna aktif" },
+      { description: "Microservices re-architecture untuk platform retail dengan 50+ brand. Zero-downtime migration dari monolith legacy.", result: "Zero-downtime migration" },
+      { description: "Learning management system untuk 500k+ pelajar. Live streaming, adaptive quiz engine, dan sertifikasi blockchain.", result: "500k+ pelajar aktif" },
+      { description: "Fleet management dan real-time cargo tracking untuk 1000+ kendaraan. IoT integration dengan prediksi rute AI.", result: "1000+ armada terpantau" }
+    ]
+  }
+};
+
+// src/i18n/en.ts
+var en = {
+  locale: "en",
+  nav: {
+    home: "Home",
+    services: "Services",
+    portfolio: "Portfolio",
+    about: "About",
+    contact: "Contact",
+    cta: "Don't Have a Cow \u2014 Contact Us",
+    switchLang: "ID"
+  },
+  footer: {
+    pagesHeading: "Pages",
+    contactHeading: "Contact",
+    builtWith: "Mmm... Built with \u2600\uFE0F Bun + Hono",
+    rights: "All rights reserved. Excellent."
+  },
+  ui: {
+    learnMore: "Learn More \u2192",
+    viewAll: "View All \u2192",
+    sendMessage: "Send It! \u2726",
+    sending: "Sending... D'oh, hold on...",
+    backHome: "Back to Springfield",
+    year: "Year",
+    featuredProject: "\u2605 Featured Project",
+    otherProjects: "More Projects",
+    readMore: "Read More"
+  },
+  home: {
+    heroBadge: "\u2600\uFE0F Since {founded} \u2014 Built for the Real World",
+    heroHeadline1: "Digital Solutions",
+    heroHeadline2: "That Actually Work",
+    heroDescription: "{description}",
+    heroCtaPrimary: "See Our Services \u2726",
+    heroCtaSecondary: "View Portfolio \u2192",
+    servicesHeading: "What We Do (And We're Cromulent at It)",
+    servicesSubheading: "From product engineering to cloud infrastructure \u2014 one partner, every digital need. Woo-hoo!",
+    servicesCtaLabel: "All Services \u2192",
+    whyHeading: "Why NusaTech? (Excellent Question...)",
+    whySubheading: "We're not just a body shop. We're the engineering team that actually gives a D'oh about your business outcome.",
+    whyCtaLabel: "About Us \u2192",
+    whyPoints: [
+      { icon: "\u26A1", title: "Fast Delivery", body: "Two-week sprints. Demo every cycle. No big-bang surprises \u2014 just steady, cromulent progress." },
+      { icon: "\u{1F512}", title: "Security First", body: "Secure SDLC from day one. Code review, SAST, dependency audits \u2014 not a last-minute afterthought. Sweet Jebus!" },
+      { icon: "\u{1F4C8}", title: "Scales Like Crazy", body: "Architecture built to grow. From 100 to 10 million users without a painful re-architecture. Woo-hoo!" },
+      { icon: "\u{1F91D}", title: "Partner, Not Just Vendor", body: "We sit on your side of the table \u2014 thinking about your business, not just closing tickets. Mmm... partnership." }
+    ],
+    testimonialsHeading: "Don't Take Our Word for It",
+    testimonialsSubheading: "Results speak louder than promises. Here's what our clients say \u2014 and they're not just being neighborly.",
+    ctaHeading: "Ready to Start? Don't Have a Cow!",
+    ctaSubheading: "Tell us your challenge \u2014 we'll sit down, grab a donut, and figure it out together.",
+    ctaPrimary: "Contact Us \u2726",
+    ctaSecondary: "View Portfolio",
+    stats: [
+      { label: "Projects Shipped" },
+      { label: "Happy Clients" },
+      { label: "Professionals" },
+      { label: "Years of Experience" }
+    ]
+  },
+  services: {
+    badge: "\u{1F6E0} Our Services",
+    heroHeadline1: "Full-Stack Solutions",
+    heroHeadline2: "For Your Team",
+    heroDescription: "From product ideation to enterprise-grade infrastructure \u2014 one partner for every digital need. Woo-hoo!",
+    processHeading: "How We Work (It's Surprisingly Cromulent)",
+    processSubheading: "Structured process, transparent communication. No Homers allowed on ambiguity.",
+    steps: [
+      { num: "01", title: "Discovery", body: "Intensive workshops to understand your business, pain points, and target outcomes. We align before a single line of code is written. Mmm... clarity." },
+      { num: "02", title: "Architecture", body: "Technical design, ADRs, and the right stack for the job. Architecture docs become living documents throughout the project." },
+      { num: "03", title: "Build", body: "Two-week sprints. Demo every cycle. CI from day one \u2014 no big-bang release. Excellent." },
+      { num: "04", title: "Deploy & Scale", body: "Zero-downtime deployment, end-to-end monitoring, and post-launch support to keep production stable. Woo-hoo!" }
+    ],
+    techHeading: "Tech Stack (Mmm... Technology...)",
+    techSubheading: "We pick the right tool for the right problem \u2014 not whatever's trending on the internet this week.",
+    ctaHeading: "Need a Technical Consultation?",
+    ctaSubheading: "Free 60 minutes \u2014 we review your architecture or stack and give you brutally honest feedback. D'oh, it's free!",
+    ctaPrimary: "Schedule Consultation",
+    ctaSecondary: "View Portfolio"
+  },
+  portfolio: {
+    badge: "\u{1F3C6} Portfolio",
+    heroHeadline1: "Projects We're",
+    heroHeadline2: "Genuinely Proud Of",
+    heroDescription: "Every project is a story of real challenges and solutions that actually work. No participation trophies here.",
+    ctaHeading: "Your Project Next? Don't Be a Square!",
+    ctaSubheading: "Let's make your project the next success story we brag about at the water cooler.",
+    ctaPrimary: "Let's Talk",
+    ctaSecondary: "View Services",
+    stats: [
+      { label: "Projects Delivered" },
+      { label: "Happy Clients" },
+      { label: "Uptime SLA" },
+      { label: "Client Rating" }
+    ]
+  },
+  about: {
+    badge: "\u{1F3E2} About Us",
+    heroHeadline1: "We Believe",
+    heroHeadline2: "Tech Embiggens Business",
+    heroDescription: "Since {founded}, we've helped hundreds of companies grow faster through technology that actually does something. Woo-hoo!",
+    storyHeading: "The Origin Story of NusaTech",
+    storyParagraphs: [
+      "Founded in {founded} by two engineers who were, frankly, fed up watching tech projects fail \u2014 not because of technical problems, but because of terrible communication between business and engineering teams. D'oh!",
+      "We built NusaTech on one cromulent principle: be a partner, not a vendor. That means we think about your business, not just execute requirements that land in our inbox.",
+      "Today we're a team of {employees} professionals who've completed {projects} projects for {clients} clients across practically every industry you can think of. Excellent."
+    ],
+    timeline: [
+      { year: "2015", event: "NusaTech founded. First team of 5, first 3 startup clients. Woo-hoo!" },
+      { year: "2017", event: "Expanded to enterprise. First project with a national bank. Excellent." },
+      { year: "2019", event: "Launched Cloud & DevOps division. Team grew to 50. Mmm... growth." },
+      { year: "2021", event: "Launched AI Lab. Started building data-driven products for clients." },
+      { year: "2023", event: "150+ team, 500+ projects, present in 5 cities. Don't have a cow!" }
+    ],
+    teamHeading: "The People Behind the Magic",
+    teamSubheading: "A small, dense team \u2014 low ego, high output. Ned Flanders would approve.",
+    valuesHeading: "Our Values (Perfectly Cromulent Ones)",
+    values: [
+      { icon: "\u{1F3AF}", title: "Outcomes over Output", body: "We don't count story points. We count real business impact. Mmm... impact." },
+      { icon: "\u{1F50D}", title: "Radical Transparency", body: "Bad news delivered fast. No happy-path-only reporting. Ever." },
+      { icon: "\u{1F331}", title: "Kaizen", body: "Every sprint better than the last. Continuous improvement is not just a poster on the wall." },
+      { icon: "\u{1F91D}", title: "Respect & Inclusion", body: "Diverse teams produce richer solutions. That's just science, man." }
+    ],
+    ctaHeading: "Join the Team? Ay Caramba!",
+    ctaSubheading: "We're always looking for engineers, designers, and PMs who are passionate. No open roles? Send your CV anyway \u2014 we don't bite.",
+    ctaPrimary: "View Careers",
+    ctaSecondary: "Contact Us",
+    stats: [
+      { label: "Founded" },
+      { label: "Professionals" },
+      { label: "Projects" },
+      { label: "Clients" }
+    ]
+  },
+  contact: {
+    badge: "\u{1F4EC} Contact",
+    heroHeadline1: "Let's Talk",
+    heroHeadline2: "About Your Project",
+    heroDescription: "Response within 1 business day. No question is too small or too big. Mmm... questions.",
+    formHeading: "Send a Message",
+    formSubheading: "All fields required. We reply within 24 business hours. Don't have a cow.",
+    fields: {
+      name: "Full Name",
+      namePlaceholder: "Homer Simpson",
+      email: "Email",
+      emailPlaceholder: "homer@springfield.com",
+      company: "Company Name",
+      companyPlaceholder: "Springfield Nuclear",
+      service: "What Do You Need?",
+      servicePlaceholder: "Pick a service...",
+      serviceOptions: [
+        "Product Engineering",
+        "Cloud & DevOps",
+        "Mobile Development",
+        "AI & Data Engineering",
+        "Security & Compliance",
+        "Analytics & BI",
+        "Something Else"
+      ],
+      message: "Tell Us About It",
+      messagePlaceholder: "We're building platform X and need help with Y... don't be shy, Mmm..."
+    },
+    submitLabel: "Send It! \u2726",
+    successMessage: "\u2705 Message sent! We'll get back to you within 1 business day. Woo-hoo!",
+    errorMessage: "\u274C D'oh! Something went wrong. Try again or email us directly.",
+    infoAddress: "Address",
+    infoEmail: "Email",
+    infoPhone: "Phone",
+    socialHeading: "Find Us Out There"
+  },
+  notFound: {
+    code: "404",
+    message: "D'oh! This page doesn't exist in Springfield.",
+    cta: "Back to Springfield"
+  },
+  seo: {
+    homeTitle: "Home",
+    homeDescription: "{description}",
+    servicesTitle: "Services",
+    servicesDescription: "Product engineering, cloud/DevOps, mobile, AI, security, and analytics \u2014 complete solutions for startups to enterprise.",
+    portfolioTitle: "Portfolio",
+    portfolioDescription: "NusaTech Solutions portfolio \u2014 fintech, e-commerce, edtech, logistics, and more. Excellent.",
+    aboutTitle: "About Us",
+    aboutDescription: "{name} \u2014 {tagline}. Founded {founded}, {employees} professionals, {projects} projects completed.",
+    contactTitle: "Contact",
+    contactDescription: "Contact {name} \u2014 we're ready to discuss your digital project. Don't have a cow!"
+  },
+  data: {
+    services: [
+      { title: "Product Engineering", description: "We design and build digital products from scratch \u2014 solid architecture, intuitive UX, and on-time delivery. Woo-hoo!", detail: "Full-cycle product development" },
+      { title: "Cloud & DevOps", description: "Infrastructure as code, CI/CD pipelines, Kubernetes orchestration, and end-to-end observability. Excellent.", detail: "AWS \xB7 GCP \xB7 Azure \xB7 K8s" },
+      { title: "Mobile Development", description: "Native iOS & Android apps, plus cross-platform React Native for maximum reach. Mmm... mobile.", detail: "iOS \xB7 Android \xB7 React Native" },
+      { title: "AI & Data Engineering", description: "Real-time data pipelines, production-ready ML models, and LLM integrations for genuinely smart products.", detail: "ML \xB7 LLM \xB7 Streaming Data" },
+      { title: "Security & Compliance", description: "Penetration testing, secure SDLC, and compliance audits for products that are safe from the ground up. Sweet Jebus!", detail: "PenTest \xB7 OWASP \xB7 ISO 27001" },
+      { title: "Analytics & BI", description: "Real-time dashboards, modern data warehouses, and actionable insights from your business data. Mmm... data.", detail: "dbt \xB7 Redshift \xB7 Metabase" }
+    ],
+    team: [
+      { bio: "10+ years in product engineering. Ex-Gojek, ex-Tokopedia. Obsessed with scalable systems.", funFact: "Can debug a production issue while eating a donut. Mmm... donut." },
+      { bio: "Distributed systems expert. Speaker at tech conferences across Southeast Asia.", funFact: "Owns more than 20 mechanical keyboards. Woo-hoo!" },
+      { bio: "Platform engineer specializing in Kubernetes and observability. Open source contributor.", funFact: "Once deployed to production from the top of a mountain. Excellent." },
+      { bio: "Design systems practitioner. Believes good UX is invisible UX.", funFact: "Designs exclusively to jazz. Always jazz." }
+    ],
+    testimonials: [
+      { text: "NusaTech transformed the way our team works. 3x faster delivery, bug rate dropped dramatically. They're not a vendor \u2014 they're a partner. Woo-hoo!" },
+      { text: "Microservices migration completed in 6 months with zero downtime. I've never seen execution of this caliber before. Excellent." },
+      { text: "Our platform handled 500k concurrent users at launch \u2014 something we thought was impossible in that timeline. Sweet Jebus!" }
+    ],
+    portfolios: [
+      { description: "Digital payment platform with 2M+ active users. Real-time transaction processing, ML fraud detection, and open banking integration.", result: "2M+ active users" },
+      { description: "Microservices re-architecture for a retail platform with 50+ brands. Zero-downtime migration from legacy monolith.", result: "Zero-downtime migration" },
+      { description: "Learning management system for 500k+ learners. Live streaming, adaptive quiz engine, and blockchain certification.", result: "500k+ active learners" },
+      { description: "Fleet management and real-time cargo tracking for 1000+ vehicles. IoT integration with AI route prediction.", result: "1000+ fleet monitored" }
+    ]
+  }
+};
+
+// src/i18n/index.ts
+var translations = { id, en };
+var SUPPORTED_LOCALES = ["id", "en"];
+var DEFAULT_LOCALE = "id";
+function getTranslation(locale) {
+  return translations[locale] ?? translations[DEFAULT_LOCALE];
+}
+function stripLocale(path) {
+  const segment = path.split("/")[1];
+  if (SUPPORTED_LOCALES.includes(segment)) {
+    return path.slice(segment.length + 1) || "/";
+  }
+  return path;
+}
+function localePath(locale, path) {
+  if (locale === DEFAULT_LOCALE) return path;
+  const clean = stripLocale(path);
+  return `/${locale}${clean === "/" ? "" : clean}`;
+}
+function interpolate(template, vars) {
+  return template.replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? `{${key}}`);
+}
+
 // src/lib/constants.ts
 var PORT = Number(process.env.PORT) || 3e3;
-var NAV_LINKS = [
-  { href: "/", label: "Beranda" },
-  { href: "/services", label: "Layanan" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/about", label: "Tentang" },
-  { href: "/contact", label: "Kontak" }
-];
+function getNavLinks(locale) {
+  const t = getTranslation(locale);
+  return [
+    { href: localePath(locale, "/"), label: t.nav.home },
+    { href: localePath(locale, "/services"), label: t.nav.services },
+    { href: localePath(locale, "/portfolio"), label: t.nav.portfolio },
+    { href: localePath(locale, "/about"), label: t.nav.about },
+    { href: localePath(locale, "/contact"), label: t.nav.contact }
+  ];
+}
 var SEO = {
   siteName: "NusaTech Solutions",
   defaultDescription: "Solusi digital kelas dunia \u2014 product engineering, cloud/DevOps, mobile, AI, dan security untuk startup hingga enterprise.",
@@ -3858,44 +4318,73 @@ var portfolios = [
 ];
 
 // src/layouts/base.ts
-function navbar(activePage) {
-  const links = NAV_LINKS.map(({ href, label }) => {
+function langSwitcher(locale, currentPath) {
+  const t = getTranslation(locale);
+  const pagePath = stripLocale(currentPath);
+  const otherLocale = locale === "id" ? "en" : "id";
+  const switchHref = localePath(otherLocale, pagePath);
+  const flag = locale === "id" ? "\u{1F1EE}\u{1F1E9}" : "\u{1F1FA}\u{1F1F8}";
+  const switchFlag = locale === "id" ? "\u{1F1FA}\u{1F1F8}" : "\u{1F1EE}\u{1F1E9}";
+  return `
+  <a href="${switchHref}" title="Switch language" style="
+    display:inline-flex;align-items:center;gap:0.35rem;
+    padding:0.35rem 0.75rem;
+    background:#FED41D22;
+    border:2px solid #FED41D66;
+    border-radius:8px;
+    font-family:'Fredoka',sans-serif;
+    font-size:0.85rem;font-weight:700;
+    color:#FED41D;
+    text-decoration:none;
+    transition:background 0.15s,border-color 0.15s;
+    white-space:nowrap;
+  "
+  onmouseover="this.style.background='#FED41D33';this.style.borderColor='#FED41D'"
+  onmouseout="this.style.background='#FED41D22';this.style.borderColor='#FED41D66'"
+  aria-label="Switch to ${otherLocale === "en" ? "English" : "Bahasa Indonesia"}"
+  >
+    <span style="font-size:1rem;line-height:1;">${flag}</span>
+    <span style="opacity:0.5;font-size:0.7rem;">\u2192</span>
+    <span style="font-size:1rem;line-height:1;">${switchFlag}</span>
+    <span>${t.nav.switchLang}</span>
+  </a>`;
+}
+function navbar(locale, activePage) {
+  const t = getTranslation(locale);
+  const links = getNavLinks(locale);
+  const ctaHref = localePath(locale, "/contact");
+  const desktopLinks = links.map(({ href, label }) => {
     const isActive = activePage === href;
     return `
-      <a href="${href}" style="
-        font-family:'Fredoka',sans-serif;
-        font-size:1rem;
-        font-weight:600;
-        text-decoration:none;
-        padding:0.4rem 1rem;
-        border-radius:8px;
-        border:2px solid ${isActive ? "#1A1A2E" : "transparent"};
-        background:${isActive ? "#FED41D" : "transparent"};
-        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
-        box-shadow:${isActive ? "3px 3px 0px #1A1A2E" : "none"};
-        transition:background 0.15s,color 0.15s,border-color 0.15s,box-shadow 0.15s;
-        white-space:nowrap;
-      "
-      onmouseover="if(!this.classList.contains('active')){this.style.background='#FED41D33';this.style.color='#FED41D';}"
-      onmouseout="if(!this.classList.contains('active')){this.style.background='transparent';this.style.color='#FFFEF7';}"
-      ${isActive ? 'class="active"' : ""}
-      >${label}</a>`;
+    <a href="${href}" style="
+      font-family:'Fredoka',sans-serif;
+      font-size:1rem;font-weight:600;
+      text-decoration:none;
+      padding:0.4rem 1rem;
+      border-radius:8px;
+      border:2px solid ${isActive ? "#1A1A2E" : "transparent"};
+      background:${isActive ? "#FED41D" : "transparent"};
+      color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+      box-shadow:${isActive ? "3px 3px 0px #1A1A2E" : "none"};
+      transition:background 0.15s,color 0.15s,border-color 0.15s,box-shadow 0.15s;
+      white-space:nowrap;
+    "
+    onmouseover="if(!this.dataset.active){this.style.background='#FED41D33';this.style.color='#FED41D';}"
+    onmouseout="if(!this.dataset.active){this.style.background='transparent';this.style.color='#FFFEF7';}"
+    ${isActive ? 'data-active="true"' : ""}
+    >${label}</a>`;
   }).join("");
-  const mobileLinks = NAV_LINKS.map(({ href, label }) => {
+  const mobileLinks = links.map(({ href, label }) => {
     const isActive = activePage === href;
     return `
-      <a href="${href}" style="
-        font-family:'Fredoka',sans-serif;
-        font-size:1.1rem;
-        font-weight:600;
-        text-decoration:none;
-        padding:0.75rem 1.25rem;
-        border-radius:10px;
-        border:2px solid ${isActive ? "#1A1A2E" : "#FED41D33"};
-        background:${isActive ? "#FED41D" : "transparent"};
-        color:${isActive ? "#1A1A2E" : "#FFFEF7"};
-        display:block;
-      ">${label}</a>`;
+    <a href="${href}" style="
+      font-family:'Fredoka',sans-serif;font-size:1.1rem;font-weight:600;
+      text-decoration:none;padding:0.75rem 1.25rem;border-radius:10px;
+      border:2px solid ${isActive ? "#1A1A2E" : "#FED41D33"};
+      background:${isActive ? "#FED41D" : "transparent"};
+      color:${isActive ? "#1A1A2E" : "#FFFEF7"};
+      display:block;
+    ">${label}</a>`;
   }).join("");
   return `
   <nav id="navbar" style="
@@ -3904,76 +4393,72 @@ function navbar(activePage) {
     border-bottom:3px solid #FED41D;
     transition:box-shadow 0.2s;
   ">
-    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;">
 
       <!-- Logo -->
-      <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;">
+      <a href="${localePath(locale, "/")}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
         <div style="
-          width:38px;height:38px;
-          background:#FED41D;
-          border:3px solid #FED41D;
-          border-radius:10px;
+          width:38px;height:38px;background:#FED41D;
+          border:3px solid #FED41D;border-radius:10px;
           box-shadow:3px 3px 0px #F5C400;
           display:flex;align-items:center;justify-content:center;
-          font-family:'Bangers',cursive;
-          font-size:1.2rem;
-          color:#1A1A2E;
+          font-family:'Bangers',cursive;font-size:1.2rem;color:#1A1A2E;
         ">NT</div>
-        <span style="
-          font-family:'Bangers',cursive;
-          font-size:1.4rem;
-          letter-spacing:0.06em;
-          color:#FFFEF7;
-        ">${company.name}</span>
+        <span style="font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:0.06em;color:#FFFEF7;">${company.name}</span>
       </a>
 
-      <!-- Desktop links -->
+      <!-- Desktop links + switcher + CTA -->
       <div id="nav-links" style="display:flex;align-items:center;gap:0.25rem;">
-        ${links}
-        <a href="/contact" style="
-          margin-left:0.75rem;
+        ${desktopLinks}
+        <div style="width:1px;height:24px;background:#FFFEF722;margin:0 0.5rem;"></div>
+        ${langSwitcher(locale, activePage)}
+        <a href="${ctaHref}" style="
+          margin-left:0.5rem;
           padding:0.4rem 1.25rem;
-          background:#FED41D;
-          color:#1A1A2E;
-          border:2px solid #1A1A2E;
-          border-radius:8px;
-          font-family:'Fredoka',sans-serif;
-          font-size:0.95rem;
-          font-weight:700;
-          text-decoration:none;
-          box-shadow:3px 3px 0px #1A1A2E;
-          transition:transform 0.1s,box-shadow 0.1s;
-          white-space:nowrap;
+          background:#FED41D;color:#1A1A2E;
+          border:2px solid #1A1A2E;border-radius:8px;
+          font-family:'Fredoka',sans-serif;font-size:0.95rem;font-weight:700;
+          text-decoration:none;box-shadow:3px 3px 0px #1A1A2E;
+          transition:transform 0.1s,box-shadow 0.1s;white-space:nowrap;
         "
         onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0px #1A1A2E'"
         onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0px #1A1A2E'"
-        >Hubungi Kami</a>
+        >${t.nav.cta}</a>
       </div>
 
       <!-- Mobile hamburger -->
       <button id="menu-btn" aria-label="Menu" style="
-        display:none;
-        background:none;border:2px solid #FED41D;
-        border-radius:8px;padding:0.4rem 0.6rem;
-        cursor:pointer;color:#FED41D;font-size:1.3rem;
-        line-height:1;
+        display:none;background:none;
+        border:2px solid #FED41D;border-radius:8px;
+        padding:0.4rem 0.6rem;cursor:pointer;
+        color:#FED41D;font-size:1.3rem;line-height:1;
       ">\u2630</button>
     </div>
 
     <!-- Mobile drawer -->
     <div id="mobile-menu" style="
-      display:none;
-      flex-direction:column;
-      gap:0.5rem;
+      display:none;flex-direction:column;gap:0.5rem;
       padding:1rem 1.5rem 1.5rem;
-      border-top:2px solid #FED41D33;
-      background:#1A1A2E;
+      border-top:2px solid #FED41D33;background:#1A1A2E;
     ">
       ${mobileLinks}
+      <div style="padding-top:0.5rem;display:flex;align-items:center;gap:0.75rem;">
+        ${langSwitcher(locale, activePage)}
+        <a href="${ctaHref}" style="
+          flex:1;text-align:center;
+          padding:0.75rem;background:#FED41D;color:#1A1A2E;
+          border:2px solid #1A1A2E;border-radius:10px;
+          font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+          text-decoration:none;
+        ">${t.nav.cta}</a>
+      </div>
     </div>
   </nav>`;
 }
-function footer() {
+function footer(locale) {
+  const t = getTranslation(locale);
+  const links = getNavLinks(locale);
   const year = (/* @__PURE__ */ new Date()).getFullYear();
   const socials = [
     { label: "LinkedIn", href: company.social.linkedin },
@@ -3982,57 +4467,43 @@ function footer() {
     { label: "Instagram", href: company.social.instagram }
   ].map(({ label, href }) => `
     <a href="${href}" target="_blank" rel="noopener noreferrer" style="
-      font-family:'Fredoka',sans-serif;
-      font-size:0.9rem;
-      font-weight:500;
-      color:#87CEEB;
-      text-decoration:none;
-      transition:color 0.15s;
+      font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:500;
+      color:#87CEEB;text-decoration:none;transition:color 0.15s;
     "
     onmouseover="this.style.color='#FED41D'"
     onmouseout="this.style.color='#87CEEB'"
     >${label}</a>`).join("");
-  const footerLinks = NAV_LINKS.map(({ href, label }) => `
+  const footerLinks = links.map(({ href, label }) => `
     <a href="${href}" style="
-      font-family:'Fredoka',sans-serif;
-      font-size:0.9rem;
-      color:#FFFEF799;
-      text-decoration:none;
-      transition:color 0.15s;
+      font-family:'Fredoka',sans-serif;font-size:0.9rem;
+      color:#FFFEF799;text-decoration:none;transition:color 0.15s;
     "
     onmouseover="this.style.color='#FED41D'"
     onmouseout="this.style.color='#FFFEF799'"
     >${label}</a>`).join("");
   return `
   <footer style="
-    background:#1A1A2E;
-    border-top:4px solid #FED41D;
-    padding:3rem 1.5rem 2rem;
-    margin-top:auto;
+    background:#1A1A2E;border-top:4px solid #FED41D;
+    padding:3rem 1.5rem 2rem;margin-top:auto;
   ">
     <div style="max-width:1200px;margin:0 auto;">
       <div style="
-        display:grid;
-        grid-template-columns:2fr 1fr 1fr;
-        gap:2.5rem;
-        padding-bottom:2rem;
-        border-bottom:2px solid #FED41D22;
+        display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;
+        padding-bottom:2rem;border-bottom:2px solid #FED41D22;
       " class="footer-grid">
 
         <!-- Brand -->
         <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div style="display:flex;align-items:center;gap:0.5rem;">
+          <a href="${localePath(locale, "/")}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;">
             <div style="
-              width:36px;height:36px;
-              background:#FED41D;
-              border:3px solid #FED41D;
-              border-radius:8px;
+              width:36px;height:36px;background:#FED41D;
+              border:3px solid #FED41D;border-radius:8px;
               box-shadow:3px 3px 0px #F5C400;
               display:flex;align-items:center;justify-content:center;
               font-family:'Bangers',cursive;font-size:1.1rem;color:#1A1A2E;
             ">NT</div>
             <span style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#FFFEF7;">${company.name}</span>
-          </div>
+          </a>
           <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;line-height:1.6;margin:0;max-width:280px;">
             ${company.description}
           </p>
@@ -4041,13 +4512,17 @@ function footer() {
 
         <!-- Nav -->
         <div>
-          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Halaman</h4>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">
+            ${t.footer.pagesHeading}
+          </h4>
           <div style="display:flex;flex-direction:column;gap:0.5rem;">${footerLinks}</div>
         </div>
 
         <!-- Contact -->
         <div>
-          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">Kontak</h4>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin:0 0 1rem;">
+            ${t.footer.contactHeading}
+          </h4>
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
             <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.email}</span>
             <span style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#FFFEF799;">${company.phone}</span>
@@ -4058,17 +4533,14 @@ function footer() {
 
       <div style="
         padding-top:1.5rem;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        flex-wrap:wrap;
-        gap:1rem;
+        display:flex;justify-content:space-between;align-items:center;
+        flex-wrap:wrap;gap:1rem;
       ">
         <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FFFEF755;">
-          \xA9 ${year} ${company.name}. All rights reserved.
+          \xA9 ${year} ${company.name}. ${t.footer.rights}
         </span>
         <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;color:#FED41D88;">
-          Built with \u2600\uFE0F Bun + Hono
+          ${t.footer.builtWith}
         </span>
       </div>
     </div>
@@ -4077,30 +4549,17 @@ function footer() {
 function globalStyles() {
   return `
   <style>
-    /* Reset & base */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
-      background: #FFFEF7;
-      color: #1A1A2E;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      background: #FFFEF7; color: #1A1A2E;
+      min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
     }
-
-    /* Comic card hover */
     .comic-card:hover {
       transform: translate(-2px, -2px);
       box-shadow: 7px 7px 0px #1A1A2E !important;
     }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-d1 { transition-delay: 0.05s; }
     .reveal-d2 { transition-delay: 0.10s; }
@@ -4108,45 +4567,29 @@ function globalStyles() {
     .reveal-d4 { transition-delay: 0.20s; }
     .reveal-d5 { transition-delay: 0.25s; }
     .reveal-d6 { transition-delay: 0.30s; }
-
-    /* Page main \u2014 leave room for fixed navbar */
     main { padding-top: 64px; flex: 1; }
-
-    /* Section spacing */
-    .section { padding: 5rem 1.5rem; }
+    .section    { padding: 5rem 1.5rem; }
     .section-sm { padding: 3rem 1.5rem; }
-    .container { max-width: 1200px; margin: 0 auto; }
-
-    /* Comic separator */
+    .container  { max-width: 1200px; margin: 0 auto; }
     .comic-divider {
       height: 4px;
       background: repeating-linear-gradient(
         90deg, #FED41D 0px, #FED41D 20px, #1A1A2E 20px, #1A1A2E 24px
       );
     }
-
-    /* Responsive grid helpers */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-
-    /* Responsive navbar & footer */
     @media (max-width: 768px) {
       #nav-links { display: none !important; }
       #menu-btn  { display: flex !important; }
-      .footer-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .grid-2, .grid-3, .grid-4 {
-        grid-template-columns: 1fr !important;
-      }
+      .footer-grid { grid-template-columns: 1fr !important; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
     }
     @media (min-width: 769px) and (max-width: 1024px) {
       .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
       .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
     }
-
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #1A1A2E; }
     ::-webkit-scrollbar-thumb { background: #FED41D; border-radius: 4px; }
@@ -4155,17 +4598,12 @@ function globalStyles() {
 function globalScripts() {
   return `
   <script>
-    // \u2500\u2500 Navbar scroll shadow
     (function() {
       var nav = document.getElementById('navbar');
       window.addEventListener('scroll', function() {
-        nav.style.boxShadow = window.scrollY > 10
-          ? '0 4px 24px #00000066'
-          : 'none';
+        nav.style.boxShadow = window.scrollY > 10 ? '0 4px 24px #00000066' : 'none';
       }, { passive: true });
     })();
-
-    // \u2500\u2500 Mobile menu toggle
     (function() {
       var btn  = document.getElementById('menu-btn');
       var menu = document.getElementById('mobile-menu');
@@ -4176,8 +4614,6 @@ function globalScripts() {
         btn.textContent = open ? '\u2630' : '\u2715';
       });
     })();
-
-    // \u2500\u2500 Scroll reveal
     (function() {
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window)) {
@@ -4186,16 +4622,11 @@ function globalScripts() {
       }
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            obs.unobserve(e.target);
-          }
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
         });
       }, { threshold: 0.12 });
       els.forEach(function(el) { obs.observe(el); });
     })();
-
-    // \u2500\u2500 Counter animation
     (function() {
       function animateCounter(el) {
         var raw    = el.dataset.target || el.textContent;
@@ -4203,24 +4634,19 @@ function globalScripts() {
         var num    = parseFloat(raw.replace(/[^0-9.]/g, ''));
         var isFloat = raw.includes('.');
         if (isNaN(num)) return;
-        var start    = 0;
-        var duration = 1800;
-        var startTime = null;
+        var duration = 1800, startTime = null;
         function step(ts) {
           if (!startTime) startTime = ts;
           var progress = Math.min((ts - startTime) / duration, 1);
           var ease     = 1 - Math.pow(1 - progress, 3);
-          var current  = start + (num - start) * ease;
+          var current  = num * ease;
           el.textContent = (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
           if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       }
       var counterEls = document.querySelectorAll('[data-counter]');
-      if (!('IntersectionObserver' in window)) {
-        counterEls.forEach(animateCounter);
-        return;
-      }
+      if (!('IntersectionObserver' in window)) { counterEls.forEach(animateCounter); return; }
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
           if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); }
@@ -4230,11 +4656,13 @@ function globalScripts() {
     })();
   </script>`;
 }
-function baseLayout({ title, description, activePage, content }) {
+function baseLayout({ title, description, activePage, locale, content }) {
+  const t = getTranslation(locale);
   const desc = description ?? SEO.defaultDescription;
   const fullTitle = `${title} \u2014 ${SEO.siteName}`;
+  const htmlLang = locale === "en" ? "en" : "id";
   return `<!DOCTYPE html>
-<html lang="id">
+<html lang="${htmlLang}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -4245,18 +4673,21 @@ function baseLayout({ title, description, activePage, content }) {
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="${SEO.twitterHandle}" />
-  <!-- Google Fonts: Bangers (display) + Fredoka (body) -->
+  <!-- Alternate language links for SEO -->
+  <link rel="alternate" hreflang="id" href="/id${activePage === "/" ? "" : activePage}" />
+  <link rel="alternate" hreflang="en" href="/en${activePage === "/" ? "" : activePage}" />
+  <link rel="alternate" hreflang="x-default" href="${activePage}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   ${globalStyles()}
 </head>
 <body>
-  ${navbar(activePage)}
+  ${navbar(locale, activePage)}
   <main>
     ${content}
   </main>
-  ${footer()}
+  ${footer(locale)}
   ${globalScripts()}
 </body>
 </html>`;
@@ -4423,15 +4854,16 @@ function ctaSection({
 }
 
 // src/pages/home.ts
-function heroSection() {
+function heroSection(locale) {
+  const t = getTranslation(locale);
+  const h = t.home;
+  const badge2 = interpolate(h.heroBadge, { founded: company.founded });
+  const desc = interpolate(h.heroDescription, { description: company.description });
   return `
   <section style="
-    background: linear-gradient(160deg, #1A1A2E 0%, #2D2D44 100%);
-    padding: 6rem 1.5rem 5rem;
-    position: relative;
-    overflow: hidden;
+    background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
+    padding:6rem 1.5rem 5rem;position:relative;overflow:hidden;
   ">
-    <!-- Decorative blobs -->
     <div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;
       background:#FED41D22;border-radius:50%;pointer-events:none;"></div>
     <div style="position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;
@@ -4439,150 +4871,110 @@ function heroSection() {
 
     <div class="container" style="position:relative;z-index:1;">
       <div style="max-width:720px;">
-        <!-- Badge -->
         <div class="reveal" style="margin-bottom:1.25rem;">
           <span style="
             display:inline-flex;align-items:center;gap:0.4rem;
-            padding:0.35rem 1rem;
-            background:#FED41D22;
-            border:2px solid #FED41D44;
-            border-radius:999px;
-            font-family:'Fredoka',sans-serif;
-            font-size:0.85rem;font-weight:600;
-            color:#FED41D;
-            letter-spacing:0.04em;
-          ">\u2600\uFE0F ${company.founded} \u2014 Hadir untuk Indonesia</span>
+            padding:0.35rem 1rem;background:#FED41D22;
+            border:2px solid #FED41D44;border-radius:999px;
+            font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+          ">${badge2}</span>
         </div>
 
         <h1 class="reveal reveal-d1" style="
           font-family:'Bangers',cursive;
           font-size:clamp(3rem,8vw,5.5rem);
-          line-height:1.0;
-          letter-spacing:0.04em;
-          color:#FFFEF7;
-          margin-bottom:0.5rem;
+          line-height:1.0;letter-spacing:0.04em;color:#FFFEF7;margin-bottom:0.5rem;
         ">
-          Digital Solutions<br/>
-          <span style="
-            color:#FED41D;
-            text-shadow:4px 4px 0px #1A1A2E;
-          ">Kelas Dunia</span>
+          ${h.heroHeadline1}<br/>
+          <span style="color:#FED41D;text-shadow:4px 4px 0px #1A1A2E;">${h.heroHeadline2}</span>
         </h1>
 
         <p class="reveal reveal-d2" style="
-          font-family:'Fredoka',sans-serif;
-          font-size:1.15rem;
-          color:#FFFEF7BB;
-          line-height:1.7;
-          margin:1.5rem 0 2.5rem;
-          max-width:560px;
-        ">${company.description}</p>
+          font-family:'Fredoka',sans-serif;font-size:1.15rem;
+          color:#FFFEF7BB;line-height:1.7;margin:1.5rem 0 2.5rem;max-width:560px;
+        ">${desc}</p>
 
         <div class="reveal reveal-d3" style="display:flex;flex-wrap:wrap;gap:1rem;">
-          <a href="/services" style="
-            padding:0.85rem 2.25rem;
-            background:#FED41D;
-            color:#1A1A2E;
-            border:3px solid #1A1A2E;
-            border-radius:12px;
-            font-family:'Fredoka',sans-serif;
-            font-size:1rem;font-weight:700;
-            text-decoration:none;
-            box-shadow:5px 5px 0px #F5C400;
+          <a href="${localePath(locale, "/services")}" style="
+            padding:0.85rem 2.25rem;background:#FED41D;color:#1A1A2E;
+            border:3px solid #1A1A2E;border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+            text-decoration:none;box-shadow:5px 5px 0px #F5C400;
             transition:transform 0.1s,box-shadow 0.1s;
           "
           onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0px #F5C400'"
           onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0px #F5C400'"
-          >Lihat Layanan \u2726</a>
-          <a href="/portfolio" style="
-            padding:0.85rem 2.25rem;
-            background:transparent;
-            color:#FFFEF7;
-            border:3px solid #FFFEF755;
-            border-radius:12px;
-            font-family:'Fredoka',sans-serif;
-            font-size:1rem;font-weight:600;
-            text-decoration:none;
-            transition:border-color 0.15s,color 0.15s;
+          >${h.heroCtaPrimary}</a>
+          <a href="${localePath(locale, "/portfolio")}" style="
+            padding:0.85rem 2.25rem;background:transparent;color:#FFFEF7;
+            border:3px solid #FFFEF755;border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:600;
+            text-decoration:none;transition:border-color 0.15s,color 0.15s;
           "
           onmouseover="this.style.borderColor='#FED41D';this.style.color='#FED41D'"
           onmouseout="this.style.borderColor='#FFFEF755';this.style.color='#FFFEF7'"
-          >Lihat Portfolio \u2192</a>
+          >${h.heroCtaSecondary}</a>
         </div>
       </div>
 
-      <!-- Stats strip -->
       <div class="reveal reveal-d4" style="margin-top:4rem;">
         ${statsStrip([
-    { value: company.projects, label: "Proyek Selesai", suffix: "" },
-    { value: company.clients, label: "Klien Puas", suffix: "" },
-    { value: company.employees, label: "Profesional", suffix: "" },
-    { value: "9", label: "Tahun Pengalaman", suffix: " thn" }
+    { value: company.projects, label: h.stats[0].label, suffix: "" },
+    { value: company.clients, label: h.stats[1].label, suffix: "" },
+    { value: company.employees, label: h.stats[2].label, suffix: "" },
+    { value: "9", label: h.stats[3].label, suffix: locale === "id" ? " thn" : " yrs" }
   ], true)}
       </div>
     </div>
   </section>`;
 }
-function servicesPreview() {
-  const cards = services.slice(0, 4).map(
-    (s, i) => `<div class="reveal reveal-d${i + 1}">
-      ${card({ title: s.title, body: s.description, icon: s.icon, footer: s.detail })}
-    </div>`
-  ).join("");
+function servicesPreview(locale) {
+  const t = getTranslation(locale);
+  const h = t.home;
+  const ds = t.data.services;
+  const cards = services.slice(0, 4).map((s, i) => {
+    const d = ds[i];
+    return `<div class="reveal reveal-d${i + 1}">
+      ${card({ title: d.title, body: d.description, icon: s.icon, footer: d.detail })}
+    </div>`;
+  }).join("");
   return `
   <section class="section">
     <div class="container">
       <div style="text-align:center;margin-bottom:3rem;">
         <h2 class="reveal" style="
-          font-family:'Bangers',cursive;
-          font-size:clamp(2rem,5vw,3rem);
-          letter-spacing:0.05em;
-          color:#1A1A2E;
-          margin-bottom:0.75rem;
-        ">Apa yang Kami Lakukan</h2>
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+          letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
+        ">${h.servicesHeading}</h2>
         <p class="reveal reveal-d1" style="
-          font-family:'Fredoka',sans-serif;
-          font-size:1rem;color:#2D2D44BB;max-width:480px;margin:0 auto;line-height:1.6;
-        ">Dari product engineering sampai cloud infrastructure \u2014 kami cover semua kebutuhan digital Anda.</p>
+          font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44BB;
+          max-width:480px;margin:0 auto;line-height:1.6;
+        ">${h.servicesSubheading}</p>
       </div>
-      <div class="grid-2" style="gap:1.5rem;">
-        ${cards}
-      </div>
+      <div class="grid-2">${cards}</div>
       <div class="reveal" style="text-align:center;margin-top:2.5rem;">
-        <a href="/services" style="
-          display:inline-block;
-          padding:0.75rem 2rem;
-          border:3px solid #1A1A2E;
-          border-radius:12px;
-          background:#FED41D;
-          color:#1A1A2E;
-          font-family:'Fredoka',sans-serif;
-          font-size:0.95rem;font-weight:700;
-          text-decoration:none;
-          box-shadow:4px 4px 0px #1A1A2E;
+        <a href="${localePath(locale, "/services")}" style="
+          display:inline-block;padding:0.75rem 2rem;
+          border:3px solid #1A1A2E;border-radius:12px;
+          background:#FED41D;color:#1A1A2E;
+          font-family:'Fredoka',sans-serif;font-size:0.95rem;font-weight:700;
+          text-decoration:none;box-shadow:4px 4px 0px #1A1A2E;
           transition:transform 0.1s,box-shadow 0.1s;
         "
         onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0px #1A1A2E'"
         onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0px #1A1A2E'"
-        >Semua Layanan \u2192</a>
+        >${h.servicesCtaLabel}</a>
       </div>
     </div>
   </section>`;
 }
-function whyUsSection() {
-  const points = [
-    { icon: "\u26A1", title: "Delivery Cepat", body: "Metodologi Agile ketat. Sprint dua minggu. Demo tiap akhir sprint \u2014 tidak ada surprise di akhir." },
-    { icon: "\u{1F512}", title: "Security First", body: "Secure SDLC dari hari pertama. Code review, SAST, dependency audit \u2014 bukan afterthought." },
-    { icon: "\u{1F4C8}", title: "Scalable by Design", body: "Arsitektur dirancang untuk tumbuh. Dari 100 user ke 10 juta user tanpa rearchitecture besar." },
-    { icon: "\u{1F91D}", title: "Partner, Bukan Vendor", body: "Kami duduk di sisi Anda \u2014 ikut memikirkan bisnis, bukan hanya mengerjakan tiket." }
-  ];
-  const items = points.map((p, i) => `
+function whyUsSection(locale) {
+  const t = getTranslation(locale);
+  const h = t.home;
+  const items = h.whyPoints.map((p, i) => `
     <div class="reveal reveal-d${i + 1}" style="
-      display:flex;gap:1rem;align-items:flex-start;
-      padding:1.25rem;
-      border:2px solid #1A1A2E22;
-      border-radius:14px;
-      background:#FFFEF7;
+      display:flex;gap:1rem;align-items:flex-start;padding:1.25rem;
+      border:2px solid #1A1A2E22;border-radius:14px;background:#FFFEF7;
       transition:border-color 0.15s,box-shadow 0.15s;
     "
     onmouseover="this.style.borderColor='#FED41D';this.style.boxShadow='4px 4px 0px #FED41D'"
@@ -4597,162 +4989,143 @@ function whyUsSection() {
   return `
   <section class="section" style="background:#1A1A2E;">
     <div class="container">
-      <div style="
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:4rem;
-        align-items:center;
-      " class="grid-why">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;" class="grid-why">
         <div>
           <h2 class="reveal" style="
-            font-family:'Bangers',cursive;
-            font-size:clamp(2rem,5vw,3rem);
-            letter-spacing:0.05em;
-            color:#FED41D;
-            margin-bottom:1rem;
-            line-height:1.1;
-          ">Kenapa Pilih<br/>NusaTech?</h2>
+            font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
+            letter-spacing:0.05em;color:#FED41D;margin-bottom:1rem;line-height:1.1;
+          ">${h.whyHeading}</h2>
           <p class="reveal reveal-d1" style="
-            font-family:'Fredoka',sans-serif;
-            font-size:1rem;color:#FFFEF799;line-height:1.7;margin-bottom:2rem;
-          ">Kami bukan body shop. Kami adalah tim engineering yang peduli dengan outcome bisnis Anda \u2014 bukan hanya output teknis.</p>
-          <a class="reveal reveal-d2" href="/about" style="
-            display:inline-block;
-            padding:0.75rem 1.75rem;
-            background:#FED41D;
-            color:#1A1A2E;
-            border:3px solid #FED41D;
-            border-radius:12px;
-            font-family:'Fredoka',sans-serif;
-            font-size:0.95rem;font-weight:700;
-            text-decoration:none;
-            box-shadow:4px 4px 0px #F5C400;
-          ">Tentang Kami \u2192</a>
+            font-family:'Fredoka',sans-serif;font-size:1rem;
+            color:#FFFEF799;line-height:1.7;margin-bottom:2rem;
+          ">${h.whySubheading}</p>
+          <a class="reveal reveal-d2" href="${localePath(locale, "/about")}" style="
+            display:inline-block;padding:0.75rem 1.75rem;
+            background:#FED41D;color:#1A1A2E;
+            border:3px solid #FED41D;border-radius:12px;
+            font-family:'Fredoka',sans-serif;font-size:0.95rem;font-weight:700;
+            text-decoration:none;box-shadow:4px 4px 0px #F5C400;
+          ">${h.whyCtaLabel}</a>
         </div>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          ${items}
-        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">${items}</div>
       </div>
     </div>
-    <style>
-      @media(max-width:768px){.grid-why{grid-template-columns:1fr !important;gap:2rem !important;}}
-    </style>
+    <style>@media(max-width:768px){.grid-why{grid-template-columns:1fr !important;gap:2rem !important;}}</style>
   </section>`;
 }
-function testimonialsSection() {
-  const cards = testimonials.map((t, i) => `
+function testimonialsSection(locale) {
+  const t = getTranslation(locale);
+  const h = t.home;
+  const dt = t.data.testimonials;
+  const cards = testimonials.map((tst, i) => {
+    const d = dt[i];
+    return `
     <div class="reveal reveal-d${i + 1}" style="
-      background:#FFFEF7;
-      border:3px solid #1A1A2E;
-      border-radius:16px;
-      box-shadow:5px 5px 0px #FED41D;
-      padding:1.75rem;
+      background:#FFFEF7;border:3px solid #1A1A2E;border-radius:16px;
+      box-shadow:5px 5px 0px #FED41D;padding:1.75rem;
       display:flex;flex-direction:column;gap:1rem;
     ">
-      <div style="color:#FED41D;font-size:1.1rem;letter-spacing:0.1em;">${"\u2605".repeat(t.rating)}</div>
-      <p style="
-        font-family:'Fredoka',sans-serif;
-        font-size:0.95rem;
-        color:#1A1A2E;
-        line-height:1.7;
-        flex:1;
-        font-style:italic;
-      ">"${t.text}"</p>
+      <div style="color:#FED41D;font-size:1.1rem;letter-spacing:0.1em;">${"\u2605".repeat(tst.rating)}</div>
+      <p style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#1A1A2E;line-height:1.7;flex:1;font-style:italic;">
+        "${d.text}"
+      </p>
       <div style="display:flex;align-items:center;gap:0.75rem;padding-top:0.75rem;border-top:2px solid #1A1A2E22;">
         <div style="
-          width:40px;height:40px;
-          background:#FED41D;
-          border:2px solid #1A1A2E;
-          border-radius:50%;
+          width:40px;height:40px;background:#FED41D;
+          border:2px solid #1A1A2E;border-radius:50%;
           display:flex;align-items:center;justify-content:center;
-          font-family:'Bangers',cursive;
-          font-size:0.85rem;color:#1A1A2E;
-          flex-shrink:0;
-        ">${t.avatar}</div>
+          font-family:'Bangers',cursive;font-size:0.85rem;color:#1A1A2E;flex-shrink:0;
+        ">${tst.avatar}</div>
         <div>
-          <div style="font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:700;color:#1A1A2E;">${t.name}</div>
-          <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#2D2D44AA;">${t.role}, ${t.company}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.9rem;font-weight:700;color:#1A1A2E;">${tst.name}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:0.78rem;color:#2D2D44AA;">${tst.role}, ${tst.company}</div>
         </div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
   return `
   <section class="section" style="background:#F5F5EC;">
     <div class="container">
       <div style="text-align:center;margin-bottom:3rem;">
         <h2 class="reveal" style="
-          font-family:'Bangers',cursive;
-          font-size:clamp(2rem,5vw,3rem);
+          font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
           letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
-        ">Kata Klien Kami</h2>
-        <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44BB;max-width:440px;margin:0 auto;">
-          Hasil bicara lebih keras dari janji. Ini yang mereka katakan.
-        </p>
+        ">${h.testimonialsHeading}</h2>
+        <p class="reveal reveal-d1" style="
+          font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44BB;
+          max-width:440px;margin:0 auto;
+        ">${h.testimonialsSubheading}</p>
       </div>
       <div class="grid-3">${cards}</div>
     </div>
   </section>`;
 }
-function homePage() {
+function homePage(locale) {
+  const t = getTranslation(locale);
+  const h = t.home;
+  const desc = interpolate(t.seo.homeDescription, { description: company.description });
   const content = `
-    ${heroSection()}
+    ${heroSection(locale)}
     <div class="comic-divider"></div>
-    ${servicesPreview()}
-    ${whyUsSection()}
+    ${servicesPreview(locale)}
+    ${whyUsSection(locale)}
     <div class="comic-divider"></div>
-    ${testimonialsSection()}
+    ${testimonialsSection(locale)}
     ${ctaSection({
-    heading: "Siap Memulai Proyek?",
-    subheading: "Ceritakan tantangan Anda \u2014 kami siap duduk bareng dan cari solusinya.",
-    primaryLabel: "Hubungi Kami \u2726",
-    primaryHref: "/contact",
-    secondaryLabel: "Lihat Portfolio",
-    secondaryHref: "/portfolio"
+    heading: h.ctaHeading,
+    subheading: h.ctaSubheading,
+    primaryLabel: h.ctaPrimary,
+    primaryHref: localePath(locale, "/contact"),
+    secondaryLabel: h.ctaSecondary,
+    secondaryHref: localePath(locale, "/portfolio")
   })}
   `;
   return baseLayout({
-    title: "Beranda",
-    description: company.description,
-    activePage: "/",
+    title: t.seo.homeTitle,
+    description: desc,
+    activePage: localePath(locale, "/"),
+    locale,
     content
   });
 }
 
 // src/pages/services.ts
-function servicesHero() {
+function servicesHero(locale) {
+  const t = getTranslation(locale);
+  const s = t.services;
   return `
   <section style="
     background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
-    padding:5rem 1.5rem 4rem;
-    text-align:center;
+    padding:5rem 1.5rem 4rem;text-align:center;
   ">
     <div class="container">
       <div class="reveal" style="margin-bottom:1rem;">
         <span style="
           display:inline-block;padding:0.3rem 1rem;
-          background:#FED41D22;border:2px solid #FED41D44;
-          border-radius:999px;font-family:'Fredoka',sans-serif;
-          font-size:0.85rem;font-weight:600;color:#FED41D;
-        ">\u{1F6E0} Layanan Kami</span>
+          background:#FED41D22;border:2px solid #FED41D44;border-radius:999px;
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">${s.badge}</span>
       </div>
       <h1 class="reveal reveal-d1" style="
-        font-family:'Bangers',cursive;
-        font-size:clamp(2.5rem,7vw,4.5rem);
-        letter-spacing:0.05em;color:#FFFEF7;
-        line-height:1.05;margin-bottom:1rem;
-      ">Solusi Lengkap<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">untuk Tim Anda</span></h1>
+        font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,4.5rem);
+        letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
+      ">${s.heroHeadline1}<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">${s.heroHeadline2}</span></h1>
       <p class="reveal reveal-d2" style="
         font-family:'Fredoka',sans-serif;font-size:1.05rem;
         color:#FFFEF7AA;max-width:520px;margin:0 auto;line-height:1.7;
-      ">Dari ideasi produk hingga infrastruktur skala enterprise \u2014 satu partner untuk semua kebutuhan digital Anda.</p>
+      ">${s.heroDescription}</p>
     </div>
   </section>`;
 }
-function servicesGrid() {
-  const cards = services.map(
-    (s, i) => `<div class="reveal reveal-d${i % 3 + 1}">
-      ${card({ title: s.title, body: s.description, icon: s.icon, badge: s.detail })}
-    </div>`
-  ).join("");
+function servicesGrid(locale) {
+  const t = getTranslation(locale);
+  const ds = t.data.services;
+  const cards = services.map((s, i) => {
+    const d = ds[i];
+    return `<div class="reveal reveal-d${i % 3 + 1}">
+      ${card({ title: d.title, body: d.description, icon: s.icon, badge: d.detail })}
+    </div>`;
+  }).join("");
   return `
   <section class="section">
     <div class="container">
@@ -4760,35 +5133,24 @@ function servicesGrid() {
     </div>
   </section>`;
 }
-function processSection() {
-  const steps = [
-    { num: "01", title: "Discovery", body: "Workshop intensif untuk memahami bisnis, pain point, dan target outcome. Kita align sebelum satu baris kode pun ditulis." },
-    { num: "02", title: "Architecture", body: "Technical design, ADR, dan pemilihan stack yang tepat. Dokumen arsitektur jadi living document sepanjang proyek." },
-    { num: "03", title: "Build", body: "Sprint dua minggu. Demo tiap akhir sprint. Continuous integration dari hari pertama \u2014 tidak ada big bang release." },
-    { num: "04", title: "Deploy & Scale", body: "Zero-downtime deployment, monitoring end-to-end, dan post-launch support untuk pastikan sistem stabil di production." }
-  ];
-  const items = steps.map((s, i) => `
+function processSection(locale) {
+  const t = getTranslation(locale);
+  const s = t.services;
+  const items = s.steps.map((step, i) => `
     <div class="reveal reveal-d${i + 1}" style="
-      display:flex;gap:1.25rem;align-items:flex-start;
-      padding:1.5rem;
-      border:3px solid #1A1A2E;
-      border-radius:16px;
-      background:#FFFEF7;
-      box-shadow:4px 4px 0 #FED41D;
+      display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem;
+      border:3px solid #1A1A2E;border-radius:16px;
+      background:#FFFEF7;box-shadow:4px 4px 0 #FED41D;
     ">
       <div style="
-        min-width:52px;height:52px;
-        background:#FED41D;
-        border:3px solid #1A1A2E;
-        border-radius:12px;
+        min-width:52px;height:52px;background:#FED41D;
+        border:3px solid #1A1A2E;border-radius:12px;
         display:flex;align-items:center;justify-content:center;
-        font-family:'Bangers',cursive;
-        font-size:1.3rem;letter-spacing:0.05em;color:#1A1A2E;
-        flex-shrink:0;
-      ">${s.num}</div>
+        font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:#1A1A2E;flex-shrink:0;
+      ">${step.num}</div>
       <div>
-        <h3 style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.4rem;">${s.title}</h3>
-        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${s.body}</p>
+        <h3 style="font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.4rem;">${step.title}</h3>
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${step.body}</p>
       </div>
     </div>`).join("");
   return `
@@ -4798,16 +5160,18 @@ function processSection() {
         <h2 class="reveal" style="
           font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
           letter-spacing:0.05em;color:#FED41D;margin-bottom:0.75rem;
-        ">Cara Kami Bekerja</h2>
+        ">${s.processHeading}</h2>
         <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#FFFEF799;max-width:440px;margin:0 auto;">
-          Proses yang terstruktur, komunikasi yang transparan.
+          ${s.processSubheading}
         </p>
       </div>
       <div class="grid-2" style="gap:1.25rem;">${items}</div>
     </div>
   </section>`;
 }
-function techStackSection() {
+function techStackSection(locale) {
+  const t = getTranslation(locale);
+  const s = t.services;
   const stacks = [
     { cat: "Backend", items: ["Go", "Node.js", "Python", "Rust"] },
     { cat: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind"] },
@@ -4816,27 +5180,17 @@ function techStackSection() {
     { cat: "Data", items: ["PostgreSQL", "MongoDB", "Kafka", "Redis"] },
     { cat: "AI/ML", items: ["PyTorch", "LangChain", "Hugging Face", "MLflow"] }
   ];
-  const groups = stacks.map((s, i) => `
+  const groups = stacks.map((st, i) => `
     <div class="reveal reveal-d${i % 3 + 1}" style="
-      padding:1.25rem;
-      border:3px solid #FED41D33;
-      border-radius:14px;
-      background:#FFFEF708;
+      padding:1.25rem;border:3px solid #FED41D33;border-radius:14px;background:#FFFEF708;
     ">
-      <h4 style="
-        font-family:'Bangers',cursive;font-size:1rem;
-        letter-spacing:0.06em;color:#FED41D;margin-bottom:0.75rem;
-      ">${s.cat}</h4>
+      <h4 style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.06em;color:#FED41D;margin-bottom:0.75rem;">${st.cat}</h4>
       <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
-        ${s.items.map((it) => `
+        ${st.items.map((it) => `
           <span style="
-            padding:0.2rem 0.7rem;
-            background:#FED41D18;
-            border:1.5px solid #FED41D44;
-            border-radius:999px;
-            font-family:'Fredoka',sans-serif;
-            font-size:0.8rem;font-weight:500;
-            color:#FFFEF7CC;
+            padding:0.2rem 0.7rem;background:#FED41D18;
+            border:1.5px solid #FED41D44;border-radius:999px;
+            font-family:'Fredoka',sans-serif;font-size:0.8rem;font-weight:500;color:#FFFEF7CC;
           ">${it}</span>`).join("")}
       </div>
     </div>`).join("");
@@ -4847,38 +5201,39 @@ function techStackSection() {
         <h2 class="reveal" style="
           font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
           letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
-        ">Tech Stack</h2>
+        ">${s.techHeading}</h2>
         <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44AA;max-width:400px;margin:0 auto;">
-          Kami pilih tools yang tepat untuk masalah yang tepat \u2014 bukan yang lagi hype.
+          ${s.techSubheading}
         </p>
       </div>
-      <div class="grid-3" style="gap:1.25rem;">
-        ${groups}
-      </div>
+      <div class="grid-3" style="gap:1.25rem;">${groups}</div>
     </div>
   </section>`;
 }
-function servicesPage() {
+function servicesPage(locale) {
+  const t = getTranslation(locale);
+  const s = t.services;
   const content = `
-    ${servicesHero()}
+    ${servicesHero(locale)}
     <div class="comic-divider"></div>
-    ${servicesGrid()}
-    ${processSection()}
+    ${servicesGrid(locale)}
+    ${processSection(locale)}
     <div class="comic-divider"></div>
-    ${techStackSection()}
+    ${techStackSection(locale)}
     ${ctaSection({
-    heading: "Butuh Konsultasi Teknis?",
-    subheading: "Gratis 60 menit \u2014 kami review arsitektur atau stack Anda dan kasih feedback jujur.",
-    primaryLabel: "Jadwalkan Konsultasi",
-    primaryHref: "/contact",
-    secondaryLabel: "Lihat Portfolio",
-    secondaryHref: "/portfolio"
+    heading: s.ctaHeading,
+    subheading: s.ctaSubheading,
+    primaryLabel: s.ctaPrimary,
+    primaryHref: localePath(locale, "/contact"),
+    secondaryLabel: s.ctaSecondary,
+    secondaryHref: localePath(locale, "/portfolio")
   })}
   `;
   return baseLayout({
-    title: "Layanan",
-    description: "Product engineering, cloud/DevOps, mobile, AI, security, dan analytics \u2014 solusi lengkap untuk startup hingga enterprise.",
-    activePage: "/services",
+    title: t.seo.servicesTitle,
+    description: t.seo.servicesDescription,
+    activePage: localePath(locale, "/services"),
+    locale,
     content
   });
 }
@@ -4905,7 +5260,9 @@ function badge(text, variant = "yellow") {
 }
 
 // src/pages/portfolio.ts
-function portfolioHero() {
+function portfolioHero(locale) {
+  const t = getTranslation(locale);
+  const p = t.portfolio;
   return `
   <section style="
     background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
@@ -4915,86 +5272,66 @@ function portfolioHero() {
       <div class="reveal" style="margin-bottom:1rem;">
         <span style="
           display:inline-block;padding:0.3rem 1rem;
-          background:#FED41D22;border:2px solid #FED41D44;
-          border-radius:999px;font-family:'Fredoka',sans-serif;
-          font-size:0.85rem;font-weight:600;color:#FED41D;
-        ">\u{1F3C6} Portfolio</span>
+          background:#FED41D22;border:2px solid #FED41D44;border-radius:999px;
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">${p.badge}</span>
       </div>
       <h1 class="reveal reveal-d1" style="
-        font-family:'Bangers',cursive;
-        font-size:clamp(2.5rem,7vw,4.5rem);
+        font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,4.5rem);
         letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
-      ">Proyek yang<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Kami Banggakan</span></h1>
+      ">${p.heroHeadline1}<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">${p.heroHeadline2}</span></h1>
       <p class="reveal reveal-d2" style="
         font-family:'Fredoka',sans-serif;font-size:1.05rem;
         color:#FFFEF7AA;max-width:500px;margin:0 auto;line-height:1.7;
-      ">Setiap proyek adalah cerita tentang tantangan nyata dan solusi yang benar-benar bekerja.</p>
+      ">${p.heroDescription}</p>
     </div>
   </section>`;
 }
-function featuredProject() {
+function featuredProject(locale) {
+  const t = getTranslation(locale);
   const featured = portfolios[0];
-  const techBadges = featured.tech.map((t) => badge(t, "sky")).join(" ");
+  const dp = t.data.portfolios[0];
+  const techBadges = featured.tech.map((tech) => badge(tech, "sky")).join(" ");
   return `
   <section class="section">
     <div class="container">
       <div class="reveal" style="margin-bottom:1rem;">
         <span style="
-          font-family:'Fredoka',sans-serif;font-size:0.85rem;
-          font-weight:700;color:#FED41D;letter-spacing:0.08em;
-          text-transform:uppercase;
-        ">\u2605 Featured Project</span>
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:700;
+          color:#FED41D;letter-spacing:0.08em;text-transform:uppercase;
+        ">${t.ui.featuredProject}</span>
       </div>
       <div style="
-        border:3px solid #1A1A2E;
-        border-radius:20px;
-        box-shadow:8px 8px 0 #FED41D;
-        overflow:hidden;
-        display:grid;
-        grid-template-columns:1fr 1fr;
+        border:3px solid #1A1A2E;border-radius:20px;
+        box-shadow:8px 8px 0 #FED41D;overflow:hidden;
+        display:grid;grid-template-columns:1fr 1fr;
       " class="featured-grid">
-
-        <!-- Visual side -->
         <div style="
           background:linear-gradient(135deg,#1A1A2E 0%,#2D2D44 100%);
-          padding:3rem 2.5rem;
-          display:flex;flex-direction:column;justify-content:center;gap:1.5rem;
+          padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.5rem;
           border-right:3px solid #FED41D;
         ">
           <div style="font-family:'Bangers',cursive;font-size:5rem;line-height:1;">\u{1F3E6}</div>
-          <h2 style="
-            font-family:'Bangers',cursive;
-            font-size:2.5rem;letter-spacing:0.05em;
-            color:#FED41D;line-height:1.1;margin:0;
-          ">${featured.title}</h2>
+          <h2 style="font-family:'Bangers',cursive;font-size:2.5rem;letter-spacing:0.05em;color:#FED41D;line-height:1.1;margin:0;">
+            ${featured.title}
+          </h2>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">${techBadges}</div>
           <div style="
-            display:inline-flex;align-items:center;gap:0.5rem;
-            padding:0.5rem 1rem;
-            background:#FED41D;
-            border:2px solid #1A1A2E;
-            border-radius:10px;
-            width:fit-content;
+            display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;
+            background:#FED41D;border:2px solid #1A1A2E;border-radius:10px;width:fit-content;
           ">
             <span style="font-family:'Bangers',cursive;font-size:1rem;color:#1A1A2E;letter-spacing:0.04em;">
-              \u{1F4CA} ${featured.result}
+              \u{1F4CA} ${dp.result}
             </span>
           </div>
         </div>
-
-        <!-- Info side -->
         <div style="padding:3rem 2.5rem;background:#FFFEF7;display:flex;flex-direction:column;justify-content:center;gap:1.25rem;">
           ${badge(featured.category, "yellow")}
           <h3 style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:0.04em;color:#1A1A2E;margin:0;">${featured.title}</h3>
-          <p style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">${featured.description}</p>
-          <div style="
-            padding:1rem;
-            background:#FED41D18;
-            border:2px solid #FED41D;
-            border-radius:12px;
-          ">
+          <p style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">${dp.description}</p>
+          <div style="padding:1rem;background:#FED41D18;border:2px solid #FED41D;border-radius:12px;">
             <span style="font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;">
-              \u{1F5D3} ${featured.year} \xB7 ${featured.result}
+              \u{1F5D3} ${featured.year} \xB7 ${dp.result}
             </span>
           </div>
         </div>
@@ -5008,19 +5345,18 @@ function featuredProject() {
     </style>
   </section>`;
 }
-function portfolioGrid() {
+function portfolioGrid(locale) {
+  const t = getTranslation(locale);
   const rest = portfolios.slice(1);
+  const dps = t.data.portfolios.slice(1);
   const items = rest.map((p, i) => {
-    const techBadges = p.tech.slice(0, 3).map((t) => badge(t, "ink")).join(" ");
+    const dp = dps[i];
+    const techBadges = p.tech.slice(0, 3).map((tech) => badge(tech, "ink")).join(" ");
     return `
     <div class="reveal reveal-d${i + 1} comic-card" style="
-      background:#FFFEF7;
-      border:3px solid #1A1A2E;
-      border-radius:16px;
-      box-shadow:5px 5px 0 #1A1A2E;
-      overflow:hidden;
-      display:flex;flex-direction:column;
-      transition:transform 0.15s,box-shadow 0.15s;
+      background:#FFFEF7;border:3px solid #1A1A2E;border-radius:16px;
+      box-shadow:5px 5px 0 #1A1A2E;overflow:hidden;
+      display:flex;flex-direction:column;transition:transform 0.15s,box-shadow 0.15s;
     ">
       <div style="
         padding:1.75rem 1.75rem 1.25rem;
@@ -5033,15 +5369,12 @@ function portfolioGrid() {
       </div>
       <div style="padding:1.25rem 1.75rem 1.5rem;display:flex;flex-direction:column;gap:0.75rem;flex:1;">
         ${badge(p.category, "yellow")}
-        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${p.description}</p>
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${dp.description}</p>
         <div style="
-          padding:0.6rem 0.9rem;
-          background:#FED41D18;
-          border:2px solid #FED41D66;
-          border-radius:8px;
-          font-family:'Fredoka',sans-serif;
-          font-size:0.82rem;font-weight:600;color:#1A1A2E;
-        ">\u{1F4CA} ${p.result}</div>
+          padding:0.6rem 0.9rem;background:#FED41D18;
+          border:2px solid #FED41D66;border-radius:8px;
+          font-family:'Fredoka',sans-serif;font-size:0.82rem;font-weight:600;color:#1A1A2E;
+        ">\u{1F4CA} ${dp.result}</div>
       </div>
     </div>`;
   }).join("");
@@ -5051,50 +5384,58 @@ function portfolioGrid() {
       <h2 class="reveal" style="
         font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);
         letter-spacing:0.05em;color:#1A1A2E;margin-bottom:2rem;
-      ">Proyek Lainnya</h2>
+      ">${t.ui.otherProjects}</h2>
       <div class="grid-3" style="gap:1.5rem;">${items}</div>
     </div>
   </section>`;
 }
-function portfolioStats() {
+function portfolioStats(locale) {
+  const t = getTranslation(locale);
+  const p = t.portfolio;
   return `
   <section class="section-sm" style="background:#1A1A2E;">
     <div class="container">
       ${statsStrip([
-    { value: "500", label: "Proyek Delivered", suffix: "+" },
-    { value: "200", label: "Klien Puas", suffix: "+" },
-    { value: "99.9", label: "Uptime SLA", suffix: "%" },
-    { value: "4.9", label: "Rating Klien", suffix: "/5" }
+    { value: "500", label: p.stats[0].label, suffix: "+" },
+    { value: "200", label: p.stats[1].label, suffix: "+" },
+    { value: "99.9", label: p.stats[2].label, suffix: "%" },
+    { value: "4.9", label: p.stats[3].label, suffix: "/5" }
   ], true)}
     </div>
   </section>`;
 }
-function portfolioPage() {
+function portfolioPage(locale) {
+  const t = getTranslation(locale);
+  const p = t.portfolio;
   const content = `
-    ${portfolioHero()}
+    ${portfolioHero(locale)}
     <div class="comic-divider"></div>
-    ${featuredProject()}
-    ${portfolioGrid()}
-    ${portfolioStats()}
+    ${featuredProject(locale)}
+    ${portfolioGrid(locale)}
+    ${portfolioStats(locale)}
     ${ctaSection({
-    heading: "Proyek Anda Berikutnya?",
-    subheading: "Mari jadikan proyek Anda sebagai salah satu success story yang kami banggakan.",
-    primaryLabel: "Diskusi Sekarang",
-    primaryHref: "/contact",
-    secondaryLabel: "Lihat Layanan",
-    secondaryHref: "/services"
+    heading: p.ctaHeading,
+    subheading: p.ctaSubheading,
+    primaryLabel: p.ctaPrimary,
+    primaryHref: localePath(locale, "/contact"),
+    secondaryLabel: p.ctaSecondary,
+    secondaryHref: localePath(locale, "/services")
   })}
   `;
   return baseLayout({
-    title: "Portfolio",
-    description: "Portfolio proyek NusaTech Solutions \u2014 fintech, e-commerce, edtech, logistik, dan lebih banyak lagi.",
-    activePage: "/portfolio",
+    title: t.seo.portfolioTitle,
+    description: t.seo.portfolioDescription,
+    activePage: localePath(locale, "/portfolio"),
+    locale,
     content
   });
 }
 
 // src/pages/about.ts
-function aboutHero() {
+function aboutHero(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
+  const desc = interpolate(a.heroDescription, { founded: company.founded });
   return `
   <section style="
     background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
@@ -5104,131 +5445,116 @@ function aboutHero() {
       <div class="reveal" style="margin-bottom:1rem;">
         <span style="
           display:inline-block;padding:0.3rem 1rem;
-          background:#FED41D22;border:2px solid #FED41D44;
-          border-radius:999px;font-family:'Fredoka',sans-serif;
-          font-size:0.85rem;font-weight:600;color:#FED41D;
-        ">\u{1F3E2} Tentang Kami</span>
+          background:#FED41D22;border:2px solid #FED41D44;border-radius:999px;
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">${a.badge}</span>
       </div>
       <h1 class="reveal reveal-d1" style="
-        font-family:'Bangers',cursive;
-        font-size:clamp(2.5rem,7vw,4.5rem);
+        font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,4.5rem);
         letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
-      ">Kami Percaya<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Teknologi Mengubah Bisnis</span></h1>
+      ">${a.heroHeadline1}<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">${a.heroHeadline2}</span></h1>
       <p class="reveal reveal-d2" style="
         font-family:'Fredoka',sans-serif;font-size:1.05rem;
         color:#FFFEF7AA;max-width:520px;margin:0 auto;line-height:1.7;
-      ">Sejak ${company.founded}, kami membantu ratusan perusahaan Indonesia tumbuh lebih cepat lewat teknologi yang tepat.</p>
+      ">${desc}</p>
     </div>
   </section>`;
 }
-function storySection() {
+function storySection(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
+  const vars = {
+    founded: company.founded,
+    employees: company.employees,
+    projects: company.projects,
+    clients: company.clients
+  };
+  const paragraphs = a.storyParagraphs.map(
+    (p) => `<p class="reveal reveal-d${a.storyParagraphs.indexOf(p) + 1}" style="
+      font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;
+    ">${interpolate(p, vars)}</p>`
+  ).join("");
+  const timelineItems = a.timeline.map((item, i) => `
+    <div style="display:flex;gap:1rem;align-items:flex-start;position:relative;">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+        <div style="
+          width:44px;height:44px;background:#FED41D;border:3px solid #1A1A2E;
+          border-radius:50%;display:flex;align-items:center;justify-content:center;
+          font-family:'Bangers',cursive;font-size:0.78rem;color:#1A1A2E;letter-spacing:0.02em;flex-shrink:0;
+        ">${item.year}</div>
+        ${i < a.timeline.length - 1 ? `<div style="width:3px;height:40px;background:#FED41D44;margin:2px 0;"></div>` : ""}
+      </div>
+      <div style="padding:0.5rem 0 ${i < a.timeline.length - 1 ? "1.5rem" : "0"};">
+        <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${item.event}</p>
+      </div>
+    </div>`).join("");
   return `
   <section class="section">
     <div class="container">
-      <div style="
-        display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
-      " class="story-grid">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;" class="story-grid">
         <div>
           <h2 class="reveal" style="
             font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
             letter-spacing:0.05em;color:#1A1A2E;margin-bottom:1.5rem;line-height:1.1;
-          ">Asal Mula<br/>NusaTech</h2>
-          <div style="display:flex;flex-direction:column;gap:1rem;">
-            <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
-              Didirikan tahun ${company.founded} oleh dua engineer yang frustrasi melihat banyak proyek teknologi gagal bukan karena masalah teknis, melainkan karena komunikasi yang buruk antara tim bisnis dan tim engineering.
-            </p>
-            <p class="reveal reveal-d2" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
-              Kami membangun NusaTech dengan satu prinsip sederhana: jadi partner, bukan vendor. Ini berarti kami ikut memikirkan bisnis Anda, bukan hanya mengerjakan requirement yang datang.
-            </p>
-            <p class="reveal reveal-d3" style="font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D2D44;line-height:1.7;margin:0;">
-              Hari ini kami adalah tim ${company.employees} profesional yang telah menyelesaikan ${company.projects} proyek untuk ${company.clients} klien di berbagai industri.
-            </p>
-          </div>
+          ">${a.storyHeading}</h2>
+          <div style="display:flex;flex-direction:column;gap:1rem;">${paragraphs}</div>
         </div>
-
-        <!-- Timeline -->
         <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:0;">
-          ${[
-    { year: "2015", event: "NusaTech didirikan. Tim pertama 5 orang, klien pertama 3 startup." },
-    { year: "2017", event: "Ekspansi ke enterprise. Proyek pertama dengan bank nasional." },
-    { year: "2019", event: "Buka divisi Cloud & DevOps. Tim tumbuh ke 50 orang." },
-    { year: "2021", event: "Luncurkan AI Lab. Mulai bangun produk data-driven untuk klien." },
-    { year: "2023", event: "150+ tim, 500+ proyek, hadir di 5 kota Indonesia." }
-  ].map((t, i, arr) => `
-            <div style="display:flex;gap:1rem;align-items:flex-start;position:relative;">
-              <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
-                <div style="
-                  width:44px;height:44px;
-                  background:#FED41D;
-                  border:3px solid #1A1A2E;
-                  border-radius:50%;
-                  display:flex;align-items:center;justify-content:center;
-                  font-family:'Bangers',cursive;font-size:0.78rem;
-                  color:#1A1A2E;letter-spacing:0.02em;
-                  flex-shrink:0;
-                ">${t.year}</div>
-                ${i < arr.length - 1 ? `<div style="width:3px;height:40px;background:#FED41D44;margin:2px 0;"></div>` : ""}
-              </div>
-              <div style="padding:0.5rem 0 ${i < arr.length - 1 ? "1.5rem" : "0"};">
-                <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44;line-height:1.6;margin:0;">${t.event}</p>
-              </div>
-            </div>`).join("")}
+          ${timelineItems}
         </div>
       </div>
     </div>
     <style>@media(max-width:768px){.story-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}}</style>
   </section>`;
 }
-function statsSection() {
+function statsSection(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
   return `
   <section class="section-sm" style="background:#FED41D;border-top:4px solid #1A1A2E;border-bottom:4px solid #1A1A2E;">
     <div class="container">
       ${statsStrip([
-    { value: company.founded, label: "Tahun Berdiri", suffix: "" },
-    { value: company.employees, label: "Profesional", suffix: "" },
-    { value: company.projects, label: "Proyek", suffix: "" },
-    { value: company.clients, label: "Klien", suffix: "" }
+    { value: company.founded, label: a.stats[0].label, suffix: "" },
+    { value: company.employees, label: a.stats[1].label, suffix: "" },
+    { value: company.projects, label: a.stats[2].label, suffix: "" },
+    { value: company.clients, label: a.stats[3].label, suffix: "" }
   ], false)}
     </div>
   </section>`;
 }
-function teamSection() {
-  const cards = team.map((m, i) => `
+function teamSection(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
+  const dts = t.data.team;
+  const cards = team.map((m, i) => {
+    const d = dts[i];
+    return `
     <div class="reveal reveal-d${i + 1} comic-card" style="
-      background:#FFFEF7;
-      border:3px solid #1A1A2E;
-      border-radius:16px;
-      box-shadow:5px 5px 0 #1A1A2E;
-      padding:1.75rem;
+      background:#FFFEF7;border:3px solid #1A1A2E;border-radius:16px;
+      box-shadow:5px 5px 0 #1A1A2E;padding:1.75rem;
       display:flex;flex-direction:column;gap:1rem;
       transition:transform 0.15s,box-shadow 0.15s;
     ">
       <div style="display:flex;align-items:center;gap:1rem;">
         <div style="
-          width:56px;height:56px;
-          background:#FED41D;
-          border:3px solid #1A1A2E;
-          border-radius:14px;
-          box-shadow:3px 3px 0 #1A1A2E;
+          width:56px;height:56px;background:#FED41D;
+          border:3px solid #1A1A2E;border-radius:14px;box-shadow:3px 3px 0 #1A1A2E;
           display:flex;align-items:center;justify-content:center;
-          font-family:'Bangers',cursive;font-size:1.2rem;
-          color:#1A1A2E;flex-shrink:0;
+          font-family:'Bangers',cursive;font-size:1.2rem;color:#1A1A2E;flex-shrink:0;
         ">${m.initials}</div>
         <div>
           <div style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:#1A1A2E;">${m.name}</div>
           <div style="font-family:'Fredoka',sans-serif;font-size:0.82rem;font-weight:600;color:#5BA8D4;">${m.role}</div>
         </div>
       </div>
-      <p style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${m.bio}</p>
+      <p style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.6;margin:0;flex:1;">${d.bio}</p>
       <div style="
-        padding:0.6rem 0.9rem;
-        background:#FED41D18;
-        border:2px solid #FED41D66;
-        border-radius:8px;
-        font-family:'Fredoka',sans-serif;
-        font-size:0.8rem;font-weight:500;color:#1A1A2E;
-      ">\u{1F4A1} ${m.funFact}</div>
-    </div>`).join("");
+        padding:0.6rem 0.9rem;background:#FED41D18;
+        border:2px solid #FED41D66;border-radius:8px;
+        font-family:'Fredoka',sans-serif;font-size:0.8rem;font-weight:500;color:#1A1A2E;
+      ">\u{1F4A1} ${d.funFact}</div>
+    </div>`;
+  }).join("");
   return `
   <section class="section">
     <div class="container">
@@ -5236,29 +5562,22 @@ function teamSection() {
         <h2 class="reveal" style="
           font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
           letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.75rem;
-        ">Orang-Orang di Baliknya</h2>
+        ">${a.teamHeading}</h2>
         <p class="reveal reveal-d1" style="font-family:'Fredoka',sans-serif;font-size:1rem;color:#2D2D44AA;max-width:440px;margin:0 auto;">
-          Tim kecil yang dense \u2014 sedikit ego, banyak output.
+          ${a.teamSubheading}
         </p>
       </div>
       <div class="grid-2" style="gap:1.5rem;">${cards}</div>
     </div>
   </section>`;
 }
-function valuesSection() {
-  const values = [
-    { icon: "\u{1F3AF}", title: "Outcome over Output", body: "Kami tidak hitung story points. Kami hitung dampak nyata ke bisnis Anda." },
-    { icon: "\u{1F50D}", title: "Radical Transparency", body: "Kabar buruk disampaikan cepat. Tidak ada happy path reporting." },
-    { icon: "\u{1F331}", title: "Kaizen", body: "Setiap sprint lebih baik dari yang sebelumnya. Continuous improvement bukan slogan." },
-    { icon: "\u{1F91D}", title: "Respect & Inclusion", body: "Tim yang beragam menghasilkan solusi yang lebih kaya. Selalu." }
-  ];
-  const items = values.map((v, i) => `
+function valuesSection(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
+  const items = a.values.map((v, i) => `
     <div class="reveal reveal-d${i + 1}" style="
-      text-align:center;
-      padding:2rem 1.5rem;
-      border:3px solid #FED41D33;
-      border-radius:16px;
-      background:#FFFEF708;
+      text-align:center;padding:2rem 1.5rem;
+      border:3px solid #FED41D33;border-radius:16px;background:#FFFEF708;
       transition:border-color 0.15s,background 0.15s;
     "
     onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
@@ -5275,39 +5594,51 @@ function valuesSection() {
         <h2 class="reveal" style="
           font-family:'Bangers',cursive;font-size:clamp(2rem,5vw,3rem);
           letter-spacing:0.05em;color:#FED41D;margin-bottom:0.75rem;
-        ">Nilai-Nilai Kami</h2>
+        ">${a.valuesHeading}</h2>
       </div>
       <div class="grid-4" style="gap:1.25rem;">${items}</div>
     </div>
   </section>`;
 }
-function aboutPage() {
+function aboutPage(locale) {
+  const t = getTranslation(locale);
+  const a = t.about;
+  const desc = interpolate(t.seo.aboutDescription, {
+    name: company.name,
+    tagline: company.tagline,
+    founded: company.founded,
+    employees: company.employees,
+    projects: company.projects
+  });
   const content = `
-    ${aboutHero()}
+    ${aboutHero(locale)}
     <div class="comic-divider"></div>
-    ${storySection()}
-    ${statsSection()}
-    ${teamSection()}
-    ${valuesSection()}
+    ${storySection(locale)}
+    ${statsSection(locale)}
+    ${teamSection(locale)}
+    ${valuesSection(locale)}
     ${ctaSection({
-    heading: "Bergabung dengan Kami?",
-    subheading: "Kami selalu mencari engineer, designer, dan PM yang passionate. Tidak ada posisi kosong? Kirim saja CV Anda.",
-    primaryLabel: "Lihat Karir",
-    primaryHref: "/contact",
-    secondaryLabel: "Hubungi Kami",
-    secondaryHref: "/contact"
+    heading: a.ctaHeading,
+    subheading: a.ctaSubheading,
+    primaryLabel: a.ctaPrimary,
+    primaryHref: localePath(locale, "/contact"),
+    secondaryLabel: a.ctaSecondary,
+    secondaryHref: localePath(locale, "/contact")
   })}
   `;
   return baseLayout({
-    title: "Tentang Kami",
-    description: `${company.name} \u2014 ${company.tagline}. Didirikan ${company.founded}, ${company.employees} profesional, ${company.projects} proyek selesai.`,
-    activePage: "/about",
+    title: t.seo.aboutTitle,
+    description: desc,
+    activePage: localePath(locale, "/about"),
+    locale,
     content
   });
 }
 
 // src/pages/contact.ts
-function contactHero() {
+function contactHero(locale) {
+  const t = getTranslation(locale);
+  const c = t.contact;
   return `
   <section style="
     background:linear-gradient(160deg,#1A1A2E 0%,#2D2D44 100%);
@@ -5317,115 +5648,175 @@ function contactHero() {
       <div class="reveal" style="margin-bottom:1rem;">
         <span style="
           display:inline-block;padding:0.3rem 1rem;
-          background:#FED41D22;border:2px solid #FED41D44;
-          border-radius:999px;font-family:'Fredoka',sans-serif;
-          font-size:0.85rem;font-weight:600;color:#FED41D;
-        ">\u{1F4EC} Kontak</span>
+          background:#FED41D22;border:2px solid #FED41D44;border-radius:999px;
+          font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#FED41D;
+        ">${c.badge}</span>
       </div>
       <h1 class="reveal reveal-d1" style="
-        font-family:'Bangers',cursive;
-        font-size:clamp(2.5rem,7vw,4.5rem);
+        font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,4.5rem);
         letter-spacing:0.05em;color:#FFFEF7;line-height:1.05;margin-bottom:1rem;
-      ">Ayo Ngobrol<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">Tentang Proyek Anda</span></h1>
+      ">${c.heroHeadline1}<br/><span style="color:#FED41D;text-shadow:4px 4px 0 #1A1A2E;">${c.heroHeadline2}</span></h1>
       <p class="reveal reveal-d2" style="
         font-family:'Fredoka',sans-serif;font-size:1.05rem;
         color:#FFFEF7AA;max-width:480px;margin:0 auto;line-height:1.7;
-      ">Respon dalam 1 hari kerja. Tidak ada pertanyaan yang terlalu kecil atau terlalu besar.</p>
+      ">${c.heroDescription}</p>
     </div>
   </section>`;
 }
-function contactForm() {
+function inputField(id2, label, type, placeholder) {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${id2}" style="font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;">
+      ${label} <span style="color:#FF6B6B;">*</span>
+    </label>
+    <input type="${type}" id="${id2}" name="${id2}" placeholder="${placeholder}" required style="
+      padding:0.7rem 1rem;border:2.5px solid #1A1A2E;border-radius:10px;
+      font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;outline:none;transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+    onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    />
+  </div>`;
+}
+function selectField(id2, label, placeholder, options) {
+  const opts = options.map(
+    (o) => `<option value="${o.toLowerCase().replace(/\s+/g, "-")}">${o}</option>`
+  ).join("");
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${id2}" style="font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;">
+      ${label} <span style="color:#FF6B6B;">*</span>
+    </label>
+    <select id="${id2}" name="${id2}" required style="
+      padding:0.7rem 1rem;border:2.5px solid #1A1A2E;border-radius:10px;
+      font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;outline:none;cursor:pointer;transition:border-color 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D'"
+    onblur="this.style.borderColor='#1A1A2E'"
+    >
+      <option value="" disabled selected>${placeholder}</option>
+      ${opts}
+    </select>
+  </div>`;
+}
+function textareaField(id2, label, placeholder) {
+  return `
+  <div style="display:flex;flex-direction:column;gap:0.4rem;">
+    <label for="${id2}" style="font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;">
+      ${label} <span style="color:#FF6B6B;">*</span>
+    </label>
+    <textarea id="${id2}" name="${id2}" placeholder="${placeholder}" required rows="5" style="
+      padding:0.7rem 1rem;border:2.5px solid #1A1A2E;border-radius:10px;
+      font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#1A1A2E;
+      background:#FFFEF7;outline:none;resize:vertical;transition:border-color 0.15s,box-shadow 0.15s;
+    "
+    onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
+    onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
+    ></textarea>
+  </div>`;
+}
+function infoCard(icon, title, body) {
+  return `
+  <div class="reveal" style="
+    background:#FFFEF7;border:3px solid #1A1A2E;border-radius:14px;
+    box-shadow:4px 4px 0 #1A1A2E;padding:1.25rem;
+    display:flex;gap:1rem;align-items:flex-start;
+  ">
+    <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">${icon}</div>
+    <div>
+      <div style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.25rem;">${title}</div>
+      <div style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.5;">${body}</div>
+    </div>
+  </div>`;
+}
+function socialLink(code, label, href) {
+  return `
+  <a href="${href}" target="_blank" rel="noopener noreferrer" style="
+    display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;
+    border:2px solid #FED41D22;border-radius:8px;
+    text-decoration:none;transition:border-color 0.15s,background 0.15s;
+  "
+  onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
+  onmouseout="this.style.borderColor='#FED41D22';this.style.background='transparent'"
+  >
+    <span style="
+      width:28px;height:28px;background:#FED41D22;border:1.5px solid #FED41D44;
+      border-radius:6px;display:flex;align-items:center;justify-content:center;
+      font-family:'Bangers',cursive;font-size:0.7rem;color:#FED41D;flex-shrink:0;
+    ">${code.toUpperCase()}</span>
+    <span style="font-family:'Fredoka',sans-serif;font-size:0.88rem;font-weight:500;color:#FFFEF7CC;">${label}</span>
+  </a>`;
+}
+function contactForm(locale) {
+  const t = getTranslation(locale);
+  const c = t.contact;
+  const f = c.fields;
   return `
   <section class="section">
     <div class="container">
-      <div style="
-        display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start;
-      " class="contact-grid">
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start;" class="contact-grid">
 
         <!-- Form -->
         <div class="reveal" style="
-          background:#FFFEF7;
-          border:3px solid #1A1A2E;
-          border-radius:20px;
-          box-shadow:8px 8px 0 #FED41D;
-          padding:2.5rem;
+          background:#FFFEF7;border:3px solid #1A1A2E;border-radius:20px;
+          box-shadow:8px 8px 0 #FED41D;padding:2.5rem;
         ">
-          <h2 style="
-            font-family:'Bangers',cursive;font-size:1.8rem;
-            letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;
-          ">Kirim Pesan</h2>
+          <h2 style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:0.05em;color:#1A1A2E;margin-bottom:0.5rem;">
+            ${c.formHeading}
+          </h2>
           <p style="font-family:'Fredoka',sans-serif;font-size:0.9rem;color:#2D2D44AA;margin-bottom:2rem;">
-            Semua field wajib diisi. Kami balas dalam 1\xD724 jam kerja.
+            ${c.formSubheading}
           </p>
 
-          <form id="contact-form" method="POST" action="/api/contact"
-            style="display:flex;flex-direction:column;gap:1.25rem;"
-            onsubmit="handleSubmit(event)">
-
+          <form id="contact-form" style="display:flex;flex-direction:column;gap:1.25rem;"
+            onsubmit="handleContactSubmit(event)">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="form-row">
-              ${inputField("name", "Nama Lengkap", "text", "Budi Santoso")}
-              ${inputField("email", "Email", "email", "budi@perusahaan.com")}
+              ${inputField("name", f.name, "text", f.namePlaceholder)}
+              ${inputField("email", f.email, "email", f.emailPlaceholder)}
             </div>
-            ${inputField("company", "Nama Perusahaan", "text", "PT Maju Bersama")}
-            ${selectField("service", "Kebutuhan Utama", [
-    "Product Engineering",
-    "Cloud & DevOps",
-    "Mobile Development",
-    "AI & Data Engineering",
-    "Security & Compliance",
-    "Analytics & BI",
-    "Lainnya"
-  ])}
-            ${textareaField("message", "Ceritakan Proyeknya", "Kami sedang membangun platform X dan butuh bantuan di bagian Y...")}
+            ${inputField("company", f.company, "text", f.companyPlaceholder)}
+            ${selectField("service", f.service, f.servicePlaceholder, f.serviceOptions)}
+            ${textareaField("message", f.message, f.messagePlaceholder)}
 
             <button type="submit" id="submit-btn" style="
-              padding:0.9rem 2rem;
-              background:#FED41D;
-              color:#1A1A2E;
-              border:3px solid #1A1A2E;
-              border-radius:12px;
-              font-family:'Fredoka',sans-serif;
-              font-size:1rem;font-weight:700;
-              cursor:pointer;
-              box-shadow:5px 5px 0 #1A1A2E;
-              transition:transform 0.1s,box-shadow 0.1s;
-              align-self:flex-start;
+              padding:0.9rem 2rem;background:#FED41D;color:#1A1A2E;
+              border:3px solid #1A1A2E;border-radius:12px;
+              font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
+              cursor:pointer;box-shadow:5px 5px 0 #1A1A2E;
+              transition:transform 0.1s,box-shadow 0.1s;align-self:flex-start;
             "
             onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='7px 7px 0 #1A1A2E'"
             onmouseout="this.style.transform='';this.style.boxShadow='5px 5px 0 #1A1A2E'"
-            >Kirim Pesan \u2726</button>
+            >${c.submitLabel}</button>
           </form>
 
-          <!-- Success / Error feedback -->
           <div id="form-success" style="display:none;
             margin-top:1.5rem;padding:1rem 1.25rem;
-            background:#4CAF5018;border:2px solid #4CAF50;
-            border-radius:12px;
+            background:#4CAF5018;border:2px solid #4CAF50;border-radius:12px;
             font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#2D6A2D;
-          ">\u2705 Pesan berhasil dikirim! Kami akan membalas dalam 1\xD724 jam kerja.</div>
+          ">${c.successMessage}</div>
           <div id="form-error" style="display:none;
             margin-top:1.5rem;padding:1rem 1.25rem;
-            background:#FF6B6B18;border:2px solid #FF6B6B;
-            border-radius:12px;
+            background:#FF6B6B18;border:2px solid #FF6B6B;border-radius:12px;
             font-family:'Fredoka',sans-serif;font-size:0.95rem;color:#8B0000;
-          ">\u274C Terjadi kesalahan. Silakan coba lagi atau hubungi kami langsung via email.</div>
+          ">${c.errorMessage}</div>
         </div>
 
-        <!-- Sidebar info -->
+        <!-- Sidebar -->
         <div style="display:flex;flex-direction:column;gap:1.5rem;">
-          ${infoCard("\u{1F4CD}", "Alamat", company.address)}
-          ${infoCard("\u2709\uFE0F", "Email", `<a href="mailto:${company.email}" style="color:#5BA8D4;text-decoration:none;">${company.email}</a>`)}
-          ${infoCard("\u{1F4DE}", "Telepon", `<a href="tel:${company.phone.replace(/\s/g, "")}" style="color:#5BA8D4;text-decoration:none;">${company.phone}</a>`)}
+          ${infoCard("\u{1F4CD}", c.infoAddress, company.address)}
+          ${infoCard("\u2709\uFE0F", c.infoEmail, `<a href="mailto:${company.email}" style="color:#5BA8D4;text-decoration:none;">${company.email}</a>`)}
+          ${infoCard("\u{1F4DE}", c.infoPhone, `<a href="tel:${company.phone.replace(/\s/g, "")}" style="color:#5BA8D4;text-decoration:none;">${company.phone}</a>`)}
 
-          <!-- Social links -->
           <div class="reveal" style="
-            background:#1A1A2E;
-            border:3px solid #FED41D;
-            border-radius:16px;
-            box-shadow:5px 5px 0 #FED41D44;
-            padding:1.5rem;
+            background:#1A1A2E;border:3px solid #FED41D;border-radius:16px;
+            box-shadow:5px 5px 0 #FED41D44;padding:1.5rem;
           ">
-            <h3 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin-bottom:1rem;">Temukan Kami</h3>
+            <h3 style="font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.05em;color:#FED41D;margin-bottom:1rem;">
+              ${c.socialHeading}
+            </h3>
             <div style="display:flex;flex-direction:column;gap:0.5rem;">
               ${socialLink("in", "LinkedIn", company.social.linkedin)}
               ${socialLink("tw", "Twitter / X", company.social.twitter)}
@@ -5444,135 +5835,23 @@ function contactForm() {
     </style>
   </section>`;
 }
-function inputField(name, label, type, placeholder) {
-  return `
-  <div style="display:flex;flex-direction:column;gap:0.4rem;">
-    <label for="${name}" style="
-      font-family:'Fredoka',sans-serif;font-size:0.85rem;
-      font-weight:600;color:#1A1A2E;
-    ">${label} <span style="color:#FF6B6B;">*</span></label>
-    <input type="${type}" id="${name}" name="${name}" placeholder="${placeholder}" required
-      style="
-        padding:0.7rem 1rem;
-        border:2.5px solid #1A1A2E;
-        border-radius:10px;
-        font-family:'Fredoka',sans-serif;
-        font-size:0.95rem;color:#1A1A2E;
-        background:#FFFEF7;
-        outline:none;
-        transition:border-color 0.15s,box-shadow 0.15s;
-      "
-      onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
-      onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
-    />
-  </div>`;
-}
-function selectField(name, label, options) {
-  const opts = options.map(
-    (o) => `<option value="${o.toLowerCase().replace(/\s+/g, "-")}">${o}</option>`
-  ).join("");
-  return `
-  <div style="display:flex;flex-direction:column;gap:0.4rem;">
-    <label for="${name}" style="
-      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
-    ">${label} <span style="color:#FF6B6B;">*</span></label>
-    <select id="${name}" name="${name}" required style="
-      padding:0.7rem 1rem;
-      border:2.5px solid #1A1A2E;
-      border-radius:10px;
-      font-family:'Fredoka',sans-serif;
-      font-size:0.95rem;color:#1A1A2E;
-      background:#FFFEF7;
-      outline:none;
-      cursor:pointer;
-      transition:border-color 0.15s;
-    "
-    onfocus="this.style.borderColor='#FED41D'"
-    onblur="this.style.borderColor='#1A1A2E'"
-    >
-      <option value="" disabled selected>Pilih layanan...</option>
-      ${opts}
-    </select>
-  </div>`;
-}
-function textareaField(name, label, placeholder) {
-  return `
-  <div style="display:flex;flex-direction:column;gap:0.4rem;">
-    <label for="${name}" style="
-      font-family:'Fredoka',sans-serif;font-size:0.85rem;font-weight:600;color:#1A1A2E;
-    ">${label} <span style="color:#FF6B6B;">*</span></label>
-    <textarea id="${name}" name="${name}" placeholder="${placeholder}" required rows="5" style="
-      padding:0.7rem 1rem;
-      border:2.5px solid #1A1A2E;
-      border-radius:10px;
-      font-family:'Fredoka',sans-serif;
-      font-size:0.95rem;color:#1A1A2E;
-      background:#FFFEF7;
-      outline:none;resize:vertical;
-      transition:border-color 0.15s,box-shadow 0.15s;
-    "
-    onfocus="this.style.borderColor='#FED41D';this.style.boxShadow='0 0 0 3px #FED41D44'"
-    onblur="this.style.borderColor='#1A1A2E';this.style.boxShadow='none'"
-    ></textarea>
-  </div>`;
-}
-function infoCard(icon, title, body) {
-  return `
-  <div class="reveal" style="
-    background:#FFFEF7;
-    border:3px solid #1A1A2E;
-    border-radius:14px;
-    box-shadow:4px 4px 0 #1A1A2E;
-    padding:1.25rem;
-    display:flex;gap:1rem;align-items:flex-start;
-  ">
-    <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">${icon}</div>
-    <div>
-      <div style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.04em;color:#1A1A2E;margin-bottom:0.25rem;">${title}</div>
-      <div style="font-family:'Fredoka',sans-serif;font-size:0.88rem;color:#2D2D44;line-height:1.5;">${body}</div>
-    </div>
-  </div>`;
-}
-function socialLink(code, label, href) {
-  return `
-  <a href="${href}" target="_blank" rel="noopener noreferrer" style="
-    display:flex;align-items:center;gap:0.75rem;
-    padding:0.6rem 0.75rem;
-    border:2px solid #FED41D22;
-    border-radius:8px;
-    text-decoration:none;
-    transition:border-color 0.15s,background 0.15s;
-  "
-  onmouseover="this.style.borderColor='#FED41D';this.style.background='#FED41D11'"
-  onmouseout="this.style.borderColor='#FED41D22';this.style.background='transparent'"
-  >
-    <span style="
-      width:28px;height:28px;
-      background:#FED41D22;
-      border:1.5px solid #FED41D44;
-      border-radius:6px;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Bangers',cursive;font-size:0.7rem;color:#FED41D;
-      flex-shrink:0;
-    ">${code.toUpperCase()}</span>
-    <span style="font-family:'Fredoka',sans-serif;font-size:0.88rem;font-weight:500;color:#FFFEF7CC;">${label}</span>
-  </a>`;
-}
-function contactScript() {
+function contactScript(locale) {
+  const t = getTranslation(locale);
+  const apiPath = localePath(locale, "/api/contact");
+  const sending = t.ui.sending;
+  const submit = t.contact.submitLabel;
   return `
   <script>
-    async function handleSubmit(e) {
+    async function handleContactSubmit(e) {
       e.preventDefault();
       var btn     = document.getElementById('submit-btn');
       var success = document.getElementById('form-success');
       var error   = document.getElementById('form-error');
       var form    = document.getElementById('contact-form');
-
-      btn.disabled = true;
-      btn.textContent = 'Mengirim...';
+      btn.disabled    = true;
+      btn.textContent = '${sending}';
       success.style.display = 'none';
       error.style.display   = 'none';
-
       var data = {
         name:    form.name.value,
         email:   form.email.value,
@@ -5580,39 +5859,37 @@ function contactScript() {
         service: form.service.value,
         message: form.message.value,
       };
-
       try {
-        var res = await fetch('/api/contact', {
+        var res = await fetch('${apiPath}', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-        if (res.ok) {
-          success.style.display = 'block';
-          form.reset();
-        } else {
-          error.style.display = 'block';
-        }
+        if (res.ok) { success.style.display = 'block'; form.reset(); }
+        else        { error.style.display   = 'block'; }
       } catch (_) {
         error.style.display = 'block';
       } finally {
-        btn.disabled = false;
-        btn.textContent = 'Kirim Pesan \u2726';
+        btn.disabled    = false;
+        btn.textContent = '${submit}';
       }
     }
   </script>`;
 }
-function contactPage() {
+function contactPage(locale) {
+  const t = getTranslation(locale);
+  const desc = interpolate(t.seo.contactDescription, { name: company.name });
   const content = `
-    ${contactHero()}
+    ${contactHero(locale)}
     <div class="comic-divider"></div>
-    ${contactForm()}
-    ${contactScript()}
+    ${contactForm(locale)}
+    ${contactScript(locale)}
   `;
   return baseLayout({
-    title: "Kontak",
-    description: `Hubungi ${company.name} \u2014 kami siap mendiskusikan proyek digital Anda.`,
-    activePage: "/contact",
+    title: t.seo.contactTitle,
+    description: desc,
+    activePage: localePath(locale, "/contact"),
+    locale,
     content
   });
 }
@@ -5628,52 +5905,73 @@ app.use("*", async (c, next) => {
     c.header("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
   }
 });
-app.get("/", (c) => c.html(homePage()));
-app.get("/services", (c) => c.html(servicesPage()));
-app.get("/portfolio", (c) => c.html(portfolioPage()));
-app.get("/about", (c) => c.html(aboutPage()));
-app.get("/contact", (c) => c.html(contactPage()));
-app.post("/api/contact", async (c) => {
+app.get("/", (c) => c.redirect(`/${DEFAULT_LOCALE}`, 302));
+function getLocaleFromPath(path) {
+  const seg = path.split("/")[1] ?? "";
+  return SUPPORTED_LOCALES.includes(seg) ? seg : DEFAULT_LOCALE;
+}
+async function handleContact(c, loc) {
   try {
     const body = await c.req.json();
     if (!body.name || !body.email || !body.message) {
-      return c.json({ success: false, error: "Field name, email, dan message wajib diisi." }, 400);
+      const msg2 = loc === "en" ? "D'oh! Name, email, and message are required." : "Field name, email, dan message wajib diisi.";
+      return c.json({ success: false, error: msg2 }, 400);
     }
-    console.log("[contact]", {
+    console.log(`[contact:${loc}]`, {
       name: body.name,
       email: body.email,
       company: body.company,
       service: body.service,
       message: body.message.slice(0, 120)
     });
-    return c.json({ success: true, message: "Pesan berhasil diterima." }, 200);
+    const msg = loc === "en" ? "Woo-hoo! Message received." : "Pesan berhasil diterima.";
+    return c.json({ success: true, message: msg }, 200);
   } catch {
-    return c.json({ success: false, error: "Request body tidak valid." }, 400);
+    const msg = loc === "en" ? "D'oh! Invalid request body." : "Request body tidak valid.";
+    return c.json({ success: false, error: msg }, 400);
   }
-});
+}
+app.get("/id", (c) => c.html(homePage("id")));
+app.get("/id/", (c) => c.html(homePage("id")));
+app.get("/id/services", (c) => c.html(servicesPage("id")));
+app.get("/id/portfolio", (c) => c.html(portfolioPage("id")));
+app.get("/id/about", (c) => c.html(aboutPage("id")));
+app.get("/id/contact", (c) => c.html(contactPage("id")));
+app.post("/id/api/contact", (c) => handleContact(c, "id"));
+app.get("/en", (c) => c.html(homePage("en")));
+app.get("/en/", (c) => c.html(homePage("en")));
+app.get("/en/services", (c) => c.html(servicesPage("en")));
+app.get("/en/portfolio", (c) => c.html(portfolioPage("en")));
+app.get("/en/about", (c) => c.html(aboutPage("en")));
+app.get("/en/contact", (c) => c.html(contactPage("en")));
+app.post("/en/api/contact", (c) => handleContact(c, "en"));
+app.post("/api/contact", (c) => handleContact(c, DEFAULT_LOCALE));
 app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
 app.notFound((c) => {
+  const loc = getLocaleFromPath(c.req.path);
+  const t = getTranslation(loc);
+  const nf = t.notFound;
   const html = `<!DOCTYPE html>
-<html lang="id">
+<html lang="${loc}">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>404 \u2014 Halaman Tidak Ditemukan</title>
+  <title>${nf.code} \u2014 ${loc === "en" ? "Page Not Found" : "Halaman Tidak Ditemukan"}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;600&display=swap" rel="stylesheet"/>
 </head>
-<body style="margin:0;background:#1A1A2E;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;">
+<body style="margin:0;background:#1A1A2E;min-height:100vh;display:flex;align-items:center;justify-content:center;">
   <div style="text-align:center;padding:2rem;">
     <div style="font-size:5rem;margin-bottom:1rem;">\u{1F573}\uFE0F</div>
-    <h1 style="font-family:'Bangers',cursive;font-size:6rem;color:#FED41D;letter-spacing:0.1em;margin:0;text-shadow:6px 6px 0 #F5C400;">404</h1>
-    <p style="color:#FFFEF7AA;font-size:1.1rem;margin:0.75rem 0 2rem;">Halaman yang kamu cari tidak ada di Springfield ini.</p>
-    <a href="/" style="
+    <h1 style="font-family:'Bangers',cursive;font-size:6rem;color:#FED41D;letter-spacing:0.1em;margin:0;text-shadow:6px 6px 0 #F5C400;">${nf.code}</h1>
+    <p style="color:#FFFEF7AA;font-family:'Fredoka',sans-serif;font-size:1.1rem;margin:0.75rem 0 2rem;">${nf.message}</p>
+    <a href="/${loc}" style="
       display:inline-block;padding:0.85rem 2.25rem;
       background:#FED41D;color:#1A1A2E;
-      border:3px solid #FED41D;border-radius:12px;
+      border:3px solid #1A1A2E;border-radius:12px;
       font-family:'Fredoka',sans-serif;font-size:1rem;font-weight:700;
       text-decoration:none;box-shadow:5px 5px 0 #F5C400;
-    ">Kembali ke Beranda</a>
+    ">${nf.cta}</a>
   </div>
 </body>
 </html>`;
